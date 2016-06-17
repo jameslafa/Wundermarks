@@ -32,9 +32,20 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Authentication
+gem 'devise'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  # Create test data instead of fixtures
+  gem 'factory_girl'
+  # Clean DB for tests
+  gem 'database_cleaner'
+  # Fake nice data for tests
+  gem 'faker'
+  # Testing framework
+  gem 'rspec-rails', '~> 3.4'
 end
 
 group :development do
@@ -45,3 +56,13 @@ group :development do
   gem 'spring'
 end
 
+group :test do
+  # Shortcuts for testing model validations and more
+  gem 'shoulda-matchers', require: false
+  # Validate JSON format
+  gem 'json_spec'
+  # Record and replay HTTP calls during tests
+  gem 'vcr'
+  # Mock HTTP calls during tests
+  gem 'webmock'
+end
