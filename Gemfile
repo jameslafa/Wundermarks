@@ -32,16 +32,48 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Authentication
+gem 'devise'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  # Create test data instead of fixtures
+  gem 'factory_girl'
+  # Clean DB for tests
+  gem 'database_cleaner'
+  # Fake nice data for tests
+  gem 'faker'
+  # Testing framework
+  gem 'rspec-rails', '~> 3.4'
 end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
-
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  # Watches code files & executes tests
+  gem 'guard-rspec'
+  # Lunch rake tasks via guard
+  gem 'guard-rake'
+  #  Display test results in a OSX notification
+  gem 'terminal-notifier-guard', '~> 1.6.1'
+  # Don't log static file requests
+  gem 'quiet_assets'
+  # Get a better Rails error page
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'meta_request'
 end
 
+group :test do
+  # Shortcuts for testing model validations and more
+  gem 'shoulda-matchers', require: false
+  # Validate JSON format
+  gem 'json_spec'
+  # Record and replay HTTP calls during tests
+  gem 'vcr'
+  # Mock HTTP calls during tests
+  gem 'webmock'
+end
