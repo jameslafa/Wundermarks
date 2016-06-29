@@ -23,8 +23,6 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-# Rails 12factor, Based on the ideas behind 12factor.net
-gem 'rails_12factor'
 # Use Puma as webserver
 gem 'puma'
 
@@ -86,4 +84,9 @@ group :test do
   gem 'vcr'
   # Mock HTTP calls during tests
   gem 'webmock'
+end
+
+group :production do
+  # Rails 12factor, Based on the ideas behind 12factor.net
+  gem 'rails_12factor'
 end
