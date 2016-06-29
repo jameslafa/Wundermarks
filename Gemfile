@@ -35,17 +35,20 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Authentication
 gem 'devise'
 
+# Authorizations
+gem "pundit"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-  # Create test data instead of fixtures
-  gem 'factory_girl'
   # Clean DB for tests
   gem 'database_cleaner'
   # Fake nice data for tests
   gem 'faker'
   # Testing framework
   gem 'rspec-rails', '~> 3.4'
+  # Create test data instead of fixtures
+  gem 'factory_girl'
 end
 
 group :development do
@@ -70,6 +73,8 @@ end
 group :test do
   # Shortcuts for testing model validations and more
   gem 'shoulda-matchers', require: false
+  # RSpec matchers for testing Pundit authorisation policies
+  gem 'pundit-matchers', '~> 1.1.0'
   # Validate JSON format
   gem 'json_spec'
   # Record and replay HTTP calls during tests

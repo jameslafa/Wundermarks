@@ -1,0 +1,6 @@
+en:
+ pundit:
+   default: 'You cannot perform this action.'
+   bookmark_policy:
+     show?: 'You cannot see this bookmark!'
+     update?: 'You cannot update this bookmark!'

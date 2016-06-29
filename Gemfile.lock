@@ -143,6 +143,11 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pundit (1.1.0)
+      activesupport (>= 3.0.0)
+    pundit-matchers (1.1.0)
+      pundit (~> 1.1, >= 1.1.0)
+      rspec-rails (>= 3.0.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.4)
@@ -270,6 +275,8 @@ DEPENDENCIES
   json_spec
   meta_request
   pg (~> 0.15)
+  pundit
+  pundit-matchers (~> 1.1.0)
   quiet_assets
   rails (= 4.2.6)
   rspec-rails (~> 3.4)
