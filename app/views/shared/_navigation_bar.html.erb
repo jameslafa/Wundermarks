@@ -1,0 +1,28 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only"><%= t('header.navigation.toogle_navigation') %></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to t('header.navigation.brand'), root_path, class: "navbar-brand" %>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="<%= 'active' if params[:controller] == 'bookmarks' %>"><%= link_to t('header.navigation.bookmarks'), bookmarks_path %></a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <% if current_user %>
+          <li><%= link_to t('header.sign.sign_out', user_name: current_user.email), destroy_user_session_path, method: :delete %></li>
+        <% else %>
+          <li><%= link_to t('header.sign.sign_in'), new_user_session_path %></li>
+          <li><%= link_to t('header.sign.sign_up'), new_user_registration_path %></li>  
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

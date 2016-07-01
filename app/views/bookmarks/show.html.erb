@@ -1,24 +1,12 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <p><strong><%= Bookmark.human_attribute_name('title') %>: </strong><%= @bookmark.title %></p>
+    <p><strong><%= Bookmark.human_attribute_name('url') %>: </strong><%= link_to @bookmark.url.to_s, @bookmark.url, target: '_blank' %></p>
+    <p><strong><%= Bookmark.human_attribute_name('description') %>: </strong><%= simple_format @bookmark.description %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @bookmark.title %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @bookmark.description %>
-</p>
-
-<p>
-  <strong>Url:</strong>
-  <%= @bookmark.url %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @bookmark.user %>
-</p>
-
-<%= link_to 'Edit', edit_bookmark_path(@bookmark) %> |
-<%= link_to 'Back', bookmarks_path %>
+    <div class="actions">
+      <%= link_to t('.edit_bookmark'), edit_bookmark_path(@bookmark), class: 'btn btn-primary' %>
+      <%= link_to t('.back_to_bookmarks'), bookmarks_path, class: 'btn btn-default' %>
+    </div>
+  </div>
+</div>

@@ -1,33 +1,34 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Bookmarks</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Url</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @bookmarks.each do |bookmark| %>
+<div class="row">
+  <div class="col-md-12 text-right">
+    <%= link_to "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> #{t('.new_bookmark')}".html_safe, new_bookmark_path, class: 'btn btn-primary' %>
+  </div>
+</div>
+<div class="row">
+  <table class="table table-hover">
+    <thead>
       <tr>
-        <td><%= bookmark.title %></td>
-        <td><%= bookmark.description %></td>
-        <td><%= bookmark.url %></td>
-        <td><%= bookmark.user %></td>
-        <td><%= link_to 'Show', bookmark %></td>
-        <td><%= link_to 'Edit', edit_bookmark_path(bookmark) %></td>
-        <td><%= link_to 'Destroy', bookmark, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th><%= Bookmark.human_attribute_name("title")%></th>
+        <th><%= Bookmark.human_attribute_name("description") %></th>
+        <th><%= Bookmark.human_attribute_name("url") %></th>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
-
-<%= link_to 'New Bookmark', new_bookmark_path %>
+    <tbody>
+      <% @bookmarks.each do |bookmark| %>
+        <tr>
+          <td><%= bookmark.title %></td>
+          <td><%= bookmark.description %></td>
+          <td><%= link_to bookmark.url.to_s, bookmark.url, target: '_blank' %></td>
+          <td>
+            <div class="btn-group btn-group-sm pull-right" role="group" aria-label="...">
+              <%= link_to '', bookmark, class: 'btn btn-default glyphicon glyphicon-eye-open' %>
+              <%= link_to '', edit_bookmark_path(bookmark), class: 'btn btn-default glyphicon glyphicon-edit'%>
+              <%= link_to '', bookmark, class: 'btn btn-default glyphicon glyphicon-trash', method: :delete, data: { confirm: t("confirmations.bookmark_delete") } %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
