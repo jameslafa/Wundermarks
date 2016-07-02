@@ -1,1 +1,11 @@
-
+<% @bookmarks.in_groups_of(2).each do |bookmark_group| %>
+  <div class="row">
+    <% bookmark_group.each do |bookmark| %>
+      <% if bookmark %>
+        <div class="col-md-6">
+          <%= render partial: "bookmarks/bookmark_item", locals: {bookmark: bookmark, action: 'index'} %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
