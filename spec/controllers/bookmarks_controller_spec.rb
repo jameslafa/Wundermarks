@@ -10,55 +10,44 @@ RSpec.describe BookmarksController, type: :controller do
     login_user
 
     describe "GET #index" do
-      let(:user_1) { create(:user) }
+      let(:other_user) { create(:user) }
 
-      let!(:bookmarks_user_1) { create_list(:bookmark, 3, user: user_1) }
-      let!(:bookmarks_current_user) { create_list(:bookmark, 3, user: subject.current_user) }
+      let!(:other_user_bookmarks) { create_list(:bookmark, 3, user: other_user) }
+      let!(:current_user_bookmarks) { create_list(:bookmark, 3, user: subject.current_user) }
 
       it "assigns all bookmarks belonging to current_user as @bookmarks" do
         get :index
-        expect(assigns(:bookmarks)).to match_array(bookmarks_current_user)
+        expect(assigns(:bookmarks)).to match_array(current_user_bookmarks)
       end
 
       it "sorts the bookmarks list by reverse chronology" do
-        ordered_list = bookmarks_current_user.sort { |x,y| y.created_at <=> x.created_at }
+        ordered_list = current_user_bookmarks.sort { |x,y| y.created_at <=> x.created_at }
         get :index
         expect(assigns(:bookmarks)).to eq(ordered_list)
       end
 
       context 'when a query parameter is defined' do
-        let(:tag) { 'my tag 1' }
-        let(:bookmarks) { create_list(:bookmark_with_tags, 3, user: subject.current_user) }
+        before(:each) do
+          @tag = 'my new tag'
+          @searched_bookmark = current_user_bookmarks.second
+          @searched_bookmark.update_attributes({tag_list: "#{@searched_bookmark.tag_list.to_s}, #{@tag}"})
+        end
 
-        it "assigns all bookmarks matching the search results" do
-          result_bookmark = bookmarks.second
-          result_bookmark.update_attributes({tag_list: "#{result_bookmark.tag_list.to_s}, #{tag}"})
-          get :index, q: tag
-          expect(assigns(:bookmarks)).to eq([result_bookmark])
+        it "assigns all bookmarks matching the search results belonging to the current user" do
+          get :index, q: @tag
+          expect(assigns(:bookmarks)).to eq([@searched_bookmark])
         end
       end
     end
 
     describe "GET #show" do
-      context 'when the bookmark belongs to the user' do
-        let(:bookmark) { create(:bookmark, user: subject.current_user) }
+      let(:bookmark) { create(:bookmark) }
 
-        it "assigns the requested bookmark as @bookmark and render :show" do
-          get :show, {:id => bookmark.id}
-          expect(assigns(:bookmark)).to eq(bookmark)
-          expect(response).to render_template :show
-        end
-      end
-
-      context 'when the bookmark DOES NOT belong to the user' do
-        let(:bookmark) { create(:bookmark) }
-
-        it "does not assign the requested bookmark and redirects to the user's bookmarks list" do
-          get :show, {:id => bookmark.id}
-          expect(assigns(:bookmark)).not_to eq(bookmark)
-          expect(response).to redirect_to bookmarks_path
-        end
-      end
+      it "assigns the requested bookmark as @bookmark and render :show" do
+        get :show, {:id => bookmark.id}
+        expect(assigns(:bookmark)).to eq(bookmark)
+        expect(response).to render_template :show
+      end      
     end
 
     describe "GET #new" do

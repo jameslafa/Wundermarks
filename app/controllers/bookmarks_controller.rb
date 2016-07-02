@@ -1,16 +1,15 @@
 class BookmarksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_bookmark, only: [:show, :edit, :update, :destroy]
-  after_action :verify_policy_scoped, only: :index
-  after_action :verify_authorized, only: [:show, :edit, :update, :destroy]
+  after_action :verify_authorized, only: [:edit, :update, :destroy]
 
   # GET /bookmarks
   # GET /bookmarks.json
   def index
     if params[:q].present? and @q = params[:q]
-      @bookmarks = policy_scope(Bookmark).tagged_with(@q).order(created_at: :desc)
+      @bookmarks = Bookmark.belonging_to(current_user).tagged_with(@q).order(created_at: :desc)
     else
-      @bookmarks = policy_scope(Bookmark).order(created_at: :desc)
+      @bookmarks = Bookmark.belonging_to(current_user).order(created_at: :desc)
     end
   end
 
@@ -27,6 +26,7 @@ class BookmarksController < ApplicationController
 
   # GET /bookmarks/1/edit
   def edit
+    authorize @bookmark
   end
 
   # POST /bookmarks
@@ -76,7 +76,6 @@ class BookmarksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_bookmark
       @bookmark = Bookmark.find(params[:id])
-      authorize @bookmark
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

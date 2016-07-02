@@ -3,4 +3,6 @@ class Bookmark < ActiveRecord::Base
   belongs_to :user
 
   validates :title, :url, :user, presence: true
+
+  scope :belonging_to, lambda { |user| where(:user => user) }
 end

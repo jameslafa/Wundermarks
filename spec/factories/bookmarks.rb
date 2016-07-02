@@ -6,7 +6,7 @@ FactoryGirl.define do
     association :user, factory: :user
 
     factory :bookmark_with_tags do
-      tag_list { Faker::Hipster.words.join(", ") }
+      tag_list { Faker::Hipster.words.map!(&:parameterize).join(", ") }
     end
   end
 end

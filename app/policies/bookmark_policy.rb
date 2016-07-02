@@ -1,11 +1,6 @@
 class BookmarkPolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      scope.where(user: user)
-    end
-  end
 
-  def show?
+  def edit?
     record.user == user
   end
 
