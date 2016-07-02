@@ -14,9 +14,14 @@ en:
         new_bookmark: "Add a bookmark"
         search: "Search"
         reset_search: "Reset"
+      search:
+        placeholder: "my first tag, my second tag"
+        help: "Search bookmarks using tags, separated by a comma."
     show:
       edit_bookmark: "Edit bookmark"
       back_to_bookmarks: "Back to bookmarks list"
+      action:
+        index: Back to list
     form:
       show_bookmark: "Show bookmark"
       back_to_bookmarks: "Back to bookmarks list"

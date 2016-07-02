@@ -37,7 +37,7 @@ class BookmarksController < ApplicationController
 
     respond_to do |format|
       if @bookmark.save
-        format.html { redirect_to @bookmark, notice: 'Bookmark was successfully created.' }
+        format.html { redirect_to bookmarks_path }
         format.json { render :show, status: :created, location: @bookmark }
       else
         format.html { render :new }

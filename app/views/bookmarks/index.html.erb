@@ -1,46 +1,30 @@
-<div class="row">
-  <div class="col-md-5">
+<div class="row main-actions">
+  <div class="actions col-md-7 col-md-push-5">
+    <%= link_to "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> #{t('.action.new_bookmark')}".html_safe, new_bookmark_path, class: 'btn btn-primary' %>
+  </div>
+  <div class="search col-md-5 col-md-pull-7">
     <%= form_tag({controller: 'bookmarks', action: 'index'}, method: 'get') do %>
       <div class="input-group">
-        <%= search_field_tag(:q, @q, class: 'form-control') %>
+        <%= search_field_tag(:q, @q, class: 'form-control', 'aria-describedby': "search_help", placeholder: t(".search.placeholder")) %>
         <span class="input-group-btn">
           <button type="submit" class="btn btn-default">
             <span class='glyphicon glyphicon-search' aria-hidden='true'></span> <%= t('.action.search') %>
           </button>
         </span>
       </div>
+      <span id="search_help" class="help-block hidden-xs hidden-sm"><%= t(".search.help")%></span>
     <% end %>
   </div>
-  <div class="col-md-7 text-right">
-    <%= link_to "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> #{t('.action.new_bookmark')}".html_safe, new_bookmark_path, class: 'btn btn-primary' %>
-  </div>
 </div>
-<div class="row">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th><%= Bookmark.human_attribute_name("title")%></th>
-        <th><%= Bookmark.human_attribute_name("description") %></th>
-        <th><%= Bookmark.human_attribute_name("url") %></th>
-        <th></th>
-      </tr>
-    </thead>
 
-    <tbody>
-      <% @bookmarks.each do |bookmark| %>
-        <tr>
-          <td><%= bookmark.title %></td>
-          <td><%= bookmark.description %></td>
-          <td><%= link_to bookmark.url.to_s, bookmark.url, target: '_blank' %></td>
-          <td>
-            <div class="btn-group btn-group-sm pull-right" role="group" aria-label="...">
-              <%= link_to '', bookmark, class: 'btn btn-default glyphicon glyphicon-eye-open' %>
-              <%= link_to '', edit_bookmark_path(bookmark), class: 'btn btn-default glyphicon glyphicon-edit'%>
-              <%= link_to '', bookmark, class: 'btn btn-default glyphicon glyphicon-trash', method: :delete, data: { confirm: t("confirmations.bookmark_delete") } %>
-            </div>
-          </td>
-        </tr>
+<% @bookmarks.in_groups_of(2).each do |bookmark_group| %>
+  <div class="row">
+    <% bookmark_group.each do |bookmark| %>
+      <% if bookmark %>
+        <div class="col-md-6">
+          <%= render partial: "bookmarks/bookmark_item", locals: {bookmark: bookmark, action: 'index'} %>
+        </div>
       <% end %>
-    </tbody>
-  </table>
-</div>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,27 @@
+<div class="bookmark-item panel panel-default">
+  <div class="panel-heading">
+    <div class="title">
+      <% if action == 'show' %>
+        <%= bookmark.title %>
+      <% else %>
+        <%= link_to bookmark.title, bookmark_path(bookmark.id) %>
+      <% end %>
+      <div class="actions pull-right">
+        <div class="btn-group btn-group-xs pull-right" role="group" aria-label="...">
+          <% unless action == 'show' %>
+            <%= link_to '', bookmark, class: 'action-show btn btn-default glyphicon glyphicon-eye-open' %>
+          <% end %>
+          <%= link_to '', edit_bookmark_path(bookmark), class: 'action-edit btn btn-default glyphicon glyphicon-edit'%>
+          <%= link_to '', bookmark, class: 'action-destroy btn btn-default glyphicon glyphicon-trash', method: :delete, data: { confirm: t("confirmations.bookmark_delete") } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="link"><%= link_to bookmark.url, bookmark.url, target: '_blank' %></div>
+    <div class="description"><%= simple_format bookmark.description %></div>
+  </div>
+  <div class="panel-footer">
+    <div class="tags"><%= bookmark.tag_list.present? ? bookmark.tag_list : "&nbsp;".html_safe %></div>
+  </div>
+</div>

@@ -1,13 +1,11 @@
+<div class="row main-actions">
+  <div class="col-md-8 col-md-offset-2">
+    <%= link_to t(".action.index"), bookmarks_path, class: 'btn btn-default' %>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <p><strong><%= Bookmark.human_attribute_name('title') %>: </strong><%= @bookmark.title %></p>
-    <p><strong><%= Bookmark.human_attribute_name('url') %>: </strong><%= link_to @bookmark.url.to_s, @bookmark.url, target: '_blank' %></p>
-    <p><strong><%= Bookmark.human_attribute_name('description') %>: </strong><%= simple_format @bookmark.description %></p>
-    <p><strong><%= Bookmark.human_attribute_name('tag_list') %>: </strong><%= @bookmark.tag_list %></p>
-
-    <div class="actions">
-      <%= link_to t('.edit_bookmark'), edit_bookmark_path(@bookmark), class: 'btn btn-primary' %>
-      <%= link_to t('.back_to_bookmarks'), bookmarks_path, class: 'btn btn-default' %>
-    </div>
+    <%= render partial: "bookmarks/bookmark_item", locals: {bookmark: @bookmark, action: 'show'} %>
   </div>
 </div>

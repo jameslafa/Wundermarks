@@ -1,3 +1,66 @@
-// Place all the styles related to the Bookmarks controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.c-bookmarks{
+  .main-actions{
+    margin-bottom: 1rem;
+  }
+
+  .bookmark-item{
+    .title{
+      font-size: 2rem;
+
+      a, a:visited{
+        color: #444;
+        text-decoration: none;
+      }
+    }
+
+    .link{
+      color: $brand-primary;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .description{
+      font-size: 1.2rem;
+      line-height: 1.3rem;
+      margin-top: 1rem;
+    }
+  }
+
+  &.a-index{
+    .main-actions{
+      .actions{
+        text-align: right;
+
+        @media(max-width:$screen-md-min){
+          margin-bottom: 1rem;
+        }
+      }
+    }
+
+    .bookmark-item{
+      .description{
+        height: 6rem;
+        overflow: hidden;
+        position: relative;
+        text-overflow: ellipsis;
+
+        &:after {
+          background: linear-gradient(rgba(0,0,0,0), #fff);
+          bottom:0;
+          content:"";
+          height:2rem;
+          left:0;
+          position:absolute;
+          width:100%;
+        }
+      }
+    }
+  }
+
+  &.a-show{
+    .description{
+
+    }
+  }
+}
