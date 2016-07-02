@@ -3,6 +3,7 @@
     <p><strong><%= Bookmark.human_attribute_name('title') %>: </strong><%= @bookmark.title %></p>
     <p><strong><%= Bookmark.human_attribute_name('url') %>: </strong><%= link_to @bookmark.url.to_s, @bookmark.url, target: '_blank' %></p>
     <p><strong><%= Bookmark.human_attribute_name('description') %>: </strong><%= simple_format @bookmark.description %></p>
+    <p><strong><%= Bookmark.human_attribute_name('tag_list') %>: </strong><%= @bookmark.tag_list %></p>
 
     <div class="actions">
       <%= link_to t('.edit_bookmark'), edit_bookmark_path(@bookmark), class: 'btn btn-primary' %>

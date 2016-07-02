@@ -10,13 +10,18 @@ en:
       sign_up: "Sign up"
   bookmarks:
     index:
-      new_bookmark: "Add a bookmark"
+      action:
+        new_bookmark: "Add a bookmark"
+        search: "Search"
+        reset_search: "Reset"
     show:
       edit_bookmark: "Edit bookmark"
       back_to_bookmarks: "Back to bookmarks list"
     form:
       show_bookmark: "Show bookmark"
       back_to_bookmarks: "Back to bookmarks list"
+      tag_list_help: "Enter a list of tags separated by commas: ','"
+      tag_list_placeholder: "my-first-tag, my-second-tag"
 
   confirmations:
     bookmark_delete: "Are you sure you want to delete this bookmark?"

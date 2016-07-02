@@ -26,6 +26,12 @@
     <%= f.text_area :description, class: 'form-control' %>
   </div>
 
+  <div class="form-group">
+    <%= f.label :tag_list %>
+    <%= f.text_field :tag_list, value: @bookmark.tag_list.to_s, class: 'form-control', 'aria-describedBy': 'tag_list_help', placeholder: t('.tag_list_placeholder') %>
+    <span id="tag_list_help" class="help-block"><%= t('.tag_list_help')%></span>
+  </div>
+
   <div class="actions">
     <%= f.submit class: 'btn btn-primary' %>
     <%= link_to t(".back_to_bookmarks"), bookmarks_path, class: 'btn btn-default pull-right' %>

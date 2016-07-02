@@ -1,0 +1,10 @@
+en:
+  activerecord:
+    models:
+      bookmark: Bookmark
+    attributes:
+      bookmark:
+        title: Title
+        description: Description
+        url: URL
+        tag_list: Tags

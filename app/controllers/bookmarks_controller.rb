@@ -7,7 +7,11 @@ class BookmarksController < ApplicationController
   # GET /bookmarks
   # GET /bookmarks.json
   def index
-    @bookmarks = policy_scope(Bookmark).order(created_at: :desc)
+    if params[:q].present? and @q = params[:q]
+      @bookmarks = policy_scope(Bookmark).tagged_with(@q).order(created_at: :desc)
+    else
+      @bookmarks = policy_scope(Bookmark).order(created_at: :desc)
+    end
   end
 
   # GET /bookmarks/1
@@ -48,7 +52,7 @@ class BookmarksController < ApplicationController
     authorize @bookmark
     respond_to do |format|
       if @bookmark.update(bookmark_params)
-        format.html { redirect_to @bookmark, notice: 'Bookmark was successfully updated.' }
+        format.html { redirect_to bookmarks_path }
         format.json { render :show, status: :ok, location: @bookmark }
       else
         format.html { render :edit }
@@ -77,7 +81,7 @@ class BookmarksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bookmark_params
-      params.require(:bookmark).permit(:title, :description, :url)
+      params.require(:bookmark).permit(:title, :description, :url, :tag_list)
     end
 
     # Handle unauthorized access

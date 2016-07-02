@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe BookmarksController, type: :controller do
-  let(:valid_attributes) { attributes_for(:bookmark) }
-  let(:invalid_attributes) { attributes_for(:bookmark, title: '') }
+  let(:valid_attributes) { attributes_for(:bookmark_with_tags) }
+  let(:invalid_attributes) { attributes_for(:bookmark_with_tags, title: '') }
 
   it_behaves_like 'a controller requiring an authenticated user'
 
@@ -24,6 +24,18 @@ RSpec.describe BookmarksController, type: :controller do
         ordered_list = bookmarks_current_user.sort { |x,y| y.created_at <=> x.created_at }
         get :index
         expect(assigns(:bookmarks)).to eq(ordered_list)
+      end
+
+      context 'when a query parameter is defined' do
+        let(:tag) { 'my tag 1' }
+        let(:bookmarks) { create_list(:bookmark_with_tags, 3, user: subject.current_user) }
+
+        it "assigns all bookmarks matching the search results" do
+          result_bookmark = bookmarks.second
+          result_bookmark.update_attributes({tag_list: "#{result_bookmark.tag_list.to_s}, #{tag}"})
+          get :index, q: tag
+          expect(assigns(:bookmarks)).to eq([result_bookmark])
+        end
       end
     end
 
@@ -93,8 +105,10 @@ RSpec.describe BookmarksController, type: :controller do
 
         it "assigns a newly created bookmark as @bookmark" do
           post :create, {:bookmark => valid_attributes}
+          created_bookmark = assigns(:bookmark)
           expect(assigns(:bookmark)).to be_a(Bookmark)
-          expect(assigns(:bookmark)).to contains_attributes_from valid_attributes
+          expect(assigns(:bookmark)).to contains_attributes_from valid_attributes.except(:tag_list)
+          expect(assigns(:bookmark).tag_list.to_s).to eq valid_attributes[:tag_list].downcase
           expect(assigns(:bookmark)).to be_persisted
         end
 
@@ -107,7 +121,8 @@ RSpec.describe BookmarksController, type: :controller do
       context "with invalid params" do
         it "assigns a newly created but unsaved bookmark as @bookmark" do
           post :create, {:bookmark => invalid_attributes}
-          expect(assigns(:bookmark)).to contains_attributes_from invalid_attributes
+          expect(assigns(:bookmark)).to contains_attributes_from invalid_attributes.except(:tag_list)
+          expect(assigns(:bookmark).tag_list.to_s).to eq invalid_attributes[:tag_list].downcase
           expect(assigns(:bookmark)).to be_a_new(Bookmark)
           expect(assigns(:bookmark)).not_to be_persisted
         end
@@ -119,9 +134,9 @@ RSpec.describe BookmarksController, type: :controller do
       end
 
       it "restricts parameters" do
-        params = attributes_for(:bookmark, user_id: 1)
+        params = attributes_for(:bookmark_with_tags, user_id: 1)
 
-        should permit(:title, :description, :url)
+        should permit(:title, :description, :url, :tag_list)
         .for(:create, params: {bookmark: params}).on(:bookmark)
 
         should_not permit(:user_id)
@@ -149,7 +164,7 @@ RSpec.describe BookmarksController, type: :controller do
 
           it "redirects to the bookmark" do
             put :update, {:id => bookmark.id, :bookmark => new_attributes}
-            expect(response).to redirect_to(bookmark)
+            expect(response).to redirect_to(bookmarks_path)
           end
         end
 
@@ -174,10 +189,10 @@ RSpec.describe BookmarksController, type: :controller do
         end
 
         it "restricts parameters" do
-          bookmark = create(:bookmark, user: subject.current_user)
+          bookmark = create(:bookmark_with_tags, user: subject.current_user)
           params = attributes_for(:bookmark, user_id: 22)
 
-          should permit(:title, :description, :url)
+          should permit(:title, :description, :url, :tag_list)
           .for(:update, params: {bookmark: params, id: bookmark.id}).on(:bookmark)
 
           should_not permit(:user_id)
