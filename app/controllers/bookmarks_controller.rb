@@ -25,6 +25,7 @@ class BookmarksController < ApplicationController
 
     respond_to do |format|
       if params[:layout] == 'popup'
+        @layout = 'popup'
         format.html { render :new, layout: "popup" }
       else
         format.html { render :new }

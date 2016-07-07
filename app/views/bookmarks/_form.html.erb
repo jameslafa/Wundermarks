@@ -34,6 +34,8 @@
 
   <div class="actions">
     <%= f.submit class: 'btn btn-primary' %>
-    <%= link_to t(".back_to_bookmarks"), bookmarks_path, class: 'btn btn-default pull-right' %>
+    <% unless @layout == 'popup' %>
+      <%= link_to t(".back_to_bookmarks"), bookmarks_path, class: 'btn btn-default pull-right' %>
+    <% end %>
   </div>
 <% end %>
