@@ -47,7 +47,7 @@ RSpec.describe BookmarksController, type: :controller do
         get :show, {:id => bookmark.id}
         expect(assigns(:bookmark)).to eq(bookmark)
         expect(response).to render_template :show
-      end      
+      end
     end
 
     describe "GET #new" do
@@ -101,9 +101,9 @@ RSpec.describe BookmarksController, type: :controller do
           expect(assigns(:bookmark)).to be_persisted
         end
 
-        it "redirects to the created bookmark" do
+        it "redirects to the bookmarks list" do
           post :create, {:bookmark => valid_attributes}
-          expect(response).to redirect_to(Bookmark.last)
+          expect(response).to redirect_to bookmarks_path
         end
       end
 

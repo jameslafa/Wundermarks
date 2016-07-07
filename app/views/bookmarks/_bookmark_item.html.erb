@@ -6,15 +6,17 @@
       <% else %>
         <%= link_to bookmark.title, bookmark_path(bookmark.id) %>
       <% end %>
-      <div class="actions pull-right">
-        <div class="btn-group btn-group-xs pull-right" role="group" aria-label="...">
-          <% unless action == 'show' %>
-            <%= link_to '', bookmark, class: 'action-show btn btn-default glyphicon glyphicon-eye-open' %>
-          <% end %>
-          <%= link_to '', edit_bookmark_path(bookmark), class: 'action-edit btn btn-default glyphicon glyphicon-edit'%>
-          <%= link_to '', bookmark, class: 'action-destroy btn btn-default glyphicon glyphicon-trash', method: :delete, data: { confirm: t("confirmations.bookmark_delete") } %>
+      <% if current_user && bookmark.user_id == current_user.id %>
+        <div class="actions pull-right hidden-xs">
+          <div class="btn-group btn-group-xs pull-right" role="group" aria-label="...">
+            <% unless action == 'show' %>
+              <%= link_to '', bookmark, class: 'action-show btn btn-default glyphicon glyphicon-eye-open' %>
+            <% end %>
+            <%= link_to '', edit_bookmark_path(bookmark), class: 'action-edit btn btn-default glyphicon glyphicon-edit'%>
+            <%= link_to '', bookmark, class: 'action-destroy btn btn-default glyphicon glyphicon-trash', method: :delete, data: { confirm: t("confirmations.bookmark_delete") } %>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
   <div class="panel-body">

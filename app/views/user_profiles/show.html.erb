@@ -1,0 +1,11 @@
+<div class="row main-actions">
+  <div class="col-md-12">
+    <%= link_to t(".action.edit"), edit_current_user_profile_path, class: 'btn btn-primary' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <%= render partial: "user_profiles/user_profile_item", locals: {profile: @profile} %>
+  </div>
+</div>

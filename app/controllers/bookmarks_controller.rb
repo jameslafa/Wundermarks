@@ -1,7 +1,7 @@
 class BookmarksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_bookmark, only: [:show, :edit, :update, :destroy]
-  after_action :verify_authorized, only: [:edit, :update, :destroy]
+  after_action :verify_authorized, except: [:index, :show, :new, :create]
 
   # GET /bookmarks
   # GET /bookmarks.json

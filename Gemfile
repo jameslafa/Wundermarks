@@ -89,6 +89,8 @@ group :test do
   gem 'vcr'
   # Mock HTTP calls during tests
   gem 'webmock'
+  # Feature tests
+  gem 'capybara'
 end
 
 group :production do

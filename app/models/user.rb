@@ -5,4 +5,12 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :bookmarks
+  has_one :user_profile, dependent: :destroy, inverse_of: :user
+
+  accepts_nested_attributes_for :user_profile
+
+  # Returns user's profile name
+  def profile_name
+    self.user_profile.try(:name)
+  end
 end

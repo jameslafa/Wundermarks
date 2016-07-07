@@ -1,0 +1,19 @@
+<div class="profile-item panel panel-default">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="name pull-left"><%= profile.name %></div>
+        <div class="permalink pull-right"><%= link_to user_profile_url(id: profile.id), user_profile_url(id: profile.id) %></div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <p>
+      <strong><%= UserProfile.human_attribute_name(:introduction)%></strong><br/>
+      <%= simple_format profile.introduction %>
+    </p>
+  </div>
+  <div class="panel-footer">
+    <%= t(".member_since", days: (Time.now.to_date - profile.created_at.to_date).to_i) %>
+  </div>
+</div>

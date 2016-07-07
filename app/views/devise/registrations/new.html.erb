@@ -14,6 +14,15 @@
         <%= f.text_field :email, autofocus: true, class: 'form-control' %>
       </div>
 
+      <% resource.build_user_profile unless resource.user_profile %>
+
+      <%= f.fields_for :user_profile do |up| %>
+        <div class="form-group">
+          <%= up.label :name %>
+          <%= up.text_field :name, class: 'form-control' %>
+        </div>
+      <% end %>
+
       <div class="form-group">
         <%= f.label :password %>
         <% if @minimum_password_length %>

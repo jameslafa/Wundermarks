@@ -4,8 +4,9 @@ en:
       toogle_navigation: Toggle navigation
       brand: Wundermarks
       bookmarks: My Bookmarks
+      profile: Your Profile
     sign:
-      sign_out: "Sign out (%{user_name})"
+      sign_out: "Sign out"
       sign_in: "Sign in"
       sign_up: "Sign up"
   bookmarks:
@@ -21,12 +22,19 @@ en:
       edit_bookmark: "Edit bookmark"
       back_to_bookmarks: "Back to bookmarks list"
       action:
-        index: Back to list
+        index: "Back to list"
     form:
       show_bookmark: "Show bookmark"
       back_to_bookmarks: "Back to bookmarks list"
       tag_list_help: "Enter a list of tags separated by commas: ','"
       tag_list_placeholder: "my-first-tag, my-second-tag"
-
+  user_profiles:
+    show:
+      action:
+        edit: "Edit your profile"
+    user_profile_item:
+      member_since: "Member since %{days} days"
+    form:
+      back_to_bookmarks: "Back to bookmarks list"
   confirmations:
     bookmark_delete: "Are you sure you want to delete this bookmark?"
