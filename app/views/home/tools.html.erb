@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="page-title"><%= t('.title') %></div>
+
+    <div class="tool bookmarklet">
+      <div class="title"><%= t('.bookmarklet.title') %></div>
+      <div class="description"><%= t('.bookmarklet.description_html') %></div>
+      <a href="javascript:window.open('<%=new_bookmark_url%>?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)+'&layout=popup', 'Wundermarks - Add bookmark','width=600,height=400,scrollbars=yes,status=no,titlebar=no,toolbar=no');void(0);" class="btn btn-default move"><%= t('.bookmarklet.link_title') %></a>
+    </div>
+  </div>
+</div>

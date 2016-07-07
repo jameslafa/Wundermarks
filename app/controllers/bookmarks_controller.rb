@@ -21,7 +21,15 @@ class BookmarksController < ApplicationController
 
   # GET /bookmarks/new
   def new
-    @bookmark = Bookmark.new
+    @bookmark = Bookmark.new(bookmarklet_params)
+
+    respond_to do |format|
+      if params[:layout] == 'popup'
+        format.html { render :new, layout: "popup" }
+      else
+        format.html { render :new }
+      end
+    end
   end
 
   # GET /bookmarks/1/edit
@@ -81,6 +89,10 @@ class BookmarksController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def bookmark_params
       params.require(:bookmark).permit(:title, :description, :url, :tag_list)
+    end
+
+    def bookmarklet_params
+      params.permit(:title, :description, :url)
     end
 
     # Handle unauthorized access

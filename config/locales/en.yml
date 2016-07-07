@@ -5,10 +5,20 @@ en:
       brand: Wundermarks
       bookmarks: My Bookmarks
       profile: Your Profile
+      tools: Tools
     sign:
       sign_out: "Sign out"
       sign_in: "Sign in"
       sign_up: "Sign up"
+
+  home:
+    tools:
+      title: "Useful Tools"
+      bookmarklet:
+        title: "Bookmarklet"
+        link_title: "+ Add to Wundermarks"
+        description_html: "<p>Our bookmarklet lets you quickly add links from any web page. Make sure your bookmarks toolbar is visible, then drag this button there. Click '+ Add to Delicious' any time you want to add a page.</p><p>Safari users need to enable third party cookies to remain logged in to the bookmarklet. This can be done by going to your Safari Preferences, selecting Privacy, and setting Block cookies and other website data to Never.</p>"
+
   bookmarks:
     index:
       action:
@@ -28,6 +38,7 @@ en:
       back_to_bookmarks: "Back to bookmarks list"
       tag_list_help: "Enter a list of tags separated by commas: ','"
       tag_list_placeholder: "my-first-tag, my-second-tag"
+
   user_profiles:
     show:
       action:
@@ -36,5 +47,6 @@ en:
       member_since: "Member since %{days} days"
     form:
       back_to_bookmarks: "Back to bookmarks list"
+
   confirmations:
     bookmark_delete: "Are you sure you want to delete this bookmark?"

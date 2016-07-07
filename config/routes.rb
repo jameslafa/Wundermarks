@@ -7,5 +7,6 @@ Rails.application.routes.draw do
 
   resources :bookmarks
 
+  get "/tools", to: "home#tools"
   root to: "home#index"
 end

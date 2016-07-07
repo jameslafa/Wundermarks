@@ -55,6 +55,32 @@ RSpec.describe BookmarksController, type: :controller do
         get :new
         expect(assigns(:bookmark)).to be_a_new(Bookmark)
       end
+
+      context "with url parameters" do
+        it "prefills field with data given as url parameters" do
+          get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you"
+          expect(assigns(:bookmark).url).to eq "https://www.google.com/"
+          expect(assigns(:bookmark).title).to eq "Google: search engine"
+          expect(assigns(:bookmark).description).to eq "Find everything and spies on you"
+        end
+
+        context "with url parameter layout == popup" do
+          it "renders the layout popup" do
+            get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", layout: "popup"
+            expect(response).to render_template(:new, layout: :popup)
+          end
+        end
+      end
+
+      it "restricts parameters" do
+        params = {url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", layout: "popup"}
+
+        should permit(:title, :description, :url)
+        .for(:new, verb: :get, params: params)
+
+        should_not permit(:user_id, :layout)
+        .for(:new, verb: :get, params: params)
+      end
     end
 
     describe "GET #edit" do
