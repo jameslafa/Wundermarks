@@ -3,7 +3,7 @@
     <%= link_to "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> #{t('.action.new_bookmark')}".html_safe, new_bookmark_path, class: 'btn btn-primary' %>
   </div>
   <div class="search col-md-5 col-md-pull-7">
-    <%= form_tag({controller: 'bookmarks', action: 'index'}, method: 'get') do %>
+    <%= form_tag({controller: 'home', action: 'index'}, method: 'get') do %>
       <div class="input-group">
         <%= search_field_tag(:q, @q, class: 'form-control', 'aria-describedby': "search_help", placeholder: t(".search.placeholder")) %>
         <span class="input-group-btn">
