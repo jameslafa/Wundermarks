@@ -12,6 +12,13 @@ en:
       sign_up: "Sign up"
 
   home:
+    index:
+      action:
+        new_bookmark: "Add a bookmark"
+        search: "Search"
+      search:
+        placeholder: "my first tag, my second tag"
+        help: "Search bookmarks using tags, separated by a comma."
     tools:
       title: "Useful Tools"
       bookmarklet:
@@ -24,7 +31,6 @@ en:
       action:
         new_bookmark: "Add a bookmark"
         search: "Search"
-        reset_search: "Reset"
       search:
         placeholder: "my first tag, my second tag"
         help: "Search bookmarks using tags, separated by a comma."

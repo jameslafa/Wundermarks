@@ -24,6 +24,15 @@
     <div class="description"><%= simple_format bookmark.description %></div>
   </div>
   <div class="panel-footer">
-    <div class="tags"><%= bookmark.tag_list.present? ? bookmark.tag_list : "&nbsp;".html_safe %></div>
+    <div class="tags">
+      <% if bookmark.tag_list.present? %>
+        <% tags_count = bookmark.tag_list.count %>
+        <% bookmark.tag_list.each_with_index do |tag, index| %>
+          <%= link_to tag, bookmarks_path(q: tag), class: 'tag' %><%= ',' if index < tags_count - 1 %>
+        <% end %>
+      <% else %>
+        &nbsp;
+      <% end %>
+    </div>
   </div>
 </div>

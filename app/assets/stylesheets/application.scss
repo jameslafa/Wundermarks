@@ -6,3 +6,49 @@
 @import "home";
 @import "bookmarks";
 @import "user_profiles";
+
+body{
+  background-color: $background-color;
+}
+
+.navbar{
+  &.navbar-default{
+    background-color: $navigation-bar-background-color;
+    border: 0;
+
+    .navbar-brand{
+      color: $navigation-bar-text-color;
+    }
+
+    .navbar-nav{
+      & > li {
+        &.active > a{
+          background-color: lighten($navigation-bar-background-color, 10%);
+          color: $navigation-bar-text-color;
+        }
+
+        & > a{
+          color: $navigation-bar-text-color;
+        }
+      }
+
+      & > .open {
+        & > a{
+          background-color: lighten($navigation-bar-background-color, 10%);
+          color: $navigation-bar-text-color;
+        }
+
+        & > .dropdown-menu{
+          background-color: lighten($navigation-bar-background-color, 10%);
+          border: 0;
+
+          & > li > a{
+            color: $navigation-bar-text-color;
+          }
+        }
+      }
+
+
+    }
+  }
+}

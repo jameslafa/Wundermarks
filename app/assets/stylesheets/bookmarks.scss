@@ -1,9 +1,21 @@
 .bookmark-item{
+  border: 0;
+
+  .panel-heading{
+    background-color: $ternary-color;
+  }
+  .panel-footer{
+    background-color: $ternary-color;
+  }
+  .panel-body{
+    background-color: lighten($background-color, 3%);
+  }
+
   .title{
     font-size: 2rem;
 
     a, a:visited{
-      color: #444;
+      color: #000;
       text-decoration: none;
     }
   }
@@ -19,6 +31,19 @@
     font-size: 1.2rem;
     line-height: 1.3rem;
     margin-top: 1rem;
+  }
+
+  .tags{
+    color: #000;
+
+    a.tag{
+      color: #000;
+      text-decoration: none;
+
+      &:hover{
+        text-decoration: underline;
+      }
+    }
   }
 }
 
@@ -38,12 +63,6 @@
       }
     }
   }
-
-  &.a-show{
-    .description{
-
-    }
-  }
 }
 
 .c-home, .c-bookmarks{
@@ -54,16 +73,6 @@
         overflow: hidden;
         position: relative;
         text-overflow: ellipsis;
-
-        &:after {
-          background: linear-gradient(rgba(0,0,0,0), #fff);
-          bottom:0;
-          content:"";
-          height:2rem;
-          left:0;
-          position:absolute;
-          width:100%;
-        }
       }
     }
   }

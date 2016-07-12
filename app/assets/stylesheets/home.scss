@@ -1,4 +1,22 @@
 .c-home{
+  &.a-index{
+    .main-actions{
+      margin-bottom: 1rem;
+    }
+
+    &.a-index{
+      .main-actions{
+        .actions{
+          text-align: right;
+
+          @media(max-width:$screen-md-min){
+            margin-bottom: 1rem;
+          }
+        }
+      }
+    }
+  }
+
   &.a-tools{
     .page-title{
       font-size: 3rem;
