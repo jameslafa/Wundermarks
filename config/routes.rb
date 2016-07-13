@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
 
   resources :bookmarks
+  get '/bookmarks/:id/:title', to: 'bookmarks#show', as: 'bookmark_permalink'
 
   get "/tools", to: "home#tools"
   root to: "home#index"

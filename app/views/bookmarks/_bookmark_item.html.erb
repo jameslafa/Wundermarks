@@ -4,7 +4,7 @@
       <% if action == 'show' %>
         <%= bookmark.title %>
       <% else %>
-        <%= link_to bookmark.title, bookmark_path(bookmark.id) %>
+        <%= link_to bookmark.title, bookmark_permalink(bookmark) %>
       <% end %>
       <% if current_user && bookmark.user_id == current_user.id %>
         <div class="actions pull-right hidden-xs">

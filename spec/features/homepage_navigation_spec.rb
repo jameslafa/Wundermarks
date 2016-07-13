@@ -1,4 +1,6 @@
 feature 'HomepageNavigation' do
+  include BookmarksHelper
+  
   let(:user_profile) { create(:user_profile)}
   let!(:bookmarks) { create_list(:bookmark_with_tags, 3, user: user_profile.user) }
 
@@ -12,7 +14,7 @@ feature 'HomepageNavigation' do
       first_bookmark = first('.bookmark-item')
       within(first_bookmark) do
         within('.title') do
-          expect(page).to have_link(bookmarks.last.title, href: bookmark_path(bookmarks.last))
+          expect(page).to have_link(bookmarks.last.title, href: bookmark_permalink(bookmarks.last))
         end
         within('.tags') do
           tag = first('.tag')
@@ -38,7 +40,7 @@ feature 'HomepageNavigation' do
       first_bookmark = first('.bookmark-item')
       within(first_bookmark) do
         within('.title') do
-          expect(page).to have_link(bookmarks.last.title, href: bookmark_path(bookmarks.last))
+          expect(page).to have_link(bookmarks.last.title, href: bookmark_permalink(bookmarks.last))
         end
         within('.tags') do
           tag = first('.tag')
