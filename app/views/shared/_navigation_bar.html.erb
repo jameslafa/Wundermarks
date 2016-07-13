@@ -12,7 +12,9 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="<%= 'active' if params[:controller] == 'bookmarks' %>"><%= link_to t('header.navigation.bookmarks'), bookmarks_path %></a></li>
+        <% if current_user %>
+          <li class="<%= 'active' if params[:controller] == 'bookmarks' %>"><%= link_to t('header.navigation.bookmarks'), bookmarks_path %></a></li>
+        <% end %>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">

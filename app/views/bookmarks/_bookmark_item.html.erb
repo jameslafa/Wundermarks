@@ -28,7 +28,11 @@
       <% if bookmark.tag_list.present? %>
         <% tags_count = bookmark.tag_list.count %>
         <% bookmark.tag_list.each_with_index do |tag, index| %>
-          <%= link_to tag, bookmarks_path(q: tag), class: 'tag' %>
+          <% if current_user %>
+            <%= link_to tag, bookmarks_path(q: tag), class: 'tag' %>
+          <% else %>
+            <%= link_to tag, root_path(q: tag), class: 'tag' %>
+          <% end %>
         <% end %>
       <% else %>
         &nbsp;

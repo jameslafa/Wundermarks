@@ -1,6 +1,8 @@
 <div class="row main-actions">
   <div class="actions col-md-7 col-md-push-5">
-    <%= link_to "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> #{t('.action.new_bookmark')}".html_safe, new_bookmark_path, class: 'btn btn-primary' %>
+    <% if current_user %>
+      <%= link_to "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> #{t('.action.new_bookmark')}".html_safe, new_bookmark_path, class: 'btn btn-primary' %>
+    <% end %>
   </div>
   <div class="search col-md-5 col-md-pull-7">
     <%= form_tag({controller: 'home', action: 'index'}, method: 'get') do %>

@@ -1,4 +1,4 @@
-describe 'Authentication', type: :feature do
+feature 'Authentication' do
   describe 'navigation' do
     context 'when the user is NOT signed in' do
       it 'shows the sign in and sign up link in the navigation bar' do

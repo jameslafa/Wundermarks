@@ -4,7 +4,59 @@ RSpec.describe BookmarksController, type: :controller do
   let(:valid_attributes) { attributes_for(:bookmark_with_tags) }
   let(:invalid_attributes) { attributes_for(:bookmark_with_tags, title: '') }
 
-  it_behaves_like 'a controller requiring an authenticated user'
+  context "without a signed_in user" do
+    before(:each) { sign_out :user }
+    let(:bookmark) { create(:bookmark) }
+
+    describe "GET #index" do
+      it "redirects to new_user_session_path" do
+        get :index
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+
+    describe "GET #show" do
+      it "renders template :show" do
+        get :show, {id: bookmark.id}
+        expect(response).to render_template :show
+      end
+    end
+
+    describe "GET #new" do
+      it "redirects to new_user_session_path" do
+        get :new
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+
+    describe "GET #edit" do
+      it "redirects to new_user_session_path" do
+        get :edit, {id: bookmark.id}
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+
+    describe "POST #create" do
+      it "redirects to new_user_session_path" do
+        post :create
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+
+    describe "PUT #update" do
+      it "redirects to new_user_session_path" do
+        put :update, {id: bookmark.id}
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+
+    describe "DELETE #destroy" do
+      it "redirects to new_user_session_path" do
+        delete :destroy, {id: bookmark.id}
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+  end
 
   context "with a signed_in user " do
     login_user
