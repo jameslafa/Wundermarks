@@ -12,7 +12,7 @@
       <% if bookmark.tag_list.present? %>
         <% tags_count = bookmark.tag_list.count %>
         <% bookmark.tag_list.each_with_index do |tag, index| %>
-          <%= link_to tag, root_path(q: tag), class: 'tag' %><%= ',' if index < tags_count - 1 %>
+          <%= link_to tag, root_path(q: tag), class: 'tag' %>
         <% end %>
       <% else %>
         &nbsp;

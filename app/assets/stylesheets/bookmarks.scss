@@ -37,14 +37,23 @@
   }
 
   .tags{
-    color: #000;
-
     a.tag{
-      color: #000;
+      border: 1px solid #888;
+      border-radius: $border-radius-base;
+      color: #555;
+      display: inline-block;
+      margin-right: 4px;
+      padding: 0 4px;
       text-decoration: none;
+      transition: all .3s;
 
       &:hover{
-        text-decoration: underline;
+        background-color: #555;
+        color: #ddd;
+      }
+
+      &:last-child{
+        margin-right: 0;
       }
     }
   }
