@@ -81,5 +81,6 @@ test:
 production:
   <<: *default
   database: wundermarks_production
-  username: wundermarks
+  username: wundermarks_production
+  host: localhost
   password: <%= ENV['WUNDERMARKS_DATABASE_PASSWORD'] %>
