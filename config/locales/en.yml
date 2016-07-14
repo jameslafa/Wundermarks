@@ -5,6 +5,7 @@ en:
       brand: Wundermarks
       bookmarks: My Bookmarks
       profile: Your Profile
+      account: Your account
       tools: Tools
     sign:
       sign_out: "Sign out"

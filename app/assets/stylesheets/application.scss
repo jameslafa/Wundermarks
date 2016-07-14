@@ -44,6 +44,10 @@ body{
 
           & > li > a{
             color: $navigation-bar-text-color;
+
+            &:hover{
+              background-color: lighten($navigation-bar-background-color, 20%);
+            }
           }
         }
       }

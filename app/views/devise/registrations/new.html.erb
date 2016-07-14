@@ -11,7 +11,7 @@
 
       <div class="form-group">
         <%= f.label :email %>
-        <%= f.text_field :email, autofocus: true, class: 'form-control' %>
+        <%= f.email_field :email, autofocus: true, class: 'form-control', required: true %>
       </div>
 
       <% resource.build_user_profile unless resource.user_profile %>
@@ -19,7 +19,7 @@
       <%= f.fields_for :user_profile do |up| %>
         <div class="form-group">
           <%= up.label :name %>
-          <%= up.text_field :name, class: 'form-control' %>
+          <%= up.text_field :name, class: 'form-control', required: true %>
         </div>
       <% end %>
 

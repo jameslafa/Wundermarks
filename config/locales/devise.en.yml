@@ -50,6 +50,12 @@ en:
         title: "Sign up"
         actions:
           sign_up: "Sign up"
+      edit:
+        title: "Account details"
+        password_notice: "Leave blank if you don't want to change your password"
+        actions:
+          update: "Update"
+          cancel: "Cancel"
     sessions:
       signed_in: ""
       signed_out: ""

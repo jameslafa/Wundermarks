@@ -3,3 +3,20 @@ body.c-devise-sessions, body.c-devise-registrations, body.c-devise-passwords{
     margin-top: 1rem;
   }
 }
+
+.c-registrations{
+  &.a-edit{
+    .change-password{
+      border-top: 1px solid #ccc;
+      margin: 2rem 0 1rem 0;
+      padding: 1rem 0;
+
+      .notice{
+        font-size: 1.5rem;
+        font-style: italic;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+    }
+  }
+}
