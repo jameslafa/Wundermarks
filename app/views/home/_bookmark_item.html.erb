@@ -3,7 +3,7 @@
     <div class="title"><%= link_to bookmark.title, bookmark_permalink(bookmark) %></div>
   </div>
   <div class="panel-body">
-    <div class="link"><%= link_to bookmark.url, bookmark.url, target: '_blank' %></div>
+    <div class="link"><%= link_to bookmark.url, bookmark.url, target: '_blank', rel: 'nofollow' %></div>
     <div class="description"><%= simple_format bookmark.description %></div>
     <div class="user"><%= link_to bookmark.user.user_profile.name, user_profile_path(bookmark.user.user_profile.id) %></div>
   </div>
