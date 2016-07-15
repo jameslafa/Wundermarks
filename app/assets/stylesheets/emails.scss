@@ -1,0 +1,23 @@
+.c-emails{
+  .title{
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+  }
+
+  form.new_email{
+    #email_text{
+      height: 20rem;
+    }
+  }
+
+  &.a-create{
+    .message{
+      margin-bottom: 3rem;
+    }
+
+    .email{
+      margin-bottom: 3rem;
+    }
+  }
+}

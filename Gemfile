@@ -46,6 +46,12 @@ gem 'bootstrap-sass', '~> 3.3'
 # Tags
 gem 'acts-as-taggable-on', '~> 3.4'
 
+# Config cross environment
+gem 'config'
+
+# Send email with mailgun
+gem 'mailgun-ruby'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

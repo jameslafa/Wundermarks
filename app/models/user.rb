@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :bookmarks
+  has_many :emails
   has_one :user_profile, dependent: :destroy, inverse_of: :user
 
   accepts_nested_attributes_for :user_profile

@@ -3,3 +3,5 @@ en:
     submit:
       user_profile:
         update: "Update your profile"
+      email:
+        create: "Send"

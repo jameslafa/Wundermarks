@@ -2,9 +2,15 @@ en:
   activerecord:
     models:
       bookmark: Bookmark
+      email: Email
     attributes:
       bookmark:
         title: Title
         description: Description
         url: URL
         tag_list: Tags
+      email:
+        to: To
+        subject: Subject
+        from: From
+        text: Message

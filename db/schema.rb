@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160704055038) do
+ActiveRecord::Schema.define(version: 20160715175934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,30 @@ ActiveRecord::Schema.define(version: 20160704055038) do
 
   add_index "bookmarks", ["url"], name: "index_bookmarks_on_url", using: :btree
   add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
+
+  create_table "emails", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "from"
+    t.string   "to"
+    t.string   "subject"
+    t.text     "text"
+    t.text     "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "emails", ["user_id"], name: "index_emails_on_user_id", using: :btree
+
+  create_table "identities", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "identities", ["user_id", "provider"], name: "index_identities_on_user_id_and_provider", unique: true, using: :btree
+  add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
@@ -86,5 +110,7 @@ ActiveRecord::Schema.define(version: 20160704055038) do
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
   add_foreign_key "bookmarks", "users"
+  add_foreign_key "emails", "users"
+  add_foreign_key "identities", "users"
   add_foreign_key "user_profiles", "users"
 end

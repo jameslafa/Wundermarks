@@ -6,6 +6,7 @@ en:
       bookmarks: My Bookmarks
       profile: Your Profile
       account: Your account
+      contact: Contact us
       tools: Tools
     sign:
       sign_out: "Sign out"
@@ -45,6 +46,15 @@ en:
       back_to_bookmarks: "Back to bookmarks list"
       tag_list_help: "Enter a list of tags separated by commas: ','"
       tag_list_placeholder: "my-first-tag, my-second-tag"
+
+  emails:
+    new:
+      title: "Send us an email"
+    sent:
+      title: "Your email as been sent!"
+      message: "Thank you for writing us. We will read your message and come back to you as soon as possible."
+      actions:
+        back: "Go back to homepage"
 
   user_profiles:
     show:
