@@ -46,7 +46,8 @@ set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh
 
 set :sidekiq_config, -> { File.join(current_path, 'config', 'sidekiq.yml') }
 set :sidekiq_pid,  -> { File.join(shared_path, 'tmp', 'pids', 'sidekiq.pid') }
-set :sidekiq_log, { File.join(shared_path, 'log', 'sidekiq.log') }
+set :sidekiq_log, -> { File.join(shared_path, 'log', 'sidekiq.log') }
+set :sidekiq_monit_conf_dir, -> { '/etc/monit/conf-enabled' }
 
 set :puma_threads,    [4, 16]
 set :puma_workers,    8
