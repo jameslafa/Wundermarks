@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe BookmarksController, type: :controller do
+  include ActiveJob::TestHelper
+
   let(:valid_attributes) { attributes_for(:bookmark_with_tags) }
   let(:invalid_attributes) { attributes_for(:bookmark_with_tags, title: '') }
 
@@ -182,6 +184,14 @@ RSpec.describe BookmarksController, type: :controller do
         it "redirects to the bookmarks list" do
           post :create, {:bookmark => valid_attributes}
           expect(response).to redirect_to bookmarks_path
+        end
+
+        it "posts a slack notification" do
+          expect {
+            @bookmark = post :create, {:bookmark => valid_attributes}
+          }.to have_enqueued_job(SlackNotifierJob).with { |args|
+            expect(args).to eq(["new_bookmark", @bookmark])
+          }
         end
       end
 

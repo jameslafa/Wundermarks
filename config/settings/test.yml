@@ -1,2 +1,5 @@
 mailgun:
   domain: "sandbox09713f9514454cf39408764bd8722226.mailgun.org"
+
+slack_notifier:
+  webhook_url: https://hooks.slack.com/services/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

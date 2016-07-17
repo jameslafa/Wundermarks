@@ -55,15 +55,17 @@ RSpec.describe EmailsController, type: :controller do
         end
       end
 
-      # it "restricts parameters" do
-      #   params = {from: "john.snow@gmail.com", to: "batman@gmail.com", subject: "subject", text: "message"}
-      #
-      #   should permit(:from, :subject, :text)
-      #   .for(:create, params: {email: params}).on(:email)
-      #
-      #   should_not permit(:to)
-      #   .for(:create, params: {email: params}).on(:email)
-      # end
+      it "restricts parameters" do
+        allow_any_instance_of(Email).to receive(:deliver_now).and_return(true)
+
+        params = {from: "john.snow@gmail.com", to: "batman@gmail.com", subject: "subject", text: "message"}
+
+        should permit(:from, :subject, :text)
+        .for(:create, params: {email: params}).on(:email)
+
+        should_not permit(:to)
+        .for(:create, params: {email: params}).on(:email)
+      end
     end
   end
 end

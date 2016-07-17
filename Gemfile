@@ -52,6 +52,13 @@ gem 'config'
 # Send email with mailgun
 gem 'mailgun-ruby'
 
+# Slack notifications
+gem 'slack-notifier'
+
+# ActiveJobs
+gem 'sidekiq', '~> 4.1'
+gem 'redis-namespace'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -88,6 +95,7 @@ group :development do
   gem 'capistrano-rails',   require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano3-puma',   require: false
+  gem 'capistrano-sidekiq', require: false
 end
 
 group :test do

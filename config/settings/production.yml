@@ -1,2 +1,5 @@
 mailgun:
   domain: "wundermarks.com"
+
+slack_notifier:
+  webhook_url: https://hooks.slack.com/services/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

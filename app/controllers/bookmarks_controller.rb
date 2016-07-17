@@ -46,6 +46,8 @@ class BookmarksController < ApplicationController
 
     respond_to do |format|
       if @bookmark.save
+        # Add a notification into slack
+        SlackNotifierJob.perform_later("new_bookmark", @bookmark)
         format.html { redirect_to bookmarks_path }
         format.json { render :show, status: :created, location: @bookmark }
       else

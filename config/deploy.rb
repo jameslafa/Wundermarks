@@ -44,6 +44,9 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 set :use_sudo, false
 set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub) }
 
+set :sidekiq_config, -> { File.join(current_path, 'config', 'sidekiq.yml') }
+set :sidekiq_pid,  -> { File.join(shared_path, 'tmp', 'pids', 'sidekiq.pid') }
+
 set :puma_threads,    [4, 16]
 set :puma_workers,    8
 set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"

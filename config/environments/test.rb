@@ -39,4 +39,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # Enable: ActiveJob::Base.queue_adapter.enqueued_jobs
+  config.active_job.queue_adapter = :test
 end
