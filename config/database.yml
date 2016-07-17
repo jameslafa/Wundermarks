@@ -83,4 +83,4 @@ production:
   database: wundermarks_production
   username: wundermarks_production
   host: localhost
-  password: <%= ENV['WUNDERMARKS_DATABASE_PASSWORD'] %>
+  password: <%= ENV['PRODUCTION_DB_PASSWORD'] %>
