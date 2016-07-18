@@ -3,6 +3,7 @@ class EmailsController < ApplicationController
 
   def new
     @email = Email.new
+    ahoy.track "emails-new", nil
   end
 
   def create
@@ -12,6 +13,7 @@ class EmailsController < ApplicationController
 
     respond_to do |format|
       if @email.save && @email.deliver_now
+        ahoy.track "emails-create", {from: @email.from}
         format.html { render :sent }
       else
         format.html { render :new }

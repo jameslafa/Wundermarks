@@ -9,10 +9,13 @@ class UserProfilesController < ApplicationController
     else
       @profile = get_current_user_profile
     end
+
+    ahoy.track "user_profiles-show", {id: @profile.id, current_user: (current_user.try(:id) == @profile.user.id) }
   end
 
   def edit
     @profile = get_current_user_profile
+    ahoy.track "user_profiles-edit", {id: @profile.id}
     authorize @profile
   end
 
@@ -22,6 +25,7 @@ class UserProfilesController < ApplicationController
 
     respond_to do |format|
       if @profile.update(user_profile_params)
+        ahoy.track "user_profiles-update", {id: @profile.id}
         format.html { redirect_to current_user_profile_path }
         format.json { render :show, status: :ok, location: @profile }
       else

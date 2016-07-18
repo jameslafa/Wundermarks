@@ -8,8 +8,10 @@ class BookmarksController < ApplicationController
   def index
     if params[:q].present? and @q = params[:q]
       @bookmarks = Bookmark.belonging_to(current_user).tagged_with(@q).order(created_at: :desc)
+      ahoy.track "bookmarks-search", q: @q
     else
       @bookmarks = Bookmark.belonging_to(current_user).order(created_at: :desc)
+      ahoy.track "bookmarks-index", nil
     end
   end
 
@@ -17,6 +19,7 @@ class BookmarksController < ApplicationController
   # GET /bookmarks/1.json
   def show
     @bookmark
+    ahoy.track "bookmarks-show", {id: @bookmark.id}
   end
 
   # GET /bookmarks/new
@@ -26,8 +29,10 @@ class BookmarksController < ApplicationController
     respond_to do |format|
       if params[:layout] == 'popup'
         @layout = 'popup'
+        ahoy.track "bookmarks-new", {id: @bookmark.id, layout: 'popup'}
         format.html { render :new, layout: "popup" }
       else
+        ahoy.track "bookmarks-show", {id: @bookmark.id, layout: 'web'}
         format.html { render :new }
       end
     end
@@ -36,6 +41,7 @@ class BookmarksController < ApplicationController
   # GET /bookmarks/1/edit
   def edit
     authorize @bookmark
+    ahoy.track "bookmarks-edit", {id: @bookmark.id}
   end
 
   # POST /bookmarks
@@ -48,6 +54,7 @@ class BookmarksController < ApplicationController
       if @bookmark.save
         # Add a notification into slack
         SlackNotifierJob.perform_later("new_bookmark", @bookmark)
+        ahoy.track "bookmarks-create", {id: @bookmark.id}
         format.html { redirect_to bookmarks_path }
         format.json { render :show, status: :created, location: @bookmark }
       else
@@ -63,6 +70,7 @@ class BookmarksController < ApplicationController
     authorize @bookmark
     respond_to do |format|
       if @bookmark.update(bookmark_params)
+        ahoy.track "bookmarks-update", {id: @bookmark.id}
         format.html { redirect_to bookmarks_path }
         format.json { render :show, status: :ok, location: @bookmark }
       else
@@ -76,7 +84,9 @@ class BookmarksController < ApplicationController
   # DELETE /bookmarks/1.json
   def destroy
     authorize @bookmark
+    bookmark_id = @bookmark.id
     @bookmark.destroy
+    ahoy.track "bookmarks-destroy", {id: bookmark_id}
     respond_to do |format|
       format.html { redirect_to bookmarks_url, notice: 'Bookmark was successfully destroyed.' }
       format.json { head :no_content }
