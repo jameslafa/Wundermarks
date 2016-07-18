@@ -26,7 +26,7 @@ en:
       bookmarklet:
         title: "Bookmarklet"
         link_title: "+ Add to Wundermarks"
-        description_html: "<p>Our bookmarklet lets you quickly add links from any web page. Make sure your bookmarks toolbar is visible, then drag this button there. Click '+ Add to Delicious' any time you want to add a page.</p><p>Safari users need to enable third party cookies to remain logged in to the bookmarklet. This can be done by going to your Safari Preferences, selecting Privacy, and setting Block cookies and other website data to Never.</p>"
+        description_html: "<p>Our bookmarklet lets you quickly add links from any web page. Make sure your bookmarks toolbar is visible, then drag this button there. Click '+ Add to Wundermarks' any time you want to add a page.</p><p>Safari users need to enable third party cookies to remain logged in to the bookmarklet. This can be done by going to your Safari Preferences, selecting Privacy, and setting Block cookies and other website data to Never.</p>"
 
   bookmarks:
     index:
