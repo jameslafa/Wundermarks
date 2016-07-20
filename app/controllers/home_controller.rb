@@ -5,7 +5,7 @@ class HomeController < ApplicationController
       ahoy.track "home-index", {q: @q}
     else
       @bookmarks = Bookmark.order(created_at: :desc)
-      ahoy.track "home-index", nil
+      ahoy.track "home-index", nil unless request.headers["No-Tracking"].present?
     end
   end
 
