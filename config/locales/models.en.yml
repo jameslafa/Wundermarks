@@ -14,3 +14,9 @@ en:
         subject: Subject
         from: From
         text: Message
+    errors:
+      models:
+        bookmark:
+          attributes:
+            tag_list:
+              too_many: 'are limited to 5'

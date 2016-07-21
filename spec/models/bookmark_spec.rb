@@ -35,6 +35,18 @@ RSpec.describe Bookmark, type: :model do
     end
   end
 
+  describe 'tags' do
+    it 'limits the number of tags to 5' do
+      bookmark = build(:bookmark)
+      bookmark.tag_list = "tag1, tag2, tag3, tag4, tag5"
+      expect(bookmark).to be_valid
+      bookmark.tag_list = "tag1, tag2, tag3, tag4, tag5, tag6"
+      expect(bookmark).not_to be_valid
+      expect(bookmark.errors.messages).to include :tag_list
+      expect(bookmark.errors.messages[:tag_list]).to eq [I18n.t("activerecord.errors.models.bookmark.attributes.tag_list.too_many")]
+    end
+  end
+
   describe 'update_tag_search' do
     it 'updates the attribute tag_search automatically based on used tags' do
       bookmark = build(:bookmark, tag_list: 'rails, wife')

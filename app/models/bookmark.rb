@@ -10,6 +10,7 @@ class Bookmark < ActiveRecord::Base
   belongs_to :user
 
   validates :title, :url, :user, presence: true
+  validate :max_5_tags
 
   scope :belonging_to, lambda { |user| where(:user => user) }
 
@@ -17,6 +18,12 @@ class Bookmark < ActiveRecord::Base
   before_save :update_tag_search
 
   private
+
+  def max_5_tags
+    if self.tag_list.size > 5
+      errors.add(:tag_list, I18n.t("activerecord.errors.models.bookmark.attributes.tag_list.too_many"))
+    end
+  end
 
   # Save the tags into a field that will be used for tsearch
   def update_tag_search

@@ -1,41 +1,40 @@
 <%= form_for(@bookmark) do |f| %>
-  <% if @bookmark.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@bookmark.errors.count, "error") %> prohibited this bookmark from being saved:</h2>
-
-      <ul>
-      <% @bookmark.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="form-group">
-    <%= f.label :title %>
-    <%= f.text_field :title, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :url %>
-    <%= f.text_field :url, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :description %>
-    <%= f.text_area :description, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :tag_list %>
-    <%= f.text_field :tag_list, value: @bookmark.tag_list.to_s, class: 'tag-autocomplete form-control', 'aria-describedBy': 'tag_list_help', placeholder: t('.tag_list_placeholder'), autocomplete: 'off', 'data-multiple':'data-multiple' %>
-    <span id="tag_list_help" class="help-block"><%= t('.tag_list_help')%></span>
-  </div>
-
-  <div class="actions">
-    <%= f.submit class: 'btn btn-primary' %>
-    <% unless @layout == 'popup' %>
-      <%= link_to t(".back_to_bookmarks"), bookmarks_path, class: 'btn btn-default pull-right' %>
+<% if @bookmark.errors.any? %>
+<div id="error_explanation" class="alert alert-danger" role="alert">
+  <span class="alert-title"><%= t(".errors.title_html", errors: pluralize(@bookmark.errors.count, "error"))%></span>
+  <ul>
+    <% @bookmark.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
     <% end %>
-  </div>
+  </ul>
+</div>
+<% end %>
+
+<div class="form-group">
+  <%= f.label :title, class: 'control-label' %>
+  <%= f.text_field :title, class: 'form-control' %>
+</div>
+
+<div class="form-group">
+  <%= f.label :url, class: 'control-label' %>
+  <%= f.text_field :url, class: 'form-control' %>
+</div>
+
+<div class="form-group">
+  <%= f.label :description, class: 'control-label' %>
+  <%= f.text_area :description, class: 'form-control' %>
+</div>
+
+<div class="form-group has-feedback">
+  <%= f.label :tag_list, class: 'control-label' %>
+  <%= f.text_field :tag_list, value: @bookmark.tag_list.to_s, class: 'tag-autocomplete form-control', 'aria-describedBy': 'tag_list_help', placeholder: t('.tag_list_placeholder'), autocomplete: 'off', 'data-multiple':'data-multiple' %>
+  <span id="tag_list_help" class="help-block"><%= t('.tag_list_help')%></span>
+</div>
+
+<div class="actions">
+  <%= f.submit class: 'btn btn-primary' %>
+  <% unless @layout == 'popup' %>
+  <%= link_to t(".back_to_bookmarks"), bookmarks_path, class: 'btn btn-default pull-right' %>
+  <% end %>
+</div>
 <% end %>
