@@ -19,7 +19,7 @@ en:
         new_bookmark: "Add a bookmark"
         search: "Search"
       search:
-        placeholder: "my first tag, my second tag"
+        placeholder: "rails, javascript"
         help: "Search bookmarks using tags, separated by a comma."
     tools:
       title: "Useful Tools"
@@ -34,7 +34,7 @@ en:
         new_bookmark: "Add a bookmark"
         search: "Search"
       search:
-        placeholder: "my first tag, my second tag"
+        placeholder: "rails, javascript"
         help: "Search bookmarks using tags, separated by a comma."
     show:
       edit_bookmark: "Edit bookmark"
@@ -44,8 +44,8 @@ en:
     form:
       show_bookmark: "Show bookmark"
       back_to_bookmarks: "Back to bookmarks list"
-      tag_list_help: "Enter a list of tags separated by commas: ','"
-      tag_list_placeholder: "my-first-tag, my-second-tag"
+      tag_list_help: "Enter a list of maximym 5 tags separated by commas: ','"
+      tag_list_placeholder: "rails, javascript"
 
   emails:
     new:

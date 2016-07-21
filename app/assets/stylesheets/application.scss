@@ -2,6 +2,8 @@
 @import "bootstrap-override";
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "lib/awesomplete";
+@import "lib/awesomplete-override";
 @import "devise";
 @import "home";
 @import "bookmarks";
@@ -53,8 +55,6 @@ body{
           }
         }
       }
-
-
     }
   }
 }

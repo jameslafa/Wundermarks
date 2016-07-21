@@ -28,7 +28,7 @@
 
   <div class="form-group">
     <%= f.label :tag_list %>
-    <%= f.text_field :tag_list, value: @bookmark.tag_list.to_s, class: 'form-control', 'aria-describedBy': 'tag_list_help', placeholder: t('.tag_list_placeholder') %>
+    <%= f.text_field :tag_list, value: @bookmark.tag_list.to_s, class: 'tag-autocomplete form-control', 'aria-describedBy': 'tag_list_help', placeholder: t('.tag_list_placeholder'), autocomplete: 'off', 'data-multiple':'data-multiple' %>
     <span id="tag_list_help" class="help-block"><%= t('.tag_list_help')%></span>
   </div>
 
