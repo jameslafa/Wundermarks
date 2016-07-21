@@ -34,4 +34,40 @@ RSpec.describe Bookmark, type: :model do
       expect(bookmark.tag_list).to eq ['my-tag-1', 'mytag2']
     end
   end
+
+  describe 'update_tag_search' do
+    it 'updates the attribute tag_search automatically based on used tags' do
+      bookmark = build(:bookmark, tag_list: 'rails, wife')
+      expect(bookmark.tag_search).to be_nil
+      bookmark.save
+      expect(bookmark.tag_search).to eq 'rails wife'
+    end
+  end
+
+  describe 'search' do
+    before(:each) do
+      @rails = create(:bookmark, title: 'I love rails', description: 'Rails is the best framework, ever', tag_list: 'rails')
+      @wife = create(:bookmark, title: 'I love my wife', description: 'If I would have a wife, she would me great, specially if she loves rails', tag_list: 'wife sport')
+      @kayak = create(:bookmark, title: 'I love my kayak', description: 'Kayaking is such a relaxing sport', tag_list: 'water sport')
+    end
+
+    it 'finds by title' do
+      expect(Bookmark.search('kayak')).to match_array [@kayak]
+      expect(Bookmark.search('love')).to match_array [@rails, @wife, @kayak]
+      expect(Bookmark.search('love my')).to match_array [@wife, @kayak]
+    end
+
+    it 'finds by description' do
+      expect(Bookmark.search('relaxing')).to match_array [@kayak]
+    end
+
+    it 'finds by tags' do
+      expect(Bookmark.search('water')).to match_array [@kayak]
+      expect(Bookmark.search('sport')).to match_array [@wife, @kayak]
+    end
+
+    it 'orders results by weight tag -> title -> description' do
+      expect(Bookmark.search("rails")).to eq [@rails, @wife]
+    end
+  end
 end

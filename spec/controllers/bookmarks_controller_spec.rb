@@ -82,13 +82,12 @@ RSpec.describe BookmarksController, type: :controller do
 
       context 'when a query parameter is defined' do
         before(:each) do
-          @tag = 'my new tag'
           @searched_bookmark = current_user_bookmarks.second
-          @searched_bookmark.update_attributes({tag_list: "#{@searched_bookmark.tag_list.to_s}, #{@tag}"})
+          @searched_bookmark.update_attributes({title: "I love Ruby on Rails"})
         end
 
         it "assigns all bookmarks matching the search results belonging to the current user" do
-          get :index, q: @tag
+          get :index, q: 'rails'
           expect(assigns(:bookmarks)).to eq([@searched_bookmark])
         end
       end

@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160718062047) do
+ActiveRecord::Schema.define(version: 20160721110016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "btree_gin"
 
   create_table "ahoy_events", force: :cascade do |t|
     t.integer  "visit_id"
@@ -35,8 +36,12 @@ ActiveRecord::Schema.define(version: 20160718062047) do
     t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "tag_search"
   end
 
+  add_index "bookmarks", ["description"], name: "index_bookmarks_on_description", using: :gin
+  add_index "bookmarks", ["tag_search"], name: "index_bookmarks_on_tag_search", using: :gin
+  add_index "bookmarks", ["title"], name: "index_bookmarks_on_title", using: :gin
   add_index "bookmarks", ["url"], name: "index_bookmarks_on_url", using: :btree
   add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
 

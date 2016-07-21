@@ -7,7 +7,7 @@ class BookmarksController < ApplicationController
   # GET /bookmarks.json
   def index
     if params[:q].present? and @q = params[:q]
-      @bookmarks = Bookmark.belonging_to(current_user).tagged_with(@q).order(created_at: :desc)
+      @bookmarks = Bookmark.belonging_to(current_user).search(@q)
       ahoy.track "bookmarks-search", q: @q
     else
       @bookmarks = Bookmark.belonging_to(current_user).order(created_at: :desc)
