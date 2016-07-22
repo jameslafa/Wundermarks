@@ -23,9 +23,9 @@ RSpec.describe SlackNotifierJob, type: :job do
 
     attachment = {
       "author_name" => user_profile.name,
-      "author_link" => "https://wundermarks.com/profile/#{user_profile.id}",
+      "author_link" => "http://test.host/profile/#{user_profile.id}",
       "title" => bookmark.title,
-      "title_link" => bookmark.url,
+      "title_link" => "http://test.host/bookmarks/#{bookmark.id}",
       "text" => bookmark.description,
       "ts" => bookmark.created_at.to_i,
       "color" => 'good'

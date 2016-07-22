@@ -27,6 +27,6 @@ module Wundermarks
     config.autoload_paths << Rails.root.join('lib')
 
     # use sidekiq for ActiveJob
-    config.active_job.queue_adapter = :sidekiq
+    config.active_job.queue_adapter = :sidekiq    
   end
 end

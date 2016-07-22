@@ -78,4 +78,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_mailer.default_url_options = { host: "wundermarks.com", protocol: 'https' }
+  config.action_controller.default_url_options = { host: "wundermarks.com", protocol: 'https' }
+
+  Rails.application.routes.default_url_options = config.action_mailer.default_url_options
 end

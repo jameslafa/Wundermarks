@@ -13,9 +13,9 @@ class SlackNotifierJob < ActiveJob::Base
 
       bookmark_attachment = {
         author_name: resource.user.user_profile.name,
-        author_link: url_for(controller: 'user_profiles', action: 'show', id: resource.user.user_profile.id, host: 'wundermarks.com', protocol: 'https'),
+        author_link: url_for(controller: 'user_profiles', action: 'show', id: resource.user.user_profile.id),
         title: resource.title,
-        title_link: resource.url,
+        title_link: url_for(controller: 'bookmarks', action: 'show', id: resource.id),
         text: resource.description,
         ts: resource.created_at.to_i,
         color: 'good'

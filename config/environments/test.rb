@@ -42,4 +42,9 @@ Rails.application.configure do
 
   # Enable: ActiveJob::Base.queue_adapter.enqueued_jobs
   config.active_job.queue_adapter = :test
+
+  config.action_mailer.default_url_options = { host: 'test.host' }
+  config.action_controller.default_url_options = { host: 'test.host' }
+
+  Rails.application.routes.default_url_options = config.action_mailer.default_url_options
 end
