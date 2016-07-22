@@ -1,4 +1,6 @@
 class AutocompleteSearchController < ApplicationController
+  before_action :authenticate_user!
+
   def tags
     results = []
 
