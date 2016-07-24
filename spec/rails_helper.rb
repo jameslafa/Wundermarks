@@ -86,4 +86,9 @@ RSpec.configure do |config|
 
   # Block HTTP connections
   WebMock.disable_net_connect!(allow_localhost: true)
+
+  Capybara.configure do |config|
+    config.run_server = false
+    config.app_host   = 'http://test.host'
+  end
 end

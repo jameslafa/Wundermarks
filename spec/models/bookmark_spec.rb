@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Bookmark, type: :model do
   it { is_expected.to belong_to :user }
+  it { is_expected.to have_many :bookmark_trackings }
 
   it { is_expected.to validate_presence_of :title }
   it { is_expected.to validate_presence_of :url }
@@ -80,6 +81,31 @@ RSpec.describe Bookmark, type: :model do
 
     it 'orders results by weight tag -> title -> description' do
       expect(Bookmark.search("rails")).to eq [@rails, @wife]
+    end
+  end
+
+  describe 'url_domain' do
+    let(:bookmark) { create(:bookmark, url: 'http://google.com/search') }
+
+    it 'returns the domain of the url' do
+        expect(bookmark.url_domain).to eq 'google.com'
+    end
+  end
+
+  describe 'sharing_statistics' do
+    let(:bookmark) { create(:bookmark) }
+    
+    it 'returns a Hash with tracking count per source' do
+      create(:bookmark_tracking_wundermarks, bookmark: bookmark, count: 12)
+      create(:bookmark_tracking_facebook, bookmark: bookmark, count: 13)
+      create(:bookmark_tracking_twitter, bookmark: bookmark, count: 14)
+
+      expect(bookmark.sharing_statistics).to eq({
+        "wundermarks" => 12,
+        "facebook" => 13,
+        "twitter" => 14,
+        "total" => 39
+      })
     end
   end
 end

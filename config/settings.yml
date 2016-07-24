@@ -1,3 +1,6 @@
 mailgun:
   from: 'James Lafa <james+wundermarks@jlafa.com>'
   admin_email: 'James Lafa <james+wundermarks@jlafa.com>'
+
+facebook:
+  app_id: '1746824045575538'

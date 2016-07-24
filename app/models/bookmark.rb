@@ -8,6 +8,7 @@ class Bookmark < ActiveRecord::Base
 
   acts_as_ordered_taggable
   belongs_to :user
+  has_many :bookmark_trackings
 
   validates :title, :url, :user, presence: true
   validate :max_5_tags
@@ -16,6 +17,31 @@ class Bookmark < ActiveRecord::Base
 
   # Update tag_search while saving
   before_save :update_tag_search
+
+  def url_domain
+    if url.present?
+      uri = URI(url)
+      uri.host
+    end
+  end
+
+  def sharing_statistics
+    trackings = self.bookmark_trackings
+
+    statistics = ActiveSupport::OrderedHash.new
+    BookmarkTracking.sources.keys.each do |source|
+      statistics[source.to_s] = 0
+    end
+
+    total = 0
+    trackings.each do |tracking|
+      statistics[tracking.source.to_s] = tracking.count
+      total += tracking.count
+    end
+    
+    statistics["total"] = total
+    statistics
+  end
 
   private
 

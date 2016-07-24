@@ -46,5 +46,6 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'test.host' }
   config.action_controller.default_url_options = { host: 'test.host' }
 
+  Rails.application.default_url_options = config.action_mailer.default_url_options
   Rails.application.routes.default_url_options = config.action_mailer.default_url_options
 end

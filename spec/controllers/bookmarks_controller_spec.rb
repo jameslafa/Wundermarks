@@ -18,9 +18,40 @@ RSpec.describe BookmarksController, type: :controller do
     end
 
     describe "GET #show" do
-      it "renders template :show" do
-        get :show, {id: bookmark.id}
-        expect(response).to render_template :show
+      context 'without redirect=1' do
+        it "renders template :show" do
+          get :show, {id: bookmark.id}
+          expect(response).to render_template :show
+        end
+      end
+
+      context 'with redirect=1' do
+        it 'redirects to the bookmark url' do
+          get :show, {id: bookmark.id, redirect: "1"}
+          expect(response).to redirect_to bookmark.url
+        end
+      end
+
+      context 'when a utm_medium is defined' do
+        it 'tracks the click and associate it to the specific social media' do
+          expect{
+            get :show, {id: bookmark.id, redirect: "1", utm_medium: 'facebook'}
+          }.to change(BookmarkTracking, :count).by(1)
+          last_bookmark_tracking = BookmarkTracking.last
+          expect(last_bookmark_tracking.bookmark).to eq bookmark
+          expect(last_bookmark_tracking.source).to eq "facebook"
+        end
+      end
+
+      context 'when no utm_medium is defined' do
+        it 'tracks the click and associate it to wundermarks' do
+          expect{
+            get :show, {id: bookmark.id}
+          }.to change(BookmarkTracking, :count).by(1)
+          last_bookmark_tracking = BookmarkTracking.last
+          expect(last_bookmark_tracking.bookmark).to eq bookmark
+          expect(last_bookmark_tracking.source).to eq "wundermarks"
+        end
       end
     end
 
@@ -101,6 +132,30 @@ RSpec.describe BookmarksController, type: :controller do
         expect(assigns(:bookmark)).to eq(bookmark)
         expect(response).to render_template :show
       end
+
+      context 'when no utm_medium is defined' do
+        context 'when the current_user is the bookmark owner' do
+          let(:bookmark) { create(:bookmark, user: subject.current_user) }
+
+          it 'does not tracks the click' do
+            expect{
+              get :show, {id: bookmark.id}
+            }.not_to change(BookmarkTracking, :count)
+          end
+        end
+
+        context 'when the current_user is NOT the bookmark owner' do
+          let(:bookmark) { create(:bookmark) }
+          it 'tracks the click and associate it to wundermarks' do
+            expect{
+              get :show, {id: bookmark.id}
+            }.to change(BookmarkTracking, :count).by(1)
+            last_bookmark_tracking = BookmarkTracking.last
+            expect(last_bookmark_tracking.bookmark).to eq bookmark
+            expect(last_bookmark_tracking.source).to eq "wundermarks"
+          end
+        end
+      end
     end
 
     describe "GET #new" do
@@ -180,9 +235,9 @@ RSpec.describe BookmarksController, type: :controller do
           expect(assigns(:bookmark)).to be_persisted
         end
 
-        it "redirects to the bookmarks list" do
+        it "redirects to the bookmark page" do
           post :create, {:bookmark => valid_attributes}
-          expect(response).to redirect_to bookmarks_path
+          expect(response).to redirect_to bookmark_path(Bookmark.last)
         end
 
         it "posts a slack notification" do
@@ -238,9 +293,9 @@ RSpec.describe BookmarksController, type: :controller do
             expect(assigns(:bookmark)).to eq(bookmark)
           end
 
-          it "redirects to the bookmark" do
+          it "redirects to the bookmark page" do
             put :update, {:id => bookmark.id, :bookmark => new_attributes}
-            expect(response).to redirect_to(bookmarks_path)
+            expect(response).to redirect_to(bookmark_path(bookmark))
           end
         end
 

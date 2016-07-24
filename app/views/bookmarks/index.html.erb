@@ -1,8 +1,8 @@
 <div class="row main-actions">
-  <div class="actions col-md-7 col-md-push-5">
+  <div class="actions col-md-6 col-md-push-6">
     <%= link_to "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> #{t('.action.new_bookmark')}".html_safe, new_bookmark_path, class: 'btn btn-primary' %>
   </div>
-  <div class="search col-md-5 col-md-pull-7">
+  <div class="search col-md-6 col-md-pull-6">
     <%= form_tag({controller: 'bookmarks', action: 'index'}, method: 'get') do %>
     <div class="input-group">
       <%= search_field_tag(:q, @q, class: 'form-control', 'aria-describedby': "search_help", placeholder: t(".search.placeholder"), autocomplete: 'off') %>
@@ -18,17 +18,17 @@
 </div>
 
 <% if @bookmarks.size > 0 %>
-<% @bookmarks.in_groups_of(2).each do |bookmark_group| %>
+<% @bookmarks.each do |bookmark| %>
 <div class="row">
-  <% bookmark_group.each do |bookmark| %>
-  <% if bookmark %>
-  <div class="col-md-6">
-    <%= render partial: "bookmarks/bookmark_item", locals: {bookmark: bookmark, action: 'index'} %>
+  <div class="bookmark">
+    <div class="col-md-7 title"><%= link_to bookmark.title, bookmark_permalink(bookmark) %> <a href="<%= bookmark_url(bookmark, redirect: 1) %>" target="_blank" class="hidden-md hidden-lg pull-right btn btn-default glyphicon glyphicon-link"></a></div>
+    <div class="col-md-3 link hidden-xs hidden-sm"><span class="glyphicon glyphicon-link"></span> <%= link_to bookmark.url_domain, bookmark_url(bookmark, redirect: 1), class: 'hidden-xs hidden-sm' %></div>
+    <div class="col-md-2 time hidden-xs hidden-sm"><span class="glyphicon glyphicon-time"></span> <%= t(".time_ago", time: time_ago_in_words(bookmark.created_at)) %></div>
   </div>
-  <% end %>
-  <% end %>
 </div>
 <% end %>
 <% else %>
-<div class="nothing_found"><%= t(".search.nothing_found_html")%></div>
+<div class="row">
+  <div class="col-md-12"><div class="nothing_found"><%= t(".search.nothing_found_html")%></div></div>
+</div>
 <% end %>

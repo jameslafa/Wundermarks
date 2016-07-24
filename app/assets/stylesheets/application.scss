@@ -12,7 +12,9 @@
 
 body{
   background-color: $background-color;
-  font-family: "Inconsolata", sans-serif;
+  color: $default-text-color;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 15px;
 }
 
 .navbar{

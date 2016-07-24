@@ -95,9 +95,9 @@ group :development do
   # Don't log static file requests
   gem 'quiet_assets'
   # Get a better Rails error page
-  gem 'better_errors'
-  gem 'binding_of_caller'
-  gem 'meta_request'
+  # gem 'better_errors'
+  # gem 'binding_of_caller'
+  # gem 'meta_request'
 
   gem 'capistrano',         require: false
   gem 'capistrano-rbenv',   require: false

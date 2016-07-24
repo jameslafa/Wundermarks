@@ -15,12 +15,13 @@ en:
 
   home:
     index:
+      time_ago: "%{time} ago"
       action:
         new_bookmark: "Add a bookmark"
         search: "Search"
       search:
         placeholder: "rails gem"
-        help: "Search bookmarks using tags, titles and description."
+        help: "Search bookmarks using tags, or words present in titles and descriptions."
         nothing_found_html: "Oups, nothing found! <a href=\"#\" class=\"start_new_search\">Start a new search</a>"
     tools:
       title: "Useful Tools"
@@ -31,16 +32,20 @@ en:
 
   bookmarks:
     index:
+      time_ago: "%{time} ago"
       action:
         new_bookmark: "Add a bookmark"
         search: "Search"
       search:
         placeholder: "rails gem"
-        help_html: "Search in <strong>your</strong> bookmarks using tags, titles and description."
+        help_html: "Search in <strong>your</strong> bookmarks. Use tags or words from the titles and description."
         nothing_found_html: "Oups, nothing found! <a href=\"#\" class=\"start_new_search\">Start a new search</a>"
     show:
       edit_bookmark: "Edit bookmark"
       back_to_bookmarks: "Back to bookmarks list"
+      share:
+        title: Share this bookmark with your friends
+        help_html: Click on your favorite social media to share this link.<br/> If no popup appears, you have a popup blocker. Right click on the icon and select <em>open in a new tab</em>.
       action:
         index: "Back to list"
     form:

@@ -7,7 +7,6 @@ feature 'BookmarkNavigation' do
       visit bookmark_path(bookmark)
 
       expect(page).not_to have_link(nil, href: bookmarks_path)
-      expect(page).to have_selector('.bookmark-item')
 
       within('.title') do
         expect(page).to have_content(bookmark.title)
@@ -30,7 +29,6 @@ feature 'BookmarkNavigation' do
       visit bookmark_path(bookmark)
 
       expect(page).to have_link(nil, href: bookmarks_path)
-      expect(page).to have_selector('.bookmark-item')
 
       within('.title') do
         expect(page).to have_content(bookmark.title)

@@ -18,7 +18,12 @@ class BookmarksController < ApplicationController
   # GET /bookmarks/1
   # GET /bookmarks/1.json
   def show
-    @bookmark
+    # Track link
+    BookmarkTracking.track_click(@bookmark, params[:utm_medium]) unless @bookmark.user == current_user
+
+    return redirect_to @bookmark.url if params["redirect"].present? && params["redirect"].to_bool
+
+    # Track action
     ahoy.track "bookmarks-show", {id: @bookmark.id}
   end
 
@@ -55,7 +60,7 @@ class BookmarksController < ApplicationController
         # Add a notification into slack
         SlackNotifierJob.perform_later("new_bookmark", @bookmark)
         ahoy.track "bookmarks-create", {id: @bookmark.id}
-        format.html { redirect_to bookmarks_path }
+        format.html { redirect_to bookmark_path(@bookmark) }
         format.json { render :show, status: :created, location: @bookmark }
       else
         format.html { render :new }
@@ -71,7 +76,7 @@ class BookmarksController < ApplicationController
     respond_to do |format|
       if @bookmark.update(bookmark_params)
         ahoy.track "bookmarks-update", {id: @bookmark.id}
-        format.html { redirect_to bookmarks_path }
+        format.html { redirect_to bookmark_path(@bookmark) }
         format.json { render :show, status: :ok, location: @bookmark }
       else
         format.html { render :edit }

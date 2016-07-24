@@ -9,7 +9,8 @@
 
 function application_ready(){
   trackClicks();
-  start_new_search();
+  startNewSearch();
+  socialShare();
 }
 
 // Track clicks to external links for analytics
@@ -19,10 +20,20 @@ function trackClicks() {
   });
 }
 
-function start_new_search(){
+function startNewSearch(){
   $(document).on( "click", "a.start_new_search", function(event) {
     event.stopPropagation();
     $('input#q').focus().select();
+    return false;
+  });
+}
+
+function socialShare(){
+  $(document).on( "click", "a.social_share", function(event) {
+    event.stopPropagation();
+    var socialMedia = $(this).data('social-media');
+    socialMedia = socialMedia.charAt(0).toUpperCase() + socialMedia.slice(1);
+    window.open($(this).attr('href'), 'Wundermarks - Share your bookmark on ' + socialMedia,'width=600,height=400,scrollbars=yes,status=no,titlebar=no,toolbar=no');void(0);
     return false;
   });
 }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160721110016) do
+ActiveRecord::Schema.define(version: 20160724124941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,17 @@ ActiveRecord::Schema.define(version: 20160721110016) do
   add_index "ahoy_events", ["name", "time"], name: "index_ahoy_events_on_name_and_time", using: :btree
   add_index "ahoy_events", ["user_id", "name"], name: "index_ahoy_events_on_user_id_and_name", using: :btree
   add_index "ahoy_events", ["visit_id", "name"], name: "index_ahoy_events_on_visit_id_and_name", using: :btree
+
+  create_table "bookmark_trackings", force: :cascade do |t|
+    t.integer  "bookmark_id"
+    t.integer  "source"
+    t.integer  "count",       default: 0
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "bookmark_trackings", ["bookmark_id", "source"], name: "index_bookmark_trackings_on_bookmark_id_and_source", using: :btree
+  add_index "bookmark_trackings", ["bookmark_id"], name: "index_bookmark_trackings_on_bookmark_id", using: :btree
 
   create_table "bookmarks", force: :cascade do |t|
     t.string   "title"
@@ -158,6 +169,7 @@ ActiveRecord::Schema.define(version: 20160721110016) do
   add_index "visits", ["user_id"], name: "index_visits_on_user_id", using: :btree
   add_index "visits", ["visit_token"], name: "index_visits_on_visit_token", unique: true, using: :btree
 
+  add_foreign_key "bookmark_trackings", "bookmarks"
   add_foreign_key "bookmarks", "users"
   add_foreign_key "emails", "users"
   add_foreign_key "identities", "users"
