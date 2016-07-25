@@ -1,5 +1,9 @@
 class RegistrationsController < Devise::RegistrationsController
-  
+  def create
+    super
+    SlackNotifierJob.perform_later("new_user_registration", @user) if @user.persisted?
+  end
+
   private
 
   def sign_up_params

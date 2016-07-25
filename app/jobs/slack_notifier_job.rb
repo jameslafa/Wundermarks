@@ -22,6 +22,11 @@ class SlackNotifierJob < ActiveJob::Base
       }
 
       notifier.ping Slack::Notifier::LinkFormatter.format(message), attachments: [bookmark_attachment]
+
+    elsif notification_type == "new_user_registration"
+      message = "New User registration: #{resource.user_profile.name}: #{resource.email}"
+      notifier.ping Slack::Notifier::LinkFormatter.format(message)
+
     end
   end
 end

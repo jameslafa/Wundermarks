@@ -11,7 +11,7 @@ RSpec.describe RegistrationsController, type: :controller do
 
       it 'creates the user and user_profile' do
         expect{
-            post :create, {user: valid_params}
+          post :create, {user: valid_params}
         }.to change(User, :count).by(1)
         .and change(UserProfile, :count).by(1)
 
@@ -21,6 +21,14 @@ RSpec.describe RegistrationsController, type: :controller do
       it 'redirects to the homepage' do
         post :create, {user: valid_params}
         expect(response).to redirect_to root_path
+      end
+
+      it "posts a slack notification" do
+        expect {
+          @user = post :create, {user: valid_params}
+        }.to have_enqueued_job(SlackNotifierJob).with { |args|
+          expect(args).to eq(["new_user_registration", @user])
+        }
       end
     end
 
