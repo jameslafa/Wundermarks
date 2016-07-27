@@ -17,6 +17,16 @@ body{
   font-size: 15px;
 }
 
+// To avoid iOS to zoom in when focusing on fields
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  select,
+  textarea,
+  input,
+  *.form-control{
+    font-size: 16px;
+  }
+}
+
 .navbar{
   &.navbar-default{
     background-color: $navigation-bar-background-color;
@@ -57,6 +67,12 @@ body{
           }
         }
       }
+    }
+  }
+
+  &.env-development{
+    .navbar-brand{
+      //visibility: hidden;
     }
   }
 }

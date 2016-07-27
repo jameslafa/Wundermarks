@@ -23,6 +23,8 @@ en:
         placeholder: "rails gem"
         help: "Search bookmarks using tags, or words present in titles and descriptions."
         nothing_found_html: "Oups, nothing found! <a href=\"#\" class=\"start_new_search\">Start a new search</a>"
+      bookmark:
+        details: Details
     tools:
       title: "Useful Tools"
       bookmarklet:
@@ -40,6 +42,8 @@ en:
         placeholder: "rails gem"
         help_html: "Search in <strong>your</strong> bookmarks. Use tags or words from the titles and description."
         nothing_found_html: "Oups, nothing found! <a href=\"#\" class=\"start_new_search\">Start a new search</a>"
+      bookmark:
+        details: Details
     show:
       edit_bookmark: "Edit bookmark"
       back_to_bookmarks: "Back to bookmarks list"

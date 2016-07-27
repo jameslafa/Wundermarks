@@ -24,8 +24,9 @@
 
     <div class="tags">
       <% if @bookmark.tag_list.present? %>
+      <span class="glyphicon glyphicon-tags"></span>
       <% @bookmark.tag_list.each_with_index do |tag, index| %>
-      <% if current_user %>
+      <% if current_user == @bookmark.user %>
       <%= link_to tag, bookmarks_path(q: tag), class: 'tag' %>
       <% else %>
       <%= link_to tag, root_path(q: tag), class: 'tag' %>

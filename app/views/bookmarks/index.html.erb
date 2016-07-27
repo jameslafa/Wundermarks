@@ -21,9 +21,11 @@
 <% @bookmarks.each do |bookmark| %>
 <div class="row">
   <div class="bookmark">
-    <div class="col-md-7 title"><%= link_to bookmark.title, bookmark_permalink(bookmark) %> <a href="<%= bookmark_url(bookmark, redirect: 1) %>" target="_blank" class="hidden-md hidden-lg pull-right btn btn-default glyphicon glyphicon-link"></a></div>
-    <div class="col-md-3 link hidden-xs hidden-sm"><span class="glyphicon glyphicon-link"></span> <%= link_to bookmark.url_domain, bookmark_url(bookmark, redirect: 1), class: 'hidden-xs hidden-sm' %></div>
-    <div class="col-md-2 time hidden-xs hidden-sm"><span class="glyphicon glyphicon-time"></span> <%= t(".time_ago", time: time_ago_in_words(bookmark.created_at)) %></div>
+    <div class="col-md-7 title"><%= link_to bookmark.title, bookmark_permalink(bookmark) %></div>
+    <div class="details">
+      <div class="col-md-3 link"><span class="glyphicon glyphicon-link"></span> <%= link_to bookmark.url_domain, bookmark_url(bookmark, redirect: 1), target: '_blank' %> <span class="hidden-md hidden-lg pull-right"><span class="glyphicon glyphicon-bookmark"></span> <%= link_to t(".bookmark.details"), bookmark_permalink(bookmark)%></span></div>
+      <div class="col-md-2 time"><span class="glyphicon glyphicon-time"></span> <%= t(".time_ago", time: time_ago_in_words(bookmark.created_at)) %></div>
+    </div>
   </div>
 </div>
 <% end %>
