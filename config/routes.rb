@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   resources :bookmarks
   get '/bookmarks/:id/:title', to: 'bookmarks#show', as: 'bookmark_permalink'
+  get '/b/:id', to: 'bookmarks#show', as: 'bookmark_shortlink'
 
   resources :emails, only: [:new, :create]
   get '/emails', to: "emails#new"

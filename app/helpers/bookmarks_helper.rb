@@ -12,6 +12,7 @@ module BookmarksHelper
   def share_twitter_popup_url(bookmark)
     base_url = base_twitter_url(bookmark)
     new_params = [['via', 'wundermarks']]
+    new_params << ['text', bookmark.title]
     new_params << ['hashtags', bookmark.tag_list.join(',')] if bookmark.tag_list.size > 0
     new_params << ['url', base_url]
 
@@ -32,11 +33,11 @@ module BookmarksHelper
   end
 
   def base_twitter_url(bookmark)
-    url_with_query_parameters(bookmark_permalink(bookmark, true), [['utm_source', 'user_share'], ['utm_medium', 'twitter'], ['redirect', '1']])
+    url_with_query_parameters(bookmark_shortlink_url(bookmark), [['utm_medium', 'twitter'], ['redirect', '1']])
   end
 
   def base_facebook_url(bookmark)
-    url_with_query_parameters(bookmark_permalink(bookmark, true), [['utm_source', 'user_share'], ['utm_medium', 'facebook'], ['redirect', '1']])
+    url_with_query_parameters(bookmark_shortlink_url(bookmark), [['utm_medium', 'facebook'], ['redirect', '1']])
   end
 
   def url_with_query_parameters(url, new_params)

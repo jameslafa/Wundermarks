@@ -27,9 +27,9 @@ RSpec.describe 'BookmarksHelper', :type => :helper do
   describe 'base_twitter_url' do
     it 'returns the bookmark permalinks with some tracking query parameter for twitter' do
       bookmark = build_stubbed(:bookmark)
-      permalink = bookmark_permalink(bookmark, true)
+      permalink = bookmark_shortlink_url(bookmark)
       base_url = base_twitter_url(bookmark)
-      expect(base_url).to eq "#{permalink}?utm_source=user_share&utm_medium=twitter&redirect=1"
+      expect(base_url).to eq "#{permalink}?utm_medium=twitter&redirect=1"
       expect(base_url).to start_with "http://test.host"
     end
   end
@@ -37,9 +37,9 @@ RSpec.describe 'BookmarksHelper', :type => :helper do
   describe 'base_facebook_url' do
     it 'returns the bookmark permalinks with some tracking query parameter for facebook' do
       bookmark = build_stubbed(:bookmark)
-      permalink = bookmark_permalink(bookmark, true)
+      permalink = bookmark_shortlink_url(bookmark)
       base_url = base_facebook_url(bookmark)
-      expect(base_url).to eq "#{permalink}?utm_source=user_share&utm_medium=facebook&redirect=1"
+      expect(base_url).to eq "#{permalink}?utm_medium=facebook&redirect=1"
       expect(base_url).to start_with "http://test.host"
     end
   end
@@ -48,7 +48,8 @@ RSpec.describe 'BookmarksHelper', :type => :helper do
     it 'returns the url to share a bookmark via twitter popup' do
       bookmark = build_stubbed(:bookmark, tag_list: 'tag1, tag2')
       base_url = base_twitter_url(bookmark)
-      expect(share_twitter_popup_url(bookmark)).to eq "https://twitter.com/intent/tweet?via=wundermarks&hashtags=#{ERB::Util.url_encode('tag1,tag2')}&url=#{ERB::Util.url_encode(base_url)}"
+      url_params = URI.encode_www_form([['via', 'wundermarks'],['text', bookmark.title], ['hashtags', 'tag1,tag2'], ['url', base_url]])
+      expect(share_twitter_popup_url(bookmark)).to eq "https://twitter.com/intent/tweet?#{url_params}"
     end
   end
 

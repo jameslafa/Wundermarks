@@ -13,6 +13,8 @@ RSpec.describe BookmarksController, type: :routing do
 
     it "routes to #show" do
       expect(:get => "/bookmarks/1").to route_to("bookmarks#show", :id => "1")
+      expect(:get => "/bookmarks/1/my-title").to route_to("bookmarks#show", :id => "1", :title =>"my-title")
+      expect(:get => "/b/1").to route_to("bookmarks#show", :id => "1")
     end
 
     it "routes to #edit" do

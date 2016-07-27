@@ -86,7 +86,6 @@ function ajustViewport(){
 // Track click, on mobile, on the bookmark title to display the details
 function showBookmarkDetailsOnMobile(){
   $(document).on("click", "body.viewport-xs .bookmark .title, body.viewport-sm .bookmark .title", function(event){
-    console.log("click");
     event.stopPropagation();
     $(this).parent('.bookmark').toggleClass('open');
     return false;
