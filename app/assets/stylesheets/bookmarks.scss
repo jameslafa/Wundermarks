@@ -9,6 +9,14 @@
     }
   }
 
+  &.popup{
+    form{
+      textarea#bookmark_description{
+        height: 10rem;
+      }
+    }
+  }
+
   &.a-index{
     .main-actions{
       .actions{

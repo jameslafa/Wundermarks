@@ -10,20 +10,17 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
   </head>
-  <body class="<%= "c-#{params[:controller].parameterize} a-#{params[:action].parameterize}" %>">
+  <body class="popup <%= "c-#{params[:controller].parameterize} a-#{params[:action].parameterize}" %>">
+    <nav class="navbar navbar-default env-<%= Rails.env %>">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <span class="navbar-brand"><%= t('header.navigation.brand') %></span>
+        </div>        
+      </div> <!-- .container-fluid -->
+    </nav>
+
     <div class="container-fluid">
-      <% if flash.present? %>
-        <div class="row">
-          <div class="col-md-12">
-            <% if flash[:notice] %>
-              <div class="alert alert-success" role="alert"><%= flash[:notice] %></div>
-            <% end %>
-            <% if flash[:error] %>
-              <div class="alert alert-danger"><%= flash[:error] %></div>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
+      <%= render "shared/flash" %>
       <%= yield %>
     </div>
   </body>
