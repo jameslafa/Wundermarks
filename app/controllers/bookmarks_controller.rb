@@ -1,7 +1,7 @@
 class BookmarksController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action :set_bookmark, only: [:show, :edit, :update, :destroy]
-  after_action :verify_authorized, except: [:index, :show, :new, :create]
+  after_action :verify_authorized, except: [:index, :new, :create]
 
   # GET /bookmarks
   # GET /bookmarks.json
@@ -18,6 +18,8 @@ class BookmarksController < ApplicationController
   # GET /bookmarks/1
   # GET /bookmarks/1.json
   def show
+    authorize @bookmark
+
     # Track link
     BookmarkTracking.track_click(@bookmark, params[:utm_medium]) unless @bookmark.user == current_user
 
@@ -99,31 +101,33 @@ class BookmarksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_bookmark
-      @bookmark = Bookmark.find(params[:id])
+  # Use callbacks to share common setup or constraints between actions.
+  def set_bookmark
+    @bookmark = Bookmark.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def bookmark_params
+    params.require(:bookmark).permit(:title, :description, :url, :tag_list, :privacy)
+  end
+
+  def bookmarklet_params
+    params.permit(:title, :description, :url)
+  end
+
+  # Handle unauthorized access
+  def user_not_authorized(exception)
+    # I don't see any cases where the user could access to the bookmark content
+    # but we are never too careful :-)
+    @bookmark = nil
+
+    # Generate the flash error message
+    policy_name = exception.policy.class.to_s.underscore
+    error_message = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
+
+    respond_to do |format|
+      format.html { redirect_to bookmarks_path, alert: error_message }
+      format.json { render json: {error: error_message}, status: :forbidden }
     end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def bookmark_params
-      params.require(:bookmark).permit(:title, :description, :url, :tag_list)
-    end
-
-    def bookmarklet_params
-      params.permit(:title, :description, :url)
-    end
-
-    # Handle unauthorized access
-    def user_not_authorized(exception)
-      # I don't see any cases where the user could access to the bookmark content
-      # but we are never too careful :-)
-      @bookmark = nil
-
-      # Generate the flash error message
-      policy_name = exception.policy.class.to_s.underscore
-      flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
-
-      # Redirect the user to his own bookmark list
-      redirect_to(bookmarks_path)
-    end
+  end
 end

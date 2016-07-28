@@ -55,7 +55,7 @@ en:
     form:
       show_bookmark: "Show bookmark"
       back_to_bookmarks: "Back to bookmarks list"
-      tag_list_help: "Enter a list of maximym 5 tags separated by commas: ','"
+      tag_list_help: "Enter a list of maximum 5 tags separated by commas: ','"
       tag_list_placeholder: "rails, javascript"
       errors:
         title_html: "<strong>%{errors}</strong> prohibited this bookmark from being saved:"

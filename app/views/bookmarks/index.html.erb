@@ -21,7 +21,7 @@
 <% @bookmarks.each do |bookmark| %>
 <div class="row">
   <div class="bookmark">
-    <div class="col-md-7 title"><%= link_to bookmark.title, bookmark_permalink(bookmark) %></div>
+    <div class="col-md-7 title"><span class='privacy <%= privacy_icon_class(bookmark) %>'></span> <%= link_to bookmark.title, bookmark_permalink(bookmark) %></div>
     <div class="details">
       <div class="col-md-3 link"><span class="glyphicon glyphicon-link"></span> <%= link_to bookmark.url_domain, bookmark_url(bookmark, redirect: 1), target: '_blank' %> <span class="hidden-md hidden-lg pull-right"><span class="glyphicon glyphicon-bookmark"></span> <%= link_to t(".bookmark.details"), bookmark_permalink(bookmark)%></span></div>
       <div class="col-md-2 time"><span class="glyphicon glyphicon-time"></span> <%= t(".time_ago", time: time_ago_in_words(bookmark.created_at)) %></div>

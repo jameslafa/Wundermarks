@@ -1,0 +1,12 @@
+en:
+  activerecord:
+    enums:
+      models:
+        bookmark:
+          privacy:
+            everyone: Public
+            everyone_help: "Public - Everyone can see it"
+            only_me: Only Me
+            only_me_help: "Only Me - It's private and no one can see it"
+            friends: Friends
+            friends_help: "Friends - Only you and your friends can see it (available soon)"

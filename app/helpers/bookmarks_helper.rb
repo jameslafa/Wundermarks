@@ -1,6 +1,8 @@
 require 'uri'
 
 module BookmarksHelper
+
+  # Returns a nice bookmark's permalink include title for better SEO
   def bookmark_permalink(bookmark, url=false)
     if url
       bookmark_permalink_url(id: bookmark.id, title: "#{bookmark.created_at.to_date}_#{bookmark.title.parameterize}")
@@ -9,6 +11,7 @@ module BookmarksHelper
     end
   end
 
+  # URL to open a Twitter popup to share the url
   def share_twitter_popup_url(bookmark)
     base_url = base_twitter_url(bookmark)
     new_params = [['via', 'wundermarks']]
@@ -19,6 +22,7 @@ module BookmarksHelper
     url_with_query_parameters("https://twitter.com/intent/tweet", new_params)
   end
 
+  # URL to open a Facebook popup to share the url
   def share_facebook_popup_url(bookmark)
     base_url = base_facebook_url(bookmark)
     new_params = [
@@ -32,21 +36,25 @@ module BookmarksHelper
     url_with_query_parameters("https://www.facebook.com/dialog/share", new_params)
   end
 
+  # Build the URL that will be share on Twitter including necessary analytics parameters
   def base_twitter_url(bookmark)
     url_with_query_parameters(bookmark_shortlink_url(bookmark), [['utm_medium', 'twitter'], ['redirect', '1']])
   end
 
+  # Build the URL that will be share on Facebook including necessary analytics parameters
   def base_facebook_url(bookmark)
     url_with_query_parameters(bookmark_shortlink_url(bookmark), [['utm_medium', 'facebook'], ['redirect', '1']])
   end
 
-  def url_with_query_parameters(url, new_params)
-    uri = URI(url)
-    params = URI.decode_www_form(uri.query || "")
-    new_params.each do |new_param_elt|
-      params << new_param_elt
+  # Return the privacy icon's class of the bookmark
+  def privacy_icon_class(bookmark)
+    case bookmark.privacy
+    when 'everyone'
+      'octicon octicon-globe'
+    when 'only_me'
+      'octicon octicon-lock'
+    when 'friends'
+      'octicon octicon-organization'
     end
-    uri.query = URI.encode_www_form(params)
-    uri.to_s
   end
 end

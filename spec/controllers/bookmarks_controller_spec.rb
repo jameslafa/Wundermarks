@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe BookmarksController, type: :controller do
   include ActiveJob::TestHelper
+  include Helpers
 
   let(:valid_attributes) { attributes_for(:bookmark_with_tags) }
   let(:invalid_attributes) { attributes_for(:bookmark_with_tags, title: '') }
 
   context "without a signed_in user" do
-    before(:each) { sign_out :user }
     let(:bookmark) { create(:bookmark) }
 
     describe "GET #index" do
@@ -53,6 +53,48 @@ RSpec.describe BookmarksController, type: :controller do
           expect(last_bookmark_tracking.source).to eq "wundermarks"
         end
       end
+
+      context 'when privacy is not "everyone"' do
+        context 'with a bookmark visile to only me' do
+          let(:bookmark) { create(:bookmark_visible_to_only_me) }
+
+          context 'with a html format' do
+            it 'redirects to bookmarks_path with an alert' do
+              get :show, id: bookmark.id
+              expect(response).to redirect_to bookmarks_path
+              expect(flash[:alert]).to eq I18n.t("pundit.bookmark_policy.show?")
+            end
+          end
+
+          context 'with a json format' do
+            it 'responds with a 403' do
+              get :show, id: bookmark.id, format: :json
+              expect(response.status).to eq 403
+              expect(response_body).to eq({"error" => I18n.t("pundit.bookmark_policy.show?")})
+            end
+          end
+        end
+
+        context 'with a bookmark visible to friends' do
+          let(:bookmark) { create(:bookmark_visible_to_friends) }
+
+          context 'with a html format' do
+            it 'redirects to bookmarks_path with an alert' do
+              get :show, id: bookmark.id
+              expect(response).to redirect_to bookmarks_path
+              expect(flash[:alert]).to eq I18n.t("pundit.bookmark_policy.show?")
+            end
+          end
+
+          context 'with a json format' do
+            it 'responds with a 403' do
+              get :show, id: bookmark.id, format: :json
+              expect(response.status).to eq 403
+              expect(response_body).to eq({"error" => I18n.t("pundit.bookmark_policy.show?")})
+            end
+          end
+        end
+      end
     end
 
     describe "GET #new" do
@@ -92,7 +134,7 @@ RSpec.describe BookmarksController, type: :controller do
   end
 
   context "with a signed_in user " do
-    login_user
+    before(:each) { sign_in_user }
 
     describe "GET #index" do
       let(:other_user) { create(:user) }
@@ -153,6 +195,48 @@ RSpec.describe BookmarksController, type: :controller do
             last_bookmark_tracking = BookmarkTracking.last
             expect(last_bookmark_tracking.bookmark).to eq bookmark
             expect(last_bookmark_tracking.source).to eq "wundermarks"
+          end
+        end
+      end
+
+      context 'when privacy is not "everyone"' do
+        context 'with a bookmark visile to only me' do
+          let(:bookmark) { create(:bookmark_visible_to_only_me) }
+
+          context 'with a html format' do
+            it 'redirects to bookmarks_path with an alert' do
+              get :show, id: bookmark.id
+              expect(response).to redirect_to bookmarks_path
+              expect(flash[:alert]).to eq I18n.t("pundit.bookmark_policy.show?")
+            end
+          end
+
+          context 'with a json format' do
+            it 'responds with a 403' do
+              get :show, id: bookmark.id, format: :json
+              expect(response.status).to eq 403
+              expect(response_body).to eq({"error" => I18n.t("pundit.bookmark_policy.show?")})
+            end
+          end
+        end
+
+        context 'with a bookmark visible to friends' do
+          let(:bookmark) { create(:bookmark_visible_to_friends) }
+
+          context 'with a html format' do
+            it 'redirects to bookmarks_path with an alert' do
+              get :show, id: bookmark.id
+              expect(response).to redirect_to bookmarks_path
+              expect(flash[:alert]).to eq I18n.t("pundit.bookmark_policy.show?")
+            end
+          end
+
+          context 'with a json format' do
+            it 'responds with a 403' do
+              get :show, id: bookmark.id, format: :json
+              expect(response.status).to eq 403
+              expect(response_body).to eq({"error" => I18n.t("pundit.bookmark_policy.show?")})
+            end
           end
         end
       end
@@ -230,7 +314,8 @@ RSpec.describe BookmarksController, type: :controller do
           post :create, {:bookmark => valid_attributes}
           created_bookmark = assigns(:bookmark)
           expect(assigns(:bookmark)).to be_a(Bookmark)
-          expect(assigns(:bookmark)).to contains_attributes_from valid_attributes.except(:tag_list)
+          expect(assigns(:bookmark)).to contains_attributes_from valid_attributes.except(:tag_list, :privacy)
+          expect(assigns(:bookmark).privacy).to eq valid_attributes[:privacy]
           expect(assigns(:bookmark).tag_list.to_s).to eq valid_attributes[:tag_list].downcase
           expect(assigns(:bookmark)).to be_persisted
         end
@@ -252,7 +337,8 @@ RSpec.describe BookmarksController, type: :controller do
       context "with invalid params" do
         it "assigns a newly created but unsaved bookmark as @bookmark" do
           post :create, {:bookmark => invalid_attributes}
-          expect(assigns(:bookmark)).to contains_attributes_from invalid_attributes.except(:tag_list)
+          expect(assigns(:bookmark)).to contains_attributes_from invalid_attributes.except(:tag_list, :privacy)
+          expect(assigns(:bookmark).privacy).to eq valid_attributes[:privacy]
           expect(assigns(:bookmark).tag_list.to_s).to eq invalid_attributes[:tag_list].downcase
           expect(assigns(:bookmark)).to be_a_new(Bookmark)
           expect(assigns(:bookmark)).not_to be_persisted
@@ -267,7 +353,7 @@ RSpec.describe BookmarksController, type: :controller do
       it "restricts parameters" do
         params = attributes_for(:bookmark_with_tags, user_id: 1)
 
-        should permit(:title, :description, :url, :tag_list)
+        should permit(:title, :description, :url, :tag_list, :privacy)
         .for(:create, params: {bookmark: params}).on(:bookmark)
 
         should_not permit(:user_id)
@@ -323,7 +409,7 @@ RSpec.describe BookmarksController, type: :controller do
           bookmark = create(:bookmark_with_tags, user: subject.current_user)
           params = attributes_for(:bookmark, user_id: 22)
 
-          should permit(:title, :description, :url, :tag_list)
+          should permit(:title, :description, :url, :tag_list, :privacy)
           .for(:update, params: {bookmark: params, id: bookmark.id}).on(:bookmark)
 
           should_not permit(:user_id)

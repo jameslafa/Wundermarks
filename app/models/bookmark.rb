@@ -1,4 +1,7 @@
 class Bookmark < ActiveRecord::Base
+  # Extensions
+
+  ## Postgres full-text search
   include PgSearch
   pg_search_scope :search, :against => {
     tag_search: 'A',
@@ -6,18 +9,44 @@ class Bookmark < ActiveRecord::Base
     description: 'C'
   }
 
+  ## Add tags capacities
   acts_as_ordered_taggable
+
+
+  # Associations
   belongs_to :user
   has_many :bookmark_trackings
 
+
+  # Validations
   validates :title, :url, :user, presence: true
   validate :max_5_tags
 
-  scope :belonging_to, lambda { |user| where(:user => user) }
 
-  # Update tag_search while saving
+  # Scopes
+  scope :belonging_to, lambda { |user| where(:user => user) }
+  scope :visible_to_everyone, -> { where(privacy: 1) }
+
+
+  # Hooks
+
+  ## Update tag_search while saving
   before_save :update_tag_search
 
+
+  # Enums
+
+  ## Privacy
+  enum privacy: {
+    'everyone': 1,
+    'only_me': 2,
+    'friends': 3
+  }
+
+
+  # Instance methods
+
+  # Returns the domain of the bookmark.url
   def url_domain
     if url.present?
       uri = URI(url)
@@ -25,6 +54,7 @@ class Bookmark < ActiveRecord::Base
     end
   end
 
+  # Returns a hash with the click statistics per medium
   def sharing_statistics
     trackings = self.bookmark_trackings
 
@@ -38,13 +68,15 @@ class Bookmark < ActiveRecord::Base
       statistics[tracking.source.to_s] = tracking.count
       total += tracking.count
     end
-    
+
     statistics["total"] = total
     statistics
   end
 
+
   private
 
+  # Validate that there is maximum 5 tags on the bookmark
   def max_5_tags
     if self.tag_list.size > 5
       errors.add(:tag_list, I18n.t("activerecord.errors.models.bookmark.attributes.tag_list.too_many"))

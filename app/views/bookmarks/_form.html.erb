@@ -25,6 +25,11 @@
   <%= f.text_area :description, class: 'form-control' %>
 </div>
 
+<div class="form-group">
+  <%= f.label :privacy, class: 'control-label' %>
+  <%= f.select :privacy, Bookmark.privacies.keys.to_a.map { |p| [t("activerecord.enums.models.bookmark.privacy.#{p}_help"), p]}, {}, class: 'form-control'  %>
+</div>
+
 <div class="form-group has-feedback">
   <%= f.label :tag_list, class: 'control-label' %>
   <%= f.text_field :tag_list, value: @bookmark.tag_list.to_s, class: 'tag-autocomplete form-control', 'aria-describedBy': 'tag_list_help', placeholder: t('.tag_list_placeholder'), autocomplete: 'off', 'data-multiple':'data-multiple' %>

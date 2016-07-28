@@ -8,13 +8,25 @@ RSpec.describe Bookmark, type: :model do
   it { is_expected.to validate_presence_of :url }
   it { is_expected.to validate_presence_of :user }
 
+  it { is_expected.to define_enum_for(:privacy).with({everyone: 1, only_me: 2, friends: 3}) }
+
   describe 'scopes' do
     describe 'belonging_to' do
-      it 'scopes bookmark query to bookmarks belonging to a specified person' do
+      it 'returns bookmarks belonging to a specified person' do
         users = create_list(:user, 2)
         first_user_bookmarks = create_list(:bookmark, 2, user: users.first)
         second_user_bookmarks = create_list(:bookmark, 2, user: users.second)
         expect(Bookmark.belonging_to(users.first)).to match_array first_user_bookmarks
+      end
+    end
+
+    describe 'visible_to_everyone' do
+      it 'returns bookmarks with privacy level to everyone' do
+        user = create(:user)
+        bookmarks_visible_to_everyone = create_list(:bookmark, 2, privacy: 1, user: user)
+        bookmark_visible_to_only_me = create(:bookmark, privacy: 2, user: user)
+
+        expect(Bookmark.visible_to_everyone).to match_array bookmarks_visible_to_everyone
       end
     end
   end
@@ -94,7 +106,7 @@ RSpec.describe Bookmark, type: :model do
 
   describe 'sharing_statistics' do
     let(:bookmark) { create(:bookmark) }
-    
+
     it 'returns a Hash with tracking count per source' do
       create(:bookmark_tracking_wundermarks, bookmark: bookmark, count: 12)
       create(:bookmark_tracking_facebook, bookmark: bookmark, count: 13)

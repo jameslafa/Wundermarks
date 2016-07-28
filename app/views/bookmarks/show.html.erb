@@ -18,7 +18,12 @@
 
 <div class="row details">
   <div class="col-md-10 col-md-offset-1">
-    <div class="title"><%= @bookmark.title %></div>
+    <div class="title">
+      <% if @bookmark.user == current_user %>
+      <span class='privacy <%= privacy_icon_class(@bookmark) %>'></span>
+      <% end %>
+      <%= @bookmark.title %>
+    </div>
     <div class="link"><%= link_to @bookmark.url, bookmark_url(@bookmark, redirect: 1) %></div>
     <div class="description"><%= simple_format @bookmark.description %></div>
 

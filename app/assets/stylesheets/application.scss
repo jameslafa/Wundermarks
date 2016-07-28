@@ -4,6 +4,7 @@
 @import "bootstrap";
 @import "lib/awesomplete";
 @import "lib/awesomplete-override";
+@import "lib/octicons";
 @import "devise";
 @import "home";
 @import "bookmarks";
@@ -15,6 +16,7 @@ body{
   color: $default-text-color;
   font-family: 'Ubuntu', sans-serif;
   font-size: 15px;
+  padding-bottom: 20px;
 }
 
 // To avoid iOS to zoom in when focusing on fields
@@ -31,6 +33,7 @@ body{
   &.navbar-default{
     background-color: $navigation-bar-background-color;
     border: 0;
+    border-radius: 0;
 
     .navbar-brand{
       color: $navigation-bar-text-color;
@@ -75,6 +78,13 @@ body{
       //visibility: hidden;
     }
   }
+}
+
+.top.alert{
+  margin-top: -20px;
+  border: 0;
+  border-radius: 0;
+  text-align: center;
 }
 
 .field_with_errors {

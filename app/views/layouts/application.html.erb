@@ -12,20 +12,9 @@
   </head>
   <body class="<%= "c-#{params[:controller].parameterize} a-#{params[:action].parameterize}" %>">
     <%= render "shared/navigation_bar" %>
+    <%= render "shared/flash" %>
 
-    <div class="container">
-      <% if flash.present? %>
-        <div class="row">
-          <div class="col-md-offset-2 col-md-8">
-            <% if flash[:notice] %>
-              <div class="alert alert-success" role="alert"><%= flash[:notice] %></div>
-            <% end %>
-            <% if flash[:error] %>
-              <div class="alert alert-danger"><%= flash[:error] %></div>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
+    <div class="container">      
       <%= yield %>
     </div>
   </body>

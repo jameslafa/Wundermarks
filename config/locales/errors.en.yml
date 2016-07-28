@@ -1,0 +1,4 @@
+en:
+  errors:
+    http:
+      forbidden: You are not allowed to access this ressource

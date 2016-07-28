@@ -1,0 +1,12 @@
+<% if !flash.empty? %>
+<% if flash[:notice] %>
+<div class="row top alert alert-success" role="alert">
+  <div class="col-md-10 col-md-offset-1"><%= flash[:notice] %></div>
+</div>
+<% end %>
+<% if flash[:alert] %>
+<div class="row top alert alert-danger" role="alert">
+  <div class="col-md-10 col-md-offset-1"><%= flash[:alert] %></div>
+</div>
+<% end %>
+<% end %>

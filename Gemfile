@@ -67,6 +67,8 @@ gem 'ahoy_matey'
 
 # Full text search
 gem 'pg_search'
+# Add where.or search capacities
+gem 'where-or'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
