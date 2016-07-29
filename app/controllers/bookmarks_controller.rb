@@ -8,7 +8,8 @@ class BookmarksController < ApplicationController
   def index
     if params[:q].present? and @q = params[:q]
       @bookmarks = Bookmark.belonging_to(current_user).search(@q)
-      ahoy.track "bookmarks-search", q: @q
+      ahoy.track "bookmarks-search", q: @q, results_count: @bookmarks.try(:count)
+      flash.now[:notice] = I18n.t("bookmarks.index.search.search_all_wundermarks", count: @bookmarks.count, search_all_url: root_path(q: @q))
     else
       @bookmarks = Bookmark.belonging_to(current_user).order(created_at: :desc)
       ahoy.track "bookmarks-index", nil

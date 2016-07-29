@@ -71,11 +71,11 @@ body{
         }
       }
     }
-  }
 
-  &.env-development{
-    .navbar-brand{
-      //visibility: hidden;
+    @media(min-width:$screen-md-min){
+      .search-bookmark{
+        width: 400px
+      }
     }
   }
 }

@@ -163,6 +163,11 @@ RSpec.describe BookmarksController, type: :controller do
           get :index, q: 'rails'
           expect(assigns(:bookmarks)).to eq([@searched_bookmark])
         end
+
+        it "displays a notice and offer to search in all wundermarks" do
+          get :index, q: 'rails'
+          expect(flash[:notice]).to eq I18n.t("bookmarks.index.search.search_all_wundermarks", count: 1, search_all_url: root_path(q: 'rails'))
+        end
       end
     end
 

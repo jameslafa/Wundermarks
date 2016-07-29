@@ -27,6 +27,20 @@
         }
       }
     }
+
+    .start_new_search{
+      cursor: pointer;
+      color: #ddd;
+      font-size: 200px;
+      margin-top: 2rem;
+      &:hover{
+        color: #999;
+      }
+
+      &:active{
+        color: $primary-color;
+      }
+    }
   }
 
   &.a-show{
@@ -62,7 +76,7 @@
     }
 
     .tags{
-      a.tag{
+      a.tag, span.tag{
         background-color: lighten($ternary-color, 10%);
         border: 1px solid #888;
         border-radius: $border-radius-base;
@@ -163,11 +177,6 @@
           color: $default-text-color;
         }
       }
-    }
-
-    .nothing_found{
-      margin-top: 2rem;
-      text-align: center;
     }
 
     &.viewport-xs, &.viewport-sm{

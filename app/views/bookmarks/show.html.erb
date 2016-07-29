@@ -34,7 +34,7 @@
       <% if current_user == @bookmark.user %>
       <%= link_to tag, bookmarks_path(q: tag), class: 'tag' %>
       <% else %>
-      <%= link_to tag, root_path(q: tag), class: 'tag' %>
+      <span class='tag'><%= tag %></span>
       <% end %>
       <% end %>
       <% else %>

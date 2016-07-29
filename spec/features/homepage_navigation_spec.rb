@@ -13,6 +13,11 @@ feature 'HomepageNavigation' do
     scenario 'he visits the homepage' do
       visit root_path
 
+      within '.navbar.navbar-default' do
+        expect(page).not_to have_link(nil, href: bookmarks_path)
+        expect(page).not_to have_css('form')
+      end
+
       expect(page).not_to have_link(nil, href: new_bookmark_path)
       expect(page).to have_selector('.bookmark', count: bookmarks.count)
 
@@ -45,6 +50,11 @@ feature 'HomepageNavigation' do
 
     scenario 'he visits the homepage' do
       visit root_path
+
+      within '.navbar.navbar-default' do
+        expect(page).to have_link(nil, href: bookmarks_path)
+        expect(page).to have_css('form')
+      end
 
       expect(page).to have_link(nil, href: new_bookmark_path)
     end

@@ -32,7 +32,7 @@ function trackClicks() {
 // When user click on 'start new search', it focus on the search field
 // and select the content
 function startNewSearch(){
-  $(document).on( "click", "a.start_new_search", function(event) {
+  $(document).on( "click", ".start_new_search", function(event) {
     event.stopPropagation();
     $('input#q').focus().select();
     return false;

@@ -4,19 +4,6 @@
     <%= link_to "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> #{t('.action.new_bookmark')}".html_safe, new_bookmark_path, class: 'btn btn-primary' %>
     <% end %>
   </div>
-  <div class="search col-md-6 col-md-pull-6">
-    <%= form_tag({controller: 'home', action: 'index'}, method: 'get') do %>
-    <div class="input-group">
-      <%= search_field_tag(:q, @q, class: 'form-control', 'aria-describedby': "search_help", placeholder: t(".search.placeholder"), autocomplete: 'off') %>
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-default">
-          <span class='glyphicon glyphicon-search' aria-hidden='true'></span> <%= t('.action.search') %>
-        </button>
-      </span>
-    </div>
-    <span id="search_help" class="help-block hidden-xs hidden-sm"><%= t(".search.help")%></span>
-    <% end %>
-  </div>
 </div>
 
 <% if @bookmarks.size > 0 %>
