@@ -15,7 +15,7 @@ feature 'SearchBookmark' do
     search = 'rails'
 
     visit root_path
-    within '.search-bookmark' do
+    within '.navbar .search-bookmark' do
       fill_in('q', :with => search)
       find('button').click
     end

@@ -1,5 +1,6 @@
 <div class="row main-actions">
   <div class="actions col-md-6 col-md-push-6">
+    <%= render "shared/search_bookmark", mobile: true, q: @q %>
     <% if current_user %>
     <%= link_to "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> #{t('.action.new_bookmark')}".html_safe, new_bookmark_path, class: 'btn btn-primary' %>
     <% end %>
@@ -21,6 +22,6 @@
 <% end %>
 <% else %>
 <div class="row">
-  <div class="col-md-12"><div class="nothing_found"><%= t(".search.nothing_found_html")%></div></div>
+  <div class="col-md-12 text-center"><div class="nothing_found"><%= t(".search.nothing_found_html")%></div></div>
 </div>
 <% end %>

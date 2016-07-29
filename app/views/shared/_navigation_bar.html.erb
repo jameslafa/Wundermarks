@@ -11,16 +11,7 @@
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <% if current_user %>
-      <%= form_tag({controller: 'bookmarks', action: 'index'}, method: 'get', class: 'navbar-form navbar-left') do %>
-      <div class="search-bookmark input-group">
-        <%= search_field_tag(:q, @q, class: 'form-control', 'aria-label': t(".search.aria-label"), placeholder: t(".search.placeholder"), autocomplete: 'off') %>
-        <span class="input-group-btn">
-          <button type="submit" class="btn btn-default"><span class='glyphicon glyphicon-search' aria-hidden='true'></span></button>
-        </span>
-      </div>
-      <% end %>
-      <% end %>
+      <%= render "shared/search_bookmark", mobile: false, q: @q %>
 
       <ul class="nav navbar-nav navbar-right">
         <% if current_user %>
