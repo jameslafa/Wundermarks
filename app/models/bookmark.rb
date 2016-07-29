@@ -15,7 +15,7 @@ class Bookmark < ActiveRecord::Base
 
   # Associations
   belongs_to :user
-  has_many :bookmark_trackings
+  has_many :bookmark_trackings, dependent: :destroy
 
 
   # Validations
