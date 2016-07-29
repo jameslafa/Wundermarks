@@ -4,3 +4,6 @@ mailgun:
 
 facebook:
   app_id: '1746824045575538'
+
+bookmarklet:
+  current_version: '1469795199'

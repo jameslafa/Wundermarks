@@ -264,6 +264,13 @@ RSpec.describe BookmarksController, type: :controller do
         end
       end
 
+      context "with an old bookmarklet version" do
+        it "sets upgrade_bookmarklet in the user session" do
+          get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", layout: "popup", v: (Settings.bookmarklet.current_version.to_i - 1000).to_s
+          expect(session[:upgrade_bookmarklet]).to be true
+        end
+      end
+
       it "restricts parameters" do
         params = {url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", layout: "popup"}
 

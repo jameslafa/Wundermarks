@@ -36,7 +36,13 @@ class BookmarksController < ApplicationController
     respond_to do |format|
       if params[:layout] == 'popup'
         @layout = 'popup'
-        ahoy.track "bookmarks-new", {id: @bookmark.id, layout: 'popup'}
+
+        # Check bookmarklet used version and see if the user need to update it
+        bookmarklet_version = params[:v].to_i
+        upgrade_bookmarklet = Settings.bookmarklet.current_version.to_i > bookmarklet_version.to_i
+        session[:upgrade_bookmarklet] = upgrade_bookmarklet
+
+        ahoy.track "bookmarks-new", {id: @bookmark.id, layout: 'popup', bm_v: bookmarklet_version, bm_updated: !upgrade_bookmarklet}
         format.html { render :new, layout: "popup" }
       else
         ahoy.track "bookmarks-show", {id: @bookmark.id, layout: 'web'}

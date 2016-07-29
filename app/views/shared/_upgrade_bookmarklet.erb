@@ -1,0 +1,5 @@
+<% if session[:upgrade_bookmarklet] and @layout != 'popup' %>
+<div class="row top alert alert-warning upgrade_bookmarklet" role="alert">
+  <div class="col-md-10 col-md-offset-1"><%= t("bookmarks.new.upgrade_bookmarklet_html", url: tools_path) %></div>
+</div>
+<% end %>

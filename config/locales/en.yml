@@ -30,7 +30,22 @@ en:
       bookmarklet:
         title: "Bookmarklet"
         link_title: "+ Add to Wundermarks"
-        description_html: "<p>Our bookmarklet lets you quickly add links from any web page. Make sure your bookmarks toolbar is visible, then drag this button there. Click '+ Add to Wundermarks' any time you want to add a page.</p><p>Safari users need to enable third party cookies to remain logged in to the bookmarklet. This can be done by going to your Safari Preferences, selecting Privacy, and setting Block cookies and other website data to Never.</p>"
+        introduction: Our bookmarklet lets you quickly add links from any web page.
+        instructions:
+          see_tutorial: Watch the tutorial
+          installation_html: |
+            <p><strong>How to install it?</strong></p>
+            <ul>
+              <li>Make sure your bookmarks toolbar is visible. If not, go in the <u>View menu</u> of your browser</li>
+              <li>Drag the button '+ Add to Wundermarks' below and drop it to your bookmark toolbar</li>
+            </ul>
+            <p>Safari users need to enable third party cookies to remain logged in to the bookmarklet. This can be done by going to your Safari Preferences, selecting Privacy, and setting Block cookies and other website data to Never.</p>
+          usage_html: |
+            <p><strong>How to use it?</strong></p>
+            <ul>
+              <li>Go on your favorite website, click on the button '+ Add to Wundermarks' in your bookmark toolbar and a popup will open.</li>
+              <li><em>Tip:</em>Before clicking on the button '+ Add to Wundermarks', select a paragraph on the page and it will automatically be used as the description of your bookmark.</li>
+            </ul>
 
   bookmarks:
     index:
@@ -59,6 +74,8 @@ en:
       tag_list_placeholder: "rails, javascript"
       errors:
         title_html: "<strong>%{errors}</strong> prohibited this bookmark from being saved:"
+    new:
+      upgrade_bookmarklet_html: 'Your bookmarklet is outdated. <a href="%{url}" class="alert-link">Upgrade your bookmarklet</a>'
 
   emails:
     new:

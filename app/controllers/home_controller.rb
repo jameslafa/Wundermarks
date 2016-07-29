@@ -11,5 +11,6 @@ class HomeController < ApplicationController
 
   def tools
     ahoy.track "home-tools", nil
+    session.delete(:upgrade_bookmarklet)
   end
 end

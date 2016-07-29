@@ -68,4 +68,12 @@ RSpec.describe HomeController, type: :controller do
       end
     end
   end
+
+  describe "GET #tools" do
+    it "removes :upgrade_bookmarklet from the session" do
+      session[:upgrade_bookmarklet] = true
+      get :tools
+      expect(session[:upgrade_bookmarklet]).to be nil
+    end
+  end
 end
