@@ -3,9 +3,9 @@ en:
     navigation:
       toogle_navigation: Toggle navigation
       brand: Wundermarks
-      bookmarks: My Bookmarks
+      bookmarks: My bookmarks
       home: Home
-      profile: Your Profile
+      profile: Your profile
       account: Your account
       contact: Contact us
       tools: Tools
@@ -29,25 +29,25 @@ en:
       bookmark:
         details: Details
     tools:
-      title: "Useful Tools"
+      title: "Useful tools"
       bookmarklet:
         title: "Bookmarklet"
         link_title: "+ Add to Wundermarks"
-        introduction: Our bookmarklet lets you quickly add links from any web page.
+        introduction: This bookmarklet helps you create quickly a bookmark from any web page.
         instructions:
           see_tutorial: Watch the tutorial
           installation_html: |
             <p><strong>How to install it?</strong></p>
             <ul>
-              <li>Make sure your bookmarks toolbar is visible. If not, go in the <u>View menu</u> of your browser</li>
-              <li>Drag the button '+ Add to Wundermarks' below and drop it to your bookmark toolbar</li>
+              <li>Make sure your bookmarks bar is visible. If not, go in the <u>View menu</u> of your browser</li>
+              <li>Drag the button '+ Add to Wundermarks' below and drop it into your bookmark toolbar</li>
             </ul>
             <p>Safari users need to enable third party cookies to remain logged in to the bookmarklet. This can be done by going to your Safari Preferences, selecting Privacy, and setting Block cookies and other website data to Never.</p>
           usage_html: |
             <p><strong>How to use it?</strong></p>
             <ul>
-              <li>Go on your favorite website, click on the button '+ Add to Wundermarks' in your bookmark toolbar and a popup will open.</li>
-              <li><em>Tip:</em>Before clicking on the button '+ Add to Wundermarks', select a paragraph on the page and it will automatically be used as the description of your bookmark.</li>
+              <li>Go to your favorite website, click on the button '+ Add to Wundermarks' in your bookmarks bar and a popup will open</li>
+              <li><em>Tip:</em>Before clicking on the button '+ Add to Wundermarks', select a paragraph on the page and it will automatically fill the description of your bookmark</li>
             </ul>
 
   bookmarks:
@@ -84,7 +84,7 @@ en:
       title: "Send us an email"
     sent:
       title: "Your email as been sent!"
-      message: "Thank you for writing us. We will read your message and come back to you as soon as possible."
+      message: "Thank you for writing to us. We will come back to you as soon as possible."
       actions:
         back: "Go back to homepage"
 
@@ -93,12 +93,12 @@ en:
       action:
         edit: "Edit your profile"
     user_profile_item:
-      member_since: "Member since %{days} days"
+      member_since: "Member for %{days} days"
       no_username_html: "You haven't choosen your username yet. %{reserve}"
       no_username_reserve: "Reserve it now!"
     form:
       back_to_bookmarks: "Back to bookmarks list"
-      user_name_help: "Must contain only letters and number and be at least 5 characters long."
+      user_name_help: "Must contain only letters and numbers and be at least 5 characters long"
       user_name_check: "Check availability"
       username_available: "%{username} is available"
 

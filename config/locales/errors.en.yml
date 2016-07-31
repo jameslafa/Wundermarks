@@ -2,8 +2,8 @@ en:
   errors:
     template:
       header:
-        one: "An error prohibited your data from being saved:"
-        other: "%{count} error prohibited your data from being saved:"
+        one: "Your data could not be saved because of an error:"
+        other: "Your data could not be saved because of %{count} errors:"
   activerecord:
     errors:
       models:
