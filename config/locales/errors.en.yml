@@ -10,7 +10,7 @@ en:
         user_profile:
           attributes:
             username:
-              invalid: 'can have only letters and numbers'
+              invalid: 'can only contains letters and numbers'
               cannot_be_erase: 'cannot be deleted. Please choose another username'
         bookmark:
           attributes:
