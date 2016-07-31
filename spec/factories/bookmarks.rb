@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :bookmark do
-    title { Faker::Lorem.sentence }
-    description { Faker::Lorem.sentence(2) }
+    title { Faker::Lorem.sentence.truncate(140) }
+    description { Faker::Lorem.sentence(2).truncate(255) }
     url { Faker::Internet.url }
     privacy 'everyone'
     association :user, factory: :user

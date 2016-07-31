@@ -20,6 +20,8 @@ class Bookmark < ActiveRecord::Base
 
   # Validations
   validates :title, :url, :user, presence: true
+  validates :title, length: { maximum: 80 }
+  validates :description, length: { maximum: 255 }, allow_blank: true
   validate :max_5_tags
 
 
