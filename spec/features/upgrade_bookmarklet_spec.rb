@@ -1,6 +1,7 @@
 feature 'UpgradeBookmarklet' do
   scenario "The user uses an outdated bookmarklet, it shows an alert" do
-    user = create(:user)
+    user_profile = create(:user_profile)
+    user = user_profile.user
     login_as(user, :scope => :user)
 
     visit new_bookmark_path(url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", layout: "popup", v: (Settings.bookmarklet.current_version.to_i - 1000).to_s)

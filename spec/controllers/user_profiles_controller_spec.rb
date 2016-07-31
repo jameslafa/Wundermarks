@@ -6,10 +6,20 @@ RSpec.describe UserProfilesController, type: :controller do
     context "when :id is defined" do
       let(:profile) { create(:user_profile) }
 
-      it "assigns to @profile the profile identified by :id" do
-        get :show, {id: profile.id}
-        expect(assigns(:profile)).to eq profile
+      context 'when the :id is an integer' do
+        it "assigns to @profile the profile identified by :id" do
+          get :show, {id: profile.id}
+          expect(assigns(:profile)).to eq profile
+        end
       end
+
+      context 'when the :id is s strong' do
+        it "assigns to @profile the profile identified by :username" do
+          get :show, {id: profile.username}
+          expect(assigns(:profile)).to eq profile
+        end
+      end
+
     end
 
     context "when :id is nil" do
@@ -92,7 +102,7 @@ RSpec.describe UserProfilesController, type: :controller do
         profile = create(:user_profile, user: subject.current_user)
         params = attributes_for(:user_profile, user_id: 22)
 
-        should permit(:name, :introduction)
+        should permit(:name, :introduction, :username)
         .for(:update, params: {user_profile: params, user_id: subject.current_user.id}).on(:user_profile)
 
         should_not permit(:user_id)

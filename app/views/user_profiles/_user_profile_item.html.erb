@@ -2,14 +2,17 @@
   <div class="panel-heading">
     <div class="row">
       <div class="col-md-12">
-        <div class="name pull-left"><%= profile.name %></div>
-        <div class="permalink pull-right"><%= link_to user_profile_url(id: profile.id), user_profile_url(id: profile.id) %></div>
+        <div class="name"><%= profile.name %></div>
+        <% if profile.username.present? %>
+        <div class="username"><%= link_to "@#{profile.username}", user_profile_permalink(@profile), class: 'user_profile_permalink' %></div>
+        <% elsif profile.user == current_user %>
+          <div class="create_username"><%= t(".no_username_html", reserve: link_to(t('.no_username_reserve'), edit_current_user_profile_path) ) %></div>
+        <% end %>
       </div>
     </div>
   </div>
   <div class="panel-body">
     <p>
-      <strong><%= UserProfile.human_attribute_name(:introduction)%></strong><br/>
       <%= simple_format profile.introduction %>
     </p>
   </div>

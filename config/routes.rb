@@ -12,8 +12,10 @@ Rails.application.routes.draw do
   get '/emails', to: "emails#new"
   get '/contact', to: "emails#new", as: 'contact'
 
+  # JSON only
   scope :format => true, :constraints => { :format => 'json' } do
-    get '/autocomplete_search/tags' => "autocomplete_search#tags"
+    get '/autocomplete_search/tags'                => "autocomplete_search#tags"
+    get '/autocomplete_search/username_available'  => "autocomplete_search#username_available"
   end
 
   get "/tools", to: "home#tools"

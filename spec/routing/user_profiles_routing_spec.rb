@@ -4,6 +4,7 @@ RSpec.describe UserProfilesController, type: :routing do
   describe "routing" do
     it "routes to #show" do
       expect(:get => "/profile/1").to route_to("user_profiles#show", :id => "1")
+      expect(:get => "/profile/johnsnow").to route_to("user_profiles#show", :id => "johnsnow")
       expect(:get => "/profile").to route_to("user_profiles#show")
     end
 

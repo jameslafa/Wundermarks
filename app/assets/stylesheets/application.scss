@@ -29,6 +29,57 @@ body{
   }
 }
 
+// Do not color labels on success
+.has-success , .has-error .control-label{
+  color: $default-text-color;
+}
+
+.has-success{
+  .control-label, .no-feedback{
+    color: $default-text-color;
+  }
+
+  .input-group-btn{
+    button{
+      background-color: $state-success-bg;
+      border-color: $state-success-text;
+      color: $state-success-text;
+    }
+  }
+}
+
+.has-error{
+  .control-label, .no-feedback{
+    color: $default-text-color;
+  }
+
+  .input-group-btn{
+    button{
+      background-color: $state-danger-bg;
+      border-color: $state-danger-text;
+      color: $state-danger-text;
+    }
+  }
+}
+
+.form-group.has-feedback{
+  .form-control-feedback{
+    display: none;
+  }
+
+  &.has-success{
+    .form-control-feedback-ok{
+      display: block;
+    }
+  }
+
+  &.has-error{
+    .form-control-feedback-error{
+      display: block;
+    }
+  }
+}
+
 .navbar{
   &.navbar-default{
     background-color: $navigation-bar-background-color;

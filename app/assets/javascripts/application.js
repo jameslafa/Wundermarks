@@ -20,6 +20,7 @@ function documentReady(){
   trackClicks();
   startNewSearch();
   socialShare();
+  validateUsernameAvailability();
 }
 
 // Track clicks to external links for analytics
@@ -89,6 +90,52 @@ function showBookmarkDetailsOnMobile(){
     event.stopPropagation();
     $(this).parent('.bookmark').toggleClass('open');
     return false;
+  });
+}
+
+// Validate that the username is available while user is typing it
+function validateUsernameAvailability(){
+  // Make the AJAX request to validate the username
+  function checkUsername(username){
+    var input = $("#user_profile_username");
+    var username = input.val();
+
+    if(username.length > 0){
+      $.ajax({
+        url: '/autocomplete_search/username_available.json?q=' + username,
+        success: function(data, status){
+          if(data){
+            // Update message
+            $("#user_profile_username_help .validation_message").html(data.message + '<br/>');
+
+            // Update form-group classes to update colors
+            if(data.valid == true){
+              input.parents('.form-group').removeClass('has-error').addClass('has-success');
+            }
+            else{
+              input.parents('.form-group').removeClass('has-success').addClass('has-error');
+            }
+          }
+        },
+        timeout: 3000
+      });
+    }
+    else{
+      // If the username is empty, empty validation
+      $("#user_profile_username_help .validation_message").html('');
+      input.parents('.form-group').removeClass('has-error has-success');
+    }
+  }
+
+  // Check when the user click the check button
+  $(document).on("click", "body.c-user_profiles button.user_name_check", function(event){
+    checkUsername();
+  });
+
+  // Check while user is typing. Launched 200ms after the last keyup
+  $(document).on("keyup", "body.c-user_profiles #user_profile_username", function(event){
+    clearTimeout(window.checkUsernameTimer);
+    window.checkUsernameTimer = setTimeout(checkUsername, 200);
   });
 }
 

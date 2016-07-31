@@ -1,0 +1,20 @@
+<% if resource.errors.any? %>
+  <div class="row">
+    <div class="col-md-12 col-xs-12">
+      <div class="alert alert-danger" role="alert">
+        <strong><%= I18n.t('errors.template.header', count: resource.errors.count) %></strong>
+        <ul>
+          <% if full_message == true %>
+            <% resource.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          <% else %>
+            <% resource.errors.values.flatten.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% end %>

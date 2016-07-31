@@ -1,4 +1,18 @@
 en:
   errors:
-    http:
-      forbidden: You are not allowed to access this ressource
+    template:
+      header:
+        one: "An error prohibited your data from being saved:"
+        other: "%{count} error prohibited your data from being saved:"
+  activerecord:
+    errors:
+      models:
+        user_profile:
+          attributes:
+            username:
+              invalid: 'can have only letters and numbers'
+              cannot_be_erase: 'cannot be deleted. Please choose another username'
+        bookmark:
+          attributes:
+            tag_list:
+              too_many: 'are limited to 5'

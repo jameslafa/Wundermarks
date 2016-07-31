@@ -1,0 +1,5 @@
+<% if current_user && current_user.user_profile.username.blank? && @layout != 'popup' %>
+<div class="row top alert alert-warning missing_username" role="alert">
+  <div class="col-md-10 col-md-offset-1"><%= t("user_profiles.user_profile_item.no_username_html", reserve: link_to(t('user_profiles.user_profile_item.no_username_reserve'), edit_current_user_profile_path)) %></div>
+</div>
+<% end %>

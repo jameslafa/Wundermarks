@@ -1,6 +1,10 @@
-body.c-devise-sessions, body.c-devise-registrations, body.c-devise-passwords{
+body.c-devise-sessions, body.c-registrations, body.c-devise-passwords{
   .shared-links{
     margin-top: 1rem;
+
+    a.btn-block{
+      margin-top: 1rem;
+    }
   }
 }
 

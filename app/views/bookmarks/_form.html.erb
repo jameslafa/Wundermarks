@@ -1,14 +1,5 @@
 <%= form_for(@bookmark) do |f| %>
-<% if @bookmark.errors.any? %>
-<div id="error_explanation" class="alert alert-danger" role="alert">
-  <span class="alert-title"><%= t(".errors.title_html", errors: pluralize(@bookmark.errors.count, "error"))%></span>
-  <ul>
-    <% @bookmark.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-    <% end %>
-  </ul>
-</div>
-<% end %>
+<%= render partial: 'shared/form_errors', locals: { resource: @bookmark, full_message: true } %>
 
 <div class="form-group">
   <%= f.label :title, class: 'control-label' %>
@@ -36,10 +27,17 @@
   <span id="tag_list_help" class="help-block"><%= t('.tag_list_help')%></span>
 </div>
 
-<div class="actions">
+<div class="actions hidden-xs hidden-sm">
   <%= f.submit class: 'btn btn-primary' %>
   <% unless @layout == 'popup' %>
   <%= link_to t(".back_to_bookmarks"), bookmarks_path, class: 'btn btn-default pull-right' %>
+  <% end %>
+</div>
+
+<div class="actions hidden-md hidden-lg">
+  <%= f.submit class: 'btn btn-primary btn-block btn-lg' %>
+  <% unless @layout == 'popup' %>
+  <%= link_to t(".back_to_bookmarks"), bookmarks_path, class: 'btn btn-default btn-lg btn-block' %>
   <% end %>
 </div>
 <% end %>

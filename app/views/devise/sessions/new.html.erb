@@ -26,7 +26,8 @@
       <% end -%>
 
       <div class="actions">
-        <%= f.submit t(".actions.log_in"), class: 'btn btn-primary' %>
+        <%= f.submit t(".actions.log_in"), class: 'btn btn-primary hidden-xs hidden-sm' %>
+        <%= f.submit t(".actions.log_in"), class: 'btn btn-primary btn-block btn-lg hidden-md hidden-lg' %>
       </div>
     <% end %>
 

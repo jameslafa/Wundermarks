@@ -74,10 +74,8 @@ en:
     form:
       show_bookmark: "Show bookmark"
       back_to_bookmarks: "Back to bookmarks list"
-      tag_list_help: "Enter a list of maximum 5 tags separated by commas: ','"
+      tag_list_help: "Maximum 5 tags separated by commas: ','"
       tag_list_placeholder: "rails, javascript"
-      errors:
-        title_html: "<strong>%{errors}</strong> prohibited this bookmark from being saved:"
     new:
       upgrade_bookmarklet_html: 'Your bookmarklet is outdated. <a href="%{url}" class="alert-link">Upgrade your bookmarklet</a>'
 
@@ -96,8 +94,13 @@ en:
         edit: "Edit your profile"
     user_profile_item:
       member_since: "Member since %{days} days"
+      no_username_html: "You haven't choosen your username yet. %{reserve}"
+      no_username_reserve: "Reserve it now!"
     form:
       back_to_bookmarks: "Back to bookmarks list"
+      user_name_help: "Must contain only letters and number and be at least 5 characters long."
+      user_name_check: "Check availability"
+      username_available: "%{username} is available"
 
   confirmations:
     bookmark_delete: "Are you sure you want to delete this bookmark?"

@@ -4,8 +4,14 @@ class UserProfilesController < ApplicationController
 
   def show
     # If there is no id specified, we shot the current_user's profile
-    if params[:id]
-      @profile = UserProfile.find(params[:id])
+    if params[:id].present?
+      # If an id is given, it could be the username or the id.
+      # We check if it's a integer or a string to know
+      if params[:id].is_integer?
+        @profile = UserProfile.find(params[:id])
+      else
+        @profile = UserProfile.find_by!(username: params[:id])
+      end
     else
       @profile = get_current_user_profile
     end
@@ -42,6 +48,6 @@ class UserProfilesController < ApplicationController
   end
 
   def user_profile_params
-    params.require(:user_profile).permit(:name, :introduction)
+    params.require(:user_profile).permit(:name, :introduction, :username)
   end
 end

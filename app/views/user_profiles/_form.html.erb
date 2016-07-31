@@ -1,15 +1,5 @@
 <%= form_for(@profile, url: current_user_profile_path) do |f| %>
-  <% if @profile.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@profile.errors.count, "error") %> prohibited this bookmark from being saved:</h2>
-
-      <ul>
-      <% @profile.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render partial: 'shared/form_errors', locals: { resource: @profile, full_message: true } %>
 
   <div class="form-group">
     <%= f.label :name, class: 'control-label' %>
@@ -17,12 +7,29 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :username, class: 'control-label' %>
+    <div class="input-group">
+      <span class="input-group-addon hidden-xs hidden-sm">@</span>
+      <%= f.text_field :username, class: 'form-control', autocomplete: 'off', autocorrect: 'off', autocapitalize: 'off', 'aria-describedby': "user_profile_username" %>
+      <span class="input-group-btn">
+        <button class="btn btn-default user_name_check" type="button"><%= t(".user_name_check") %></button>
+      </span>
+    </div>
+    <span id="user_profile_username_help" class="help-block"><span class="validation_message"></span><%= t(".user_name_help") %></span>
+  </div>
+
+  <div class="form-group">
     <%= f.label :introduction, class: 'control-label' %>
     <%= f.text_area :introduction, class: 'form-control' %>
   </div>
 
-  <div class="actions">
+  <div class="actions hidden-xs hidden-sm">
     <%= f.submit class: 'btn btn-primary' %>
-    <%= link_to t(".back_to_bookmarks"), bookmarks_path, class: 'btn btn-default pull-right' %>
+    <%= link_to t(".back_to_bookmarks"), bookmarks_path, class: 'btn btn-default pull-right hidden-xs hidden-sm' %>
+  </div>
+
+  <div class="actions hidden-md hidden-lg">
+    <%= f.submit class: 'btn btn-primary btn-block btn-lg' %>
+    <%= link_to t(".back_to_bookmarks"), bookmarks_path, class: 'btn btn-default btn-block btn-lg' %>
   </div>
 <% end %>

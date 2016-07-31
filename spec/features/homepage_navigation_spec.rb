@@ -1,5 +1,6 @@
 feature 'HomepageNavigation' do
   include BookmarksHelper
+  include UserProfilesHelper
   include ActionView::Helpers::DateHelper
 
   let(:user_profile) { create(:user_profile)}
@@ -29,7 +30,7 @@ feature 'HomepageNavigation' do
           expect(page).to have_link(last_bookmark.title, href: bookmark_permalink(last_bookmark))
         end
         within('.user') do
-          expect(page).to have_link(last_bookmark.user.user_profile.name, href: user_profile_path(last_bookmark.user.user_profile))
+          expect(page).to have_link(last_bookmark.user.user_profile.name, href: user_profile_permalink(last_bookmark.user.user_profile))
         end
         within('.link') do
           expect(page).to have_link(last_bookmark.url_domain, href: bookmark_url(last_bookmark, redirect: 1))
