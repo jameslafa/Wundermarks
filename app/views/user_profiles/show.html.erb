@@ -1,8 +1,10 @@
+<% if current_user && current_user == @profile.user %>
 <div class="row main-actions">
   <div class="col-md-12">
     <%= link_to t(".action.edit"), edit_current_user_profile_path, class: 'btn btn-primary' %>
   </div>
 </div>
+<% end %>
 
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
