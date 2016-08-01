@@ -97,7 +97,7 @@ en:
       no_username_html: "You haven't choosen your username yet. %{reserve}"
       no_username_reserve: "Reserve it now!"
     form:
-      back_to_bookmarks: "Back to bookmarks list"
+      back_to_profile: "Cancel"
       user_name_help: "Must contain only letters and numbers and be at least 5 characters long"
       user_name_check: "Check availability"
       username_available: "%{username} is available"

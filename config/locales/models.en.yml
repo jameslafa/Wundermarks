@@ -14,3 +14,7 @@ en:
         subject: Subject
         from: From
         text: Message
+      user_profile:
+        name: Name
+        username: Username
+        introduction: Introduce yourself

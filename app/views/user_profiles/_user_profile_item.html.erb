@@ -12,9 +12,7 @@
     </div>
   </div>
   <div class="panel-body">
-    <p>
-      <%= simple_format profile.introduction %>
-    </p>
+    <%= text_to_html profile.introduction %>
   </div>
   <div class="panel-footer">
     <%= t(".member_since", days: (Time.now.to_date - profile.created_at.to_date).to_i) %>

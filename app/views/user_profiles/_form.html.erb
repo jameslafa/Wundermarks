@@ -25,11 +25,11 @@
 
   <div class="actions hidden-xs hidden-sm">
     <%= f.submit class: 'btn btn-primary' %>
-    <%= link_to t(".back_to_bookmarks"), bookmarks_path, class: 'btn btn-default pull-right hidden-xs hidden-sm' %>
+    <%= link_to t(".back_to_profile"), current_user_profile_path, class: 'btn btn-default pull-right hidden-xs hidden-sm' %>
   </div>
 
   <div class="actions hidden-md hidden-lg">
     <%= f.submit class: 'btn btn-primary btn-block btn-lg' %>
-    <%= link_to t(".back_to_bookmarks"), bookmarks_path, class: 'btn btn-default btn-block btn-lg' %>
+    <%= link_to t(".back_to_profile"), current_user_profile_path, class: 'btn btn-default btn-block btn-lg' %>
   </div>
 <% end %>

@@ -10,4 +10,23 @@ RSpec.describe 'ApplicationHelper', :type => :helper do
     end
   end
 
+  describe 'text_to_html' do
+    it 'removes any unwanted tags' do
+      bad_string = '<b>bold</b><strong>strong</strong><em>emphasys</em><i>italic</i><img src="http://google.fr/image.jpg"/><script>bad_thing();</script>'
+      good_string = '<p><b>bold</b><strong>strong</strong><em>emphasys</em><i>italic</i>bad_thing();</p>'
+      expect(text_to_html(bad_string)).to eq good_string
+    end
+
+    it 'adds html new lines' do
+      string_with_new_line = "first_line\nnew_line"
+      string_with_html_new_line = "<p>first_line\n<br />new_line</p>"
+      expect(text_to_html(string_with_new_line)).to eq string_with_html_new_line
+    end
+
+    it 'transform urls to links with target: _blank and rel: nofollow' do
+      string_with_url = "my webpage is https://wundermarks.com"
+      string_with_link = '<p>my webpage is <a href="https://wundermarks.com" target="_blank" rel="nofollow">https://wundermarks.com</a></p>'
+    end
+  end
+
 end
