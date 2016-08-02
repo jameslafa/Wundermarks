@@ -80,6 +80,7 @@ en:
       title_length: Title length
       description_length: Description length
       max: max.
+      cancel: 'Cancel and close'
     new:
       upgrade_bookmarklet_html: 'Your bookmarklet is outdated. <a href="%{url}" class="alert-link">Upgrade your bookmarklet</a>'
 

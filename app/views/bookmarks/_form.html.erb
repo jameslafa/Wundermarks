@@ -31,14 +31,18 @@
 
 <div class="actions hidden-xs hidden-sm">
   <%= f.submit class: 'btn btn-primary' %>
-  <% unless @layout == 'popup' %>
+  <% if @layout == 'popup' %>
+  <a href="javascript:window.opener.focus();window.close();" class='btn btn-default pull-right'><%= t(".cancel") %></a>
+  <% else %>
   <%= link_to t(".back_to_bookmarks"), bookmarks_path, class: 'btn btn-default pull-right' %>
   <% end %>
 </div>
 
 <div class="actions hidden-md hidden-lg">
   <%= f.submit class: 'btn btn-primary btn-block btn-lg' %>
-  <% unless @layout == 'popup' %>
+  <% if @layout == 'popup' %>
+    <a href="javascript:window.opener.focus();window.close();" class='btn btn-default btn-block btn-lg'><%= t(".cancel") %></a>
+  <% else %>
   <%= link_to t(".back_to_bookmarks"), bookmarks_path, class: 'btn btn-default btn-lg btn-block' %>
   <% end %>
 </div>
