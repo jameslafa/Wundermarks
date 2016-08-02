@@ -261,6 +261,17 @@ RSpec.describe BookmarksController, type: :controller do
           expect(assigns(:bookmark).description).to eq "Find everything and spies on you"
         end
 
+        it "shortens title and description to match model requirement" do
+          given_title = "a" * 100
+          expected_title = ("a" * 77) + "..."
+          description = "b" * 300
+          given_description = ("b" * 252) + "..."
+
+          get :new, url: "https://www.google.com/", title: given_title, description: given_description
+          expect(assigns(:bookmark).title).to eq expected_title
+          expect(assigns(:bookmark).description).to eq given_description
+        end
+
         context "with url parameter layout == popup" do
           it "renders the layout popup" do
             get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", layout: "popup"

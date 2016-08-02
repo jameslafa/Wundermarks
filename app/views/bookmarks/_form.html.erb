@@ -3,7 +3,8 @@
 
 <div class="form-group">
   <%= f.label :title, class: 'control-label' %>
-  <%= f.text_field :title, class: 'form-control' %>
+  <%= f.text_field :title, class: 'form-control', autofocus: true, maxlength: Bookmark::MAX_TITLE_LENGTH, autocomplete: 'off' %>
+  <div id="bookmark_title_help" class="help-block"><%= t(".title_length") %>: <strong><span class="title-length"><%= @bookmark.title.try(:size) || 0 %></span>/<%= Bookmark::MAX_TITLE_LENGTH %></strong> <%= t(".max") %></div>
 </div>
 
 <div class="form-group">
@@ -13,7 +14,8 @@
 
 <div class="form-group">
   <%= f.label :description, class: 'control-label' %>
-  <%= f.text_area :description, class: 'form-control' %>
+  <%= f.text_area :description, class: 'form-control', maxlength: Bookmark::MAX_DESCRIPTION_LENGTH %>
+  <div id="bookmark_description_help" class="help-block"><%= t(".description_length") %>: <strong><span class="description-length"><%= @bookmark.description.try(:size) || 0 %></span>/<%= Bookmark::MAX_DESCRIPTION_LENGTH %></strong> <%= t(".max") %></div>
 </div>
 
 <div class="form-group">

@@ -13,6 +13,11 @@ class Bookmark < ActiveRecord::Base
   acts_as_ordered_taggable
 
 
+  # Constants
+
+  MAX_TITLE_LENGTH = 80
+  MAX_DESCRIPTION_LENGTH = 255
+
   # Associations
   belongs_to :user
   has_many :bookmark_trackings, dependent: :destroy
@@ -20,8 +25,8 @@ class Bookmark < ActiveRecord::Base
 
   # Validations
   validates :title, :url, :user, presence: true
-  validates :title, length: { maximum: 80 }
-  validates :description, length: { maximum: 255 }, allow_blank: true
+  validates :title, length: { maximum: Bookmark::MAX_TITLE_LENGTH }
+  validates :description, length: { maximum: Bookmark::MAX_DESCRIPTION_LENGTH }, allow_blank: true
   validate :max_5_tags
 
 

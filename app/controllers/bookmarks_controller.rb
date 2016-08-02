@@ -33,6 +33,8 @@ class BookmarksController < ApplicationController
   # GET /bookmarks/new
   def new
     @bookmark = Bookmark.new(bookmarklet_params)
+    @bookmark.title = @bookmark.title.truncate(Bookmark::MAX_TITLE_LENGTH) if @bookmark.title.present?
+    @bookmark.description = @bookmark.description.truncate(Bookmark::MAX_DESCRIPTION_LENGTH) if @bookmark.description.present?
 
     respond_to do |format|
       if params[:layout] == 'popup'

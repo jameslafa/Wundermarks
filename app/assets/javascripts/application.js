@@ -21,6 +21,7 @@ function documentReady(){
   startNewSearch();
   socialShare();
   validateUsernameAvailability();
+  bookmarkAttributeLength();
 }
 
 // Track clicks to external links for analytics
@@ -136,6 +137,17 @@ function validateUsernameAvailability(){
   $(document).on("keyup", "body.c-user_profiles #user_profile_username", function(event){
     clearTimeout(window.checkUsernameTimer);
     window.checkUsernameTimer = setTimeout(checkUsername, 200);
+  });
+}
+
+// Count Title and Description length on Bookmark#new
+function bookmarkAttributeLength(){
+  $(document).on("keyup", ".c-bookmarks.a-new #bookmark_title", function(event){
+    $("#bookmark_title_help .title-length").text($(this).val().length);
+  });
+
+  $(document).on("keyup", ".c-bookmarks.a-new #bookmark_description", function(event){
+    $("#bookmark_description_help .description-length").text($(this).val().length);
   });
 }
 
