@@ -64,13 +64,14 @@ en:
       bookmark:
         details: Details
     show:
-      edit_bookmark: "Edit bookmark"
       back_to_bookmarks: "Back to bookmarks list"
       share:
         title: Share this bookmark with your friends
         help_html: Click on your favorite social media to share this link.<br/> If no popup appears, you have a popup blocker. Right click on the icon and select <em>open in a new tab</em>.
       action:
         index: "Back to list"
+        edit: "Edit"
+        delete: "Delete"
     form:
       show_bookmark: "Show bookmark"
       back_to_bookmarks: "Back to bookmarks list"
