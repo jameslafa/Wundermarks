@@ -2,10 +2,12 @@
 
 @font-face {
   font-family: 'Hipstelvetica';
-  src: url('/assets/hipstelvetica_ultralight.eot'); /* IE9 Compat Modes */
-  src: url('/assets/hipstelvetica_ultralight.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('/assets/hipstelvetica_ultralight.woff2') format('woff2'), /* Super Modern Browsers */
-       url('/assets/hipstelvetica_ultralight.woff') format('woff'), /* Pretty Modern Browsers */
-       url('/assets/hipstelvetica_ultralight.ttf')  format('truetype'), /* Safari, Android, iOS */
-       url('/assets/hipstelvetica_ultralight.svg#svgFontName') format('svg'); /* Legacy iOS */
+  src: font-url('hipstelvetica_ultralight.eot'); /* IE9 Compat Modes */
+  src: font-url('hipstelvetica_ultralight.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       font-url('hipstelvetica_ultralight.woff2') format('woff2'), /* Super Modern Browsers */
+       font-url('hipstelvetica_ultralight.woff') format('woff'), /* Pretty Modern Browsers */
+       font-url('hipstelvetica_ultralight.ttf')  format('truetype'), /* Safari, Android, iOS */
+       font-url('hipstelvetica_ultralight.svg#svgFontName') format('svg'); /* Legacy iOS */
+  font-weight: 300;
+  font-style: normal;
 }
