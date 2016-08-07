@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to t('header.navigation.brand'), root_path, class: "navbar-brand" %>
+      <%= link_to t('header.navigation.brand'), feed_path, class: "navbar-brand" %>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -35,7 +35,7 @@
       <ul class="nav navbar-nav navbar-right">
         <% if current_user %>
         <li><%= link_to t('header.navigation.bookmarks'), bookmarks_path %></a></li>
-        <li><%= link_to t('header.navigation.home'), root_path %></a></li>
+        <li><%= link_to t('header.navigation.feed'), feed_path %></a></li>
         <% end %>
       </ul>
 

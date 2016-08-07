@@ -61,13 +61,15 @@ en:
       signed_out: ""
       already_signed_out: "Signed out successfully."
       new:
-        title: "Log in"
+        title: "Sign in"
         actions:
-          log_in: "Log in"
+          log_in: "Sign in"
     unlocks:
       send_instructions: "You will receive an email with instructions for how to unlock your account in a few minutes."
       send_paranoid_instructions: "If your account exists, you will receive an email with instructions for how to unlock it in a few minutes."
       unlocked: "Your account has been unlocked successfully. Please sign in to continue."
+    common:
+      back_homepage: "Back to the homepage"
   errors:
     messages:
       already_confirmed: "was already confirmed, please try signing in"

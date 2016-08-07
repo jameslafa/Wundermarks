@@ -5,15 +5,16 @@ feature 'MissingUsername' do
 
     login_as(user, :scope => :user)
 
-    visit root_path
+    visit bookmarks_path
     expect(page).to have_css ".alert.missing_username"
     find(".alert.missing_username a").click
 
     expect(current_path).to eq edit_current_user_profile_path
+    expect(page).not_to have_css ".alert.missing_username"
     fill_in("Username", with: 'johnsnow')
     first('input[name="commit"]').click
 
-    visit root_path
+    visit bookmarks_path
     expect(page).not_to have_css ".alert.missing_username"
   end
 end

@@ -1,0 +1,15 @@
+.c-feed{
+  &.a-index{
+    .main-actions{
+      margin-bottom: 2rem;
+
+      .actions{
+        text-align: right;
+
+        @media(max-width:$screen-md-min){
+          margin-bottom: 1rem;
+        }
+      }
+    }
+  }
+}

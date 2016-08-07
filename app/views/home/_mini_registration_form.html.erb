@@ -1,0 +1,54 @@
+<%= form_for(@user, url: user_registration_path, html: {class: 'mini-registration-form col-md-12 col-lg-10 col-lg-offset-1 hidden-xs hidden-sm'}) do |f| %>
+<div class="col-md-3 col-sm-6">
+  <%= f.email_field :email, autofocus: true, class: 'form-control input-lg', required: true, placeholder: User.human_attribute_name(:email) %>
+</div>
+<%= f.fields_for :user_profile do |up| %>
+<div class="col-md-3 col-sm-6">
+  <%= up.text_field :name, class: 'form-control input-lg', required: true, placeholder: User.human_attribute_name(:name) %>
+</div>
+<% end %>
+<div class="col-md-3 col-sm-6">
+  <%= f.password_field :password, autocomplete: "off", class: 'form-control input-lg', required: true, placeholder: User.human_attribute_name(:password) %>
+</div>
+<div class="col-md-3 col-sm-6">
+  <%= f.submit t("home.index.actions.sign_up"), class: 'sign-up btn btn-primary btn-block btn-lg' %>
+</div>
+<% end %>
+
+<%= form_for(@user, url: user_registration_path, html: {class: 'mini-registration-form sm col-sm-12 hidden-xs hidden-md hidden-lg'}) do |f| %>
+<div class="row input-line">
+  <div class="col-sm-6">
+    <%= f.email_field :email, autofocus: true, class: 'form-control input-lg', required: true, placeholder: User.human_attribute_name(:email) %>
+  </div>
+  <%= f.fields_for :user_profile do |up| %>
+  <div class="col-sm-6">
+    <%= up.text_field :name, class: 'form-control input-lg', required: true, placeholder: User.human_attribute_name(:name) %>
+  </div>
+  <% end %>
+</div>
+<div class="row input-line">
+  <div class="col-md-3 col-sm-6">
+    <%= f.password_field :password, autocomplete: "off", class: 'form-control input-lg', required: true, placeholder: User.human_attribute_name(:password) %>
+  </div>
+  <div class="col-md-3 col-sm-6">
+    <%= f.submit t("home.index.actions.sign_up"), class: 'sign-up btn btn-primary btn-block btn-lg' %>
+  </div>
+  <% end %>
+</div>
+
+<%= form_for(@user, url: user_registration_path, html: {class: 'mini-registration-form xs hidden-sm hidden-md hidden-lg'}) do |f| %>
+  <div class="form-group col-xs-12">
+    <%= f.email_field :email, autofocus: true, class: 'form-control input-lg', required: true, placeholder: User.human_attribute_name(:email) %>
+  </div>
+  <div class="form-group col-xs-12">
+    <%= f.fields_for :user_profile do |up| %>
+    <%= up.text_field :name, class: 'form-control input-lg', required: true, placeholder: User.human_attribute_name(:name) %>
+    <% end %>
+  </div>
+  <div class="form-group col-xs-12">
+    <%= f.password_field :password, autocomplete: "off", class: 'form-control input-lg', required: true, placeholder: User.human_attribute_name(:password) %>
+  </div>
+  <div class="form-group col-xs-12">
+    <%= f.submit t("home.index.actions.sign_up"), class: 'sign-up btn btn-primary btn-block btn-lg' %>
+  </div>
+<% end %>

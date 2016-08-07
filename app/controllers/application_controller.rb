@@ -10,6 +10,14 @@ class ApplicationController < ActionController::Base
   # In the resource's controller, just override user_not_authorized.
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  def after_sign_in_path_for(resource)
+    if resource.user_profile.username.present?
+      feed_path
+    else
+      edit_current_user_profile_path
+    end
+  end
+
   private
 
   # Default method to handle Pundit user_not_authorized error. Redifine this

@@ -17,7 +17,7 @@ module Wundermarks
     # config.time_zone = 'Central Time (US & Canada)'
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-    config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :en
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
@@ -27,6 +27,15 @@ module Wundermarks
     config.autoload_paths << Rails.root.join('lib')
 
     # use sidekiq for ActiveJob
-    config.active_job.queue_adapter = :sidekiq    
+    config.active_job.queue_adapter = :sidekiq
+
+    # Override default template for devise
+    config.to_prepare do
+      Devise::SessionsController.layout "devise"
+      Devise::RegistrationsController.layout proc{ |controller| user_signed_in? ? "application" : "devise" }
+      Devise::ConfirmationsController.layout "devise"
+      Devise::UnlocksController.layout "devise"
+      Devise::PasswordsController.layout "devise"
+    end
   end
 end

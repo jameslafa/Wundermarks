@@ -1,0 +1,20 @@
+<div class="row main-actions">
+  <div class="actions col-md-12">
+    <%= link_to "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> #{t('actions.create_bookmark')}".html_safe, new_bookmark_path, class: 'btn btn-primary' %>
+  </div>
+</div>
+
+<% if @bookmarks.size > 0 %>
+<% @bookmarks.each do |bookmark| %>
+<div class="row">
+  <div class="bookmark">
+    <div class="col-md-5 title"><%= link_to bookmark.title, bookmark_permalink(bookmark) %></div>
+    <div class="details">
+      <div class="col-md-3 link"><span class="glyphicon glyphicon-link"></span> <%= link_to bookmark.url_domain, bookmark_url(bookmark, redirect: 1), target: '_blank' %> <span class="hidden-md hidden-lg pull-right"><span class="glyphicon glyphicon-bookmark"></span> <%= link_to t(".bookmark.details"), bookmark_permalink(bookmark)%></span></div>
+      <div class="col-md-2 user"><span class="glyphicon glyphicon-user"></span> <%= link_to bookmark.user.user_profile.name, user_profile_permalink(bookmark.user.user_profile) %></div>
+      <div class="col-md-2 time"><span class="glyphicon glyphicon-time"></span> <%= t(".time_ago", time: time_ago_in_words(bookmark.created_at)) %></div>
+    </div>
+  </div>
+</div>
+<% end %>
+<% end %>

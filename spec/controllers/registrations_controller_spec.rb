@@ -18,9 +18,9 @@ RSpec.describe RegistrationsController, type: :controller do
         expect(UserProfile.last.user_id).to eq(User.last.id)
       end
 
-      it 'redirects to the homepage' do
+      it 'redirects to the edit profile page' do
         post :create, {user: valid_params}
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to edit_current_user_profile_path
       end
 
       it "posts a slack notification" do

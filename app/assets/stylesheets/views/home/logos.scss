@@ -1,0 +1,14 @@
+.c-home{
+  &.a-logos{
+    background-color: $navigation-bar-background-color;
+    padding-top: 200px;
+    text-align: center;
+
+    .logo{
+      color: #fff;
+      font-family: "Hipstelvetica", "Helvetica";
+      font-size: 15rem;
+      text-shadow: 2px 2px 2px #333;
+    }
+  }
+}

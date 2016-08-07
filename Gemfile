@@ -73,6 +73,9 @@ gem 'where-or'
 # Transform text to html
 gem 'rinku'
 
+# Embed inline svg
+gem 'inline_svg'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

@@ -1,27 +1,83 @@
-<div class="row main-actions">
-  <div class="actions col-md-6 col-md-push-6">
-    <%= render "shared/search_bookmark", mobile: true, q: @q %>
-    <% if current_user %>
-    <%= link_to "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> #{t('.action.new_bookmark')}".html_safe, new_bookmark_path, class: 'btn btn-primary' %>
-    <% end %>
-  </div>
-</div>
-
-<% if @bookmarks.size > 0 %>
-<% @bookmarks.each do |bookmark| %>
-<div class="row">
-  <div class="bookmark">
-    <div class="col-md-5 title"><%= link_to bookmark.title, bookmark_permalink(bookmark) %></div>
-    <div class="details">
-      <div class="col-md-3 link"><span class="glyphicon glyphicon-link"></span> <%= link_to bookmark.url_domain, bookmark_url(bookmark, redirect: 1), target: '_blank' %> <span class="hidden-md hidden-lg pull-right"><span class="glyphicon glyphicon-bookmark"></span> <%= link_to t(".bookmark.details"), bookmark_permalink(bookmark)%></span></div>
-      <div class="col-md-2 user"><span class="glyphicon glyphicon-user"></span> <%= link_to bookmark.user.user_profile.name, user_profile_permalink(bookmark.user.user_profile) %></div>
-      <div class="col-md-2 time"><span class="glyphicon glyphicon-time"></span> <%= t(".time_ago", time: time_ago_in_words(bookmark.created_at)) %></div>
+<div class="row home-navbar">
+  <div class="col-md-12">
+    <span class="logo">W</span>
+    <div class="actions">
+      <% if current_user %>
+        <%= link_to t(".navbar.feed"), feed_path, class: 'btn btn-default' %>
+      <% else %>
+        <%= link_to t(".navbar.sign_in"), new_user_session_path, class: 'btn btn-default' %>
+      <% end %>
     </div>
   </div>
 </div>
-<% end %>
-<% else %>
-<div class="row">
-  <div class="col-md-12 text-center"><div class="nothing_found"><%= t(".search.nothing_found_html")%></div></div>
+
+<div class="row teaser">
+  <div class="col-md-12">
+    <div class="row brand">
+      <div class="col-md-12">
+        <span class="first-letter">W</span>undermarks
+      </div>
+    </div>
+    <div class="row register">
+      <%= render partial: "mini_registration_form" %>
+    </div>
+  </div>
 </div>
-<% end %>
+
+<div class="row explanations">
+  <div class="col-sm-4 col-md-4 explanation love-it">
+    <div class="content">
+      <div class="title"><%= t(".explanations.love_it.title") %></div>
+      <p><%= t(".explanations.love_it.content") %></p>
+    </div>
+  </div>
+  <div class="col-sm-4 col-md-4 explanation save-it">
+    <div class="content">
+      <div class="title"><%= t(".explanations.save_it.title") %></div>
+      <p><%= t(".explanations.save_it.content") %></p>
+    </div>
+  </div>
+  <div class="col-sm-4 col-md-4 explanation share-it">
+    <div class="content">
+      <div class="title"><%= t(".explanations.find_it.title") %></div>
+      <p><%= t(".explanations.find_it.content") %></p>
+    </div>
+  </div>
+</div>
+
+<div class="promises">
+  <div class="row promise safe">
+    <div class="col-sm-3 col-md-3 col-md-offset-1 icon">
+      <%= inline_svg 'icons/noun_564854_cc', title: 'Bank vault by Icon Fair from the Noun Project' %>
+    </div>
+    <div class="col-sm-9 col-md-6 description">
+      <div class="title"><%= t(".promises.keep_safe.title") %></div>
+      <p><%= t(".promises.keep_safe.content") %></p>
+    </div>
+  </div>
+  <div class="row promise access">
+    <div class="col-md-3 icon visible-xs">
+      <%= inline_svg 'icons/noun_565021_cc.svg', title: 'Globe by Icon Fair from the Noun Project' %>
+    </div>
+    <div class="col-sm-9 col-md-6 col-md-offset-2 description">
+      <div class="title"><%= t(".promises.access.title") %></div>
+      <p><%= t(".promises.access.content") %></p>
+    </div>
+    <div class="col-sm-3 col-md-3 icon hidden-xs">
+      <%= inline_svg 'icons/noun_565021_cc.svg', title: 'Globe by Icon Fair from the Noun Project' %>
+    </div>
+  </div>
+  <div class="row promise privacy">
+    <div class="col-sm-3 col-md-3 col-md-offset-1 icon">
+      <%= inline_svg 'icons/noun_484233_cc.svg', title: 'Invisible by Gregor Črešnar from the Noun Project' %>
+    </div>
+    <div class="col-sm-9 col-md-6 description">
+      <div class="title"><%= t(".promises.privacy.title") %></div>
+      <p><%= t(".promises.privacy.content") %></p>
+    </div>
+  </div>
+
+  <div class="row register-bottom">
+    <%= render partial: "mini_registration_form" %>
+  </div>
+</div>

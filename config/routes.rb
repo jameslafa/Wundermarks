@@ -18,6 +18,9 @@ Rails.application.routes.draw do
     get '/autocomplete_search/username_available'  => "autocomplete_search#username_available"
   end
 
-  get "/tools", to: "home#tools"
+  get "/tools",   to: "home#tools"
+  get "/logos",   to: "home#logos"
+  get "/feed",    to: "feed#index"
+
   root to: "home#index"
 end

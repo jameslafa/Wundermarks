@@ -9,10 +9,6 @@ feature 'UpgradeBookmarklet' do
     # On the popup we do not display the alert
     expect(page).not_to have_css ".alert.upgrade_bookmarklet"
 
-    #  When he navigate to another page, it displays the alert
-    visit root_path
-    expect(page).to have_css ".alert.upgrade_bookmarklet"
-
     #  It keeps displaying it until he goes on the tools page
     visit bookmarks_path
     expect(page).to have_css ".alert.upgrade_bookmarklet"

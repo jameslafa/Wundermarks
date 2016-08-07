@@ -1,7 +1,7 @@
 <div class="shared-links">
   <% mobile_btn_class = 'btn btn-default btn-block btn-lg hidden-md hidden-lg' %>
   <%- if controller_name != 'sessions' %>
-    <p class="hidden-xs hidden-sm"><%= link_to "Log in", new_session_path(resource_name) %></p>
+    <p class="hidden-xs hidden-sm"><%= link_to "Sign in", new_session_path(resource_name) %></p>
     <%= link_to "Log in", new_session_path(resource_name), class: mobile_btn_class, type:"button" %>
   <% end -%>
 
@@ -31,4 +31,7 @@
       <%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), class: mobile_btn_class %>
     <% end -%>
   <% end -%>
+
+  <p class="hidden-xs hidden-sm"><%= link_to t("devise.common.back_homepage"), root_path %></p>
+  <%= link_to t("devise.common.back_homepage"), root_path, class: mobile_btn_class %>
 </div>

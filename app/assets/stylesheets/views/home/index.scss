@@ -1,0 +1,238 @@
+.c-home{
+  &.a-index{
+    background-color: #fff;
+    color: $default-text-color;
+    font-weight: 300;
+    padding: 0;
+
+    .home-navbar{
+      background-color: $navigation-bar-background-color;
+      color: #fff;
+      padding-top: 10px;
+      position: relative;
+      text-align: center;
+
+      .logo{
+        font-family: "Hipstelvetica", "Helvetica";
+        font-size: 3rem;
+        text-shadow: 1px 1px 1px #333;
+        vertical-align: top;
+      }
+
+      .actions{
+        right: 15px;
+        position: absolute;
+        top: 5px;
+
+        .btn{
+          background-color: $navigation-bar-background-color;
+          border-color: #fff;
+          color: #fff;
+          margin-top: 8px;
+          vertical-align: top;
+        }
+      }
+
+
+      @media (max-width: $screen-xs-max) {
+        text-align: left;
+      }
+    }
+
+    .teaser{
+      background: $navigation-bar-background-color image-url("homepage/teaser_bg.jpg") no-repeat center center;
+      background-attachment: fixed;
+      background-size: cover;
+      box-shadow: 0px 0px 5px 1px darken($navigation-bar-background-color, 20%);
+      color: #fff;
+      height: 600px;
+
+      .brand{
+        color: #fff;
+        font-size: 4rem;
+        margin-top: 100px;
+        text-align: center;
+        text-transform: uppercase;
+        text-shadow: 1px 1px 2px #333;
+
+        .first-letter{
+          font-size: 2.5em;
+          font-family: "Hipstelvetica", 'Open Sans', sans-serif;
+        }
+      }
+
+      .register{
+        form.mini-registration-form {
+          margin-top: 180px;
+          background-color: rgba(0,0,0,0.2);
+          padding: 10px 0;
+
+          &.xs{
+            background: none;
+            margin-top: 30px;
+          }
+
+          &.sm{
+            background: none;
+            margin-top: 140px;
+          }
+        }
+
+        a.sign-up{
+          &.xs{
+            margin-top: 30px;
+          }
+        }
+      }
+
+      @media (max-width: $screen-xs-max) {
+        &{
+          background-image: none;
+          background-color: darken($navigation-bar-background-color, 10%);
+          box-shadow: none;
+          height: auto;
+        }
+        .brand{
+          font-size: 1.8rem;
+          margin-top: 60px;
+        }
+      }
+    }
+
+    form.mini-registration-form {
+      border-radius: 5px;
+      display: inline-block;
+      text-align: left;
+
+      .input-line{
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+
+        &:last-child{
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .btn.sign-up{
+      background-color: #FF9900;
+      border-color: #FF9900;
+      text-shadow: 1px 1px 1px #555;
+      font-weight: bold;
+    }
+
+    .explanations{
+      margin-top: 30px;
+      text-align: center;
+
+      .explanation{
+        .content{
+          font-size: 1.3rem;
+          line-height: 2.2rem;
+          margin-left: auto;
+          margin-right: auto;
+          max-width: 350px;
+
+          .title{
+            font-size: 2rem;
+            line-height: 3.5rem;
+            text-shadow: 1px 1px 1px #aaa;
+          }
+        }
+      }
+
+      @media (max-width: $screen-xs-max) {
+        margin-top: 50px;
+
+        .explanation{
+          .content{
+            max-width: 100%;
+          }
+        }
+      }
+    }
+
+    .promises{
+      margin-top: 80px;
+
+      .promise{
+        margin-bottom: 4rem;
+        margin-top: 4rem;
+
+        .icon{
+          text-align: center;
+
+          svg{
+            fill: $default-text-color;
+            height: auto;
+            max-width: 100%;
+            vertical-align: top;
+            width: 140px;
+          }
+        }
+
+        .description{
+          text-align: left;
+          font-size: 1.3rem;
+          line-height: 2.2rem;
+
+          .title{
+            font-size: 2rem;
+            margin-bottom: 1rem;
+          }
+        }
+
+        &.safe{
+          svg{
+            margin-top: 12px;
+          }
+        }
+
+        &.privacy{
+          svg{
+            margin-top: 13px;
+          }
+        }
+      }
+    }
+
+    @media (max-width: $screen-xs-max) {
+      .promises{
+        margin-top: 50px;
+
+        .promise{
+          margin-bottom: 1rem;
+          margin-top: 1rem;
+
+          .icon{
+            svg{
+              width: 25%;
+            }
+          }
+          .description{
+            text-align: center;
+          }
+
+          &.safe{
+            svg{
+              margin-top: 0;
+              margin-bottom: 5px;
+            }
+          }
+
+          &.privacy{
+            svg{
+              margin-top: 0;
+            }
+          }
+        }
+      }
+    }
+
+    .register-bottom{
+      background-color: $navigation-bar-background-color;
+      padding: 20px 0;
+    }
+  }
+}

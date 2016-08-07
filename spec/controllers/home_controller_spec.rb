@@ -4,67 +4,25 @@ RSpec.describe HomeController, type: :controller do
   include Helpers
 
   describe "GET #index" do
-    let(:user) { create(:user) }
-    let(:other_user) { create(:user) }
-
-    let!(:bookmarks) { create_list(:bookmark, 3, user: user) }
-    let!(:other_user_bookmarks) { create_list(:bookmark, 2, user: other_user) }
-    let!(:other_user_private_bookmarks) { create_list(:bookmark_visible_to_only_me, 3, user: other_user) }
-
-    context 'when no user is signed_in' do
-      context 'without query parameter' do
-        let(:visible_bookmarks) { [bookmarks, other_user_bookmarks].flatten }
-
-        it "assigns only visible bookmarks as @bookmarks" do
-          get :index
-          expect(assigns(:bookmarks)).to match_array(visible_bookmarks)
-        end
-
-        it "sorts the bookmarks list by reverse chronology" do
-          ordered_list = visible_bookmarks.sort { |x,y| y.created_at <=> x.created_at }
-          get :index
-          expect(assigns(:bookmarks)).to eq(ordered_list)
-        end
+    context "when the user is not signed_in" do
+      it "assigns a new user with a profile" do
+        get :index
+        expect(assigns(:user)).to be_a_new User
+        expect(assigns(:user).user_profile).to be_a_new UserProfile
       end
 
-      context 'with a query parameter' do
-        before(:each) do
-          @searched_bookmark = bookmarks.second
-          @searched_bookmark.update_attributes({title: "I love Ruby on Rails"})
-          other_user_private_bookmarks.first.update_attributes({title: "I love Ruby on Rails"})
-        end
-
-        it "assigns all visible bookmarks matching the search results" do
-          get :index, q: 'rails'
-          expect(assigns(:bookmarks)).to eq([@searched_bookmark])
-        end
+      it "renders the index template with homepage layout" do
+        get :index
+        expect(response).to render_template(:index, :layout => "homepage")
       end
     end
 
-    context 'when the user is signed_in' do
-      before(:each) { sign_in_user(other_user) }
+    context "when the user is signed_in" do
+      before(:each) { sign_in_user }
 
-      context 'without query parameter' do
-        let(:visible_bookmarks) { [bookmarks, other_user_bookmarks, other_user_private_bookmarks].flatten }
-
-        it "assigns only visible bookmarks as @bookmarks" do
-          get :index
-          expect(assigns(:bookmarks)).to match_array(visible_bookmarks)
-        end
-      end
-
-      context 'with a query parameter' do
-        before(:each) do
-          @searched_bookmark = bookmarks.second
-          @searched_bookmark.update_attributes({title: "I love Ruby on Rails"})
-          @private_searched_bookmark = other_user_private_bookmarks.first
-          @private_searched_bookmark.update_attributes({title: "I love Ruby on Rails"})
-        end
-
-        it "assigns all visible bookmarks matching the search results" do
-          get :index, q: 'rails'
-          expect(assigns(:bookmarks)).to match_array([@private_searched_bookmark, @searched_bookmark])
-        end
+      it "redirects the user to his feed" do
+        get :index
+        expect(response).to redirect_to feed_path
       end
     end
   end

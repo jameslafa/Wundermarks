@@ -1,0 +1,28 @@
+en:
+  home:
+    index:
+      navbar:
+        sign_in: "Sign in"
+        feed: "My feed"
+      explanations:
+        love_it:
+          title: "Love it"
+          content: "Find amazing content on Internet, something you need to find again later."
+        save_it:
+          title: "Save it"
+          content: "In 2 clicks, bookmark it! It is saved and secure on Wundermarks, forever."
+        find_it:
+          title: "Find it"
+          content: "In a second, find it and enjoy! You will never loose anything again."
+      promises:
+        keep_safe:
+          title: "Keep what you love safe"
+          content: "Just add anything you want to Wundermarks and we make sure you never loose it. We save it on multiple servers and we backup your data 8 times per day!"
+        access:
+          title: "Access it from anywhere"
+          content: "Find your bookmarks anywhere you are, from any computer, mobile or tablet. The only thing you need is an internet connection."
+        privacy:
+          title: "We respect your privacy"
+          content: "Your data is safe. We do not share anything with any third party. We have no Google analytics, no Facebook or Twitter button. Everything you do and share with Wundermarks, stays with Wundermarks."
+      actions:
+        sign_up: "Sign up, it's free!"

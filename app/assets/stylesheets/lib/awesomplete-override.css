@@ -7,24 +7,26 @@ div.awesomplete > ul{
 }
 
 div.awesomplete > ul > li:hover {
-  background: darken($primary-color, 2%);
-  color: black;
+  background: $navigation-bar-text-color;
+  color: $navigation-bar-background-color;
 }
 
 div.awesomplete > ul > li[aria-selected="true"] {
-  background: darken($primary-color, 25%);
-  color: white;
+  background: $navigation-bar-text-color;
+  color: $navigation-bar-background-color;
 }
 
 div.awesomplete mark {
-  background: $secondary-color;
+  background: $ternary-color;
+  color: $navigation-bar-background-color;
 }
 
 div.awesomplete li:hover mark {
-  background: $secondary-color;
+  background: $ternary-color;
+  color: $navigation-bar-background-color;
 }
 
 div.awesomplete li[aria-selected="true"] mark {
-  background: darken($secondary-color, 25%);
-  color: inherit;
+  background: $ternary-color;
+  color: $navigation-bar-background-color;
 }

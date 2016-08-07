@@ -1,9 +1,52 @@
-body.c-devise-sessions, body.c-registrations, body.c-devise-passwords{
+body.devise{
+  background-color: $navigation-bar-background-color;
+  color: #fff;
+
+  h2{
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  .devise-navbar{
+    background-color: $navigation-bar-background-color;
+    color: #fff;
+    padding-top: 10px;
+    position: relative;
+    text-align: center;
+
+    .logo{
+      font-family: "Hipstelvetica", "Helvetica";
+      font-size: 3rem;
+      text-shadow: 1px 1px 1px #333;
+      vertical-align: top;
+    }
+  }
+
+  label{
+    font-weight: 600;
+  }
+  
+  .btn-primary{
+    background-color: darken($navigation-bar-background-color, 5%);
+    border-color: lighten($navigation-bar-background-color, 10%);
+    margin-top: 1rem;
+  }
+
   .shared-links{
     margin-top: 1rem;
 
-    a.btn-block{
-      margin-top: 1rem;
+    a {
+      color: $navigation-bar-text-color;
+
+      &.btn-default{
+        background-color: $navigation-bar-text-color;
+        border-color: $navigation-bar-text-color;
+        color: $navigation-bar-background-color;
+      }
+
+      &.btn-block{
+        margin-top: 1rem;
+      }
     }
   }
 }

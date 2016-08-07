@@ -152,12 +152,12 @@
   }
 }
 
-.c-home, .c-bookmarks{
+.c-feed, .c-bookmarks{
   &.a-index{
     .search-bookmark-mobile{
       margin-bottom: 2rem;
     }
-    
+
     .bookmark{
       border-bottom: 1px solid #eee;
       line-height: 4rem;
