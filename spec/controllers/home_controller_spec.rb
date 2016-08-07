@@ -20,9 +20,18 @@ RSpec.describe HomeController, type: :controller do
     context "when the user is signed_in" do
       before(:each) { sign_in_user }
 
-      it "redirects the user to his feed" do
-        get :index
-        expect(response).to redirect_to feed_path
+      context 'without no_redirect=1' do
+        it "redirects the user to his feed" do
+          get :index
+          expect(response).to redirect_to feed_path
+        end
+      end
+
+      context 'with no_redirect=1' do
+        it "renders the index template with homepage layout" do
+          get :index, no_redirect: "1"
+          expect(response).to render_template(:index, :layout => "homepage")
+        end
       end
     end
   end
