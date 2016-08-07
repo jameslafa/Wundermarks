@@ -23,14 +23,20 @@ RSpec.describe AutocompleteSearchController, type: :controller do
 
   context 'with a signed_in user' do
     let(:current_user) { create(:user_profile, username: 'james').user }
+    let(:other_user) { create(:user_profile, username: 'johnsnow').user }
 
     before(:each) { sign_in_user(current_user) }
 
     describe 'GET #tags' do
       before(:each) do
-        create(:bookmark, tag_list: 'rails1, rails2, rails3')
-        create(:bookmark, tag_list: 'rails1, rails2, rails4')
-        create(:bookmark, tag_list: 'rails2, rails5, rails6')
+        create(:bookmark, tag_list: 'rails1, rails2, rails3', user: current_user)
+        create(:bookmark, tag_list: 'rails1, rails2, rails4', user: current_user)
+        create(:bookmark, tag_list: 'rails2, rails5, rails6', user: current_user)
+
+        # Another user create bookmarks with the tag rails7. It shouldn't appear in the list
+        create(:bookmark, tag_list: 'rails7', user: other_user)
+        create(:bookmark, tag_list: 'rails7', user: other_user)
+        create(:bookmark, tag_list: 'rails7', user: other_user)
       end
 
       context 'when no query parameter is given' do
@@ -42,7 +48,7 @@ RSpec.describe AutocompleteSearchController, type: :controller do
 
       context 'when a query parameter :q is given' do
         context 'when :q matches tags' do
-          it 'returns the list of tags matching the query' do
+          it 'returns the list of tags created but the current_user matching the query' do
             get :tags, format: :json, q: 'ra'
             expect(response_body).to be_a Array
             expect(response_body[0]).to eq 'rails2'

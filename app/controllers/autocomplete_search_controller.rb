@@ -1,13 +1,14 @@
 class AutocompleteSearchController < ApplicationController
   before_action :authenticate_user!
 
-  # Find tags maching the query for tag suggestion
+  # Find tags maching the query for tag suggestion, only in tags used buy the user
   def tags
-    results = []
+    @tags = []
 
     if @q = params[:q]
       if @q.size > 1
-        results = ActsAsTaggableOn::Tag
+        @tags = current_user.bookmarks.tag_counts_on(:tags)
+          .select([:name, :taggings_count])
           .where("name LIKE :search", search: "#{@q}%")
           .order(taggings_count: :desc)
           .limit(5)
@@ -15,7 +16,7 @@ class AutocompleteSearchController < ApplicationController
       end
     end
 
-    render json: results
+    render json: @tags
   end
 
   # Control that the username is available for the current_user

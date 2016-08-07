@@ -77,19 +77,18 @@
 
     .tags{
       a.tag, span.tag{
-        background-color: lighten($ternary-color, 10%);
+        background-color: $navigation-bar-background-color;
         border: 1px solid #888;
         border-radius: $border-radius-base;
-        color: #555;
+        color: $navigation-bar-text-color;
         display: inline-block;
         margin: 0 3px;
-        padding: 0 4px;
+        padding: 2px 5px;
         text-decoration: none;
         transition: all .3s;
 
         &:hover{
-          background-color: #555;
-          color: #ddd;
+          background-color: darken($navigation-bar-background-color, 15%);
         }
 
         &:first-of-type{
