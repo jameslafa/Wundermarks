@@ -1,5 +1,9 @@
-class CreateEmails < ActiveRecord::Migration
-  def change
+class DropEmails < ActiveRecord::Migration
+  def up
+    drop_table :emails
+  end
+
+  def down
     create_table :emails do |t|
       t.belongs_to :user, index: true, foreign_key: true, null: true
       t.string :from

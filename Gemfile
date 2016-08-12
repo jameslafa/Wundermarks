@@ -50,7 +50,7 @@ gem 'acts-as-taggable-on', '~> 3.4'
 gem 'config'
 
 # Send email with mailgun
-gem 'mailgun-ruby'
+gem 'mailgun_rails'
 
 # Slack notifications
 gem 'slack-notifier'

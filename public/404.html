@@ -1,67 +1,92 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>The page you were looking for doesn't exist (404)</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-  body {
-    background-color: #EFEFEF;
-    color: #2E2F30;
-    text-align: center;
-    font-family: arial, sans-serif;
-    margin: 0;
-  }
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wundermarks</title>
+    <script type="text/javascript">
+      function spamSpan(){for(var a=getElementsByClass(spamSpanMainClass,document,"span"),e=0;e<a.length;e++){for(var n=getSpanValue(spamSpanUserClass,a[e]),s=getSpanValue(spamSpanDomainClass,a[e]),t=getSpanValue(spamSpanAnchorTextClass,a[e]),p=[],l=0;l<spamSpanParams.length;l++){var r=getSpanValue(spamSpanParams[l],a[e]);r&&p.push(spamSpanParams[l]+"="+encodeURIComponent(r))}var m=String.fromCharCode(64),o=cleanSpan(n)+m+cleanSpan(s),d=document.createTextNode(t?t:o),c=String.fromCharCode(109,97,105,108,116,111,58),u=c+o;u+=p.length?"?"+p.join("&"):"";var S=document.createElement("a");S.className=spamSpanMainClass,S.setAttribute("href",u),S.appendChild(d),a[e].parentNode.replaceChild(S,a[e])}}function getElementsByClass(a,e,n){var s=[];null==e&&(node=document),null==n&&(n="*");for(var t=e.getElementsByTagName(n),p=t.length,l=RegExp("(^|s)"+a+"(s|$)"),r=0,m=0;p>r;r++)l.test(t[r].className)&&(s[m]=t[r],m++);return s}function getSpanValue(a,e){var n=getElementsByClass(a,e,"span");return n[0]?n[0].firstChild.nodeValue:!1}function cleanSpan(a){return a=a.replace(/[\[\(\{]?[dD][oO0][tT][\}\)\]]?/g,"."),a=a.replace(/\s+/g,"")}function addEvent(a,e,n){a.addEventListener?a.addEventListener(e,n,!1):a.attachEvent&&(a["e"+e+n]=n,a[e+n]=function(){a["e"+e+n](window.event)},a.attachEvent("on"+e,a[e+n]))}var spamSpanMainClass="spamspan",spamSpanUserClass="u",spamSpanDomainClass="d",spamSpanAnchorTextClass="t",spamSpanParams=["subject","body"];addEvent(window,"load",spamSpan);
+    </script>
+    <style>
+      html{
+        font-size: 16px;
+      }
+      body{
+        font-family: sans-serif;
+        padding: 0;
+        margin: 0;
+      }
+      header{
+        background-color: #555B6E;
+        border-bottom: 1px solid #fff;
+        color: #ecedf0;
+        font-size: 2rem;
+        padding: 0.5rem;
+        text-align: center;
+        width: 100%;
+      }
 
-  div.dialog {
-    width: 95%;
-    max-width: 33em;
-    margin: 4em auto 0;
-  }
+      .error{
+        color: #555;
+        font-size: 1.3rem;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 800px;
+        padding: 1rem;
+      }
 
-  div.dialog > div {
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-    background-color: white;
-    padding: 7px 12% 0;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
+      .error .icon{
+        text-align: center;
+      }
+      .error .icon svg{
+        height: 200px;
+        width: auto;
+      }
 
-  h1 {
-    font-size: 100%;
-    color: #730E15;
-    line-height: 1.5em;
-  }
+      .error .icon svg path{
+        fill: #333;
+      }
 
-  div.dialog > p {
-    margin: 0 0 1em;
-    padding: 1em;
-    background-color: #F7F7F7;
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-color: #DADADA;
-    color: #666;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
-  </style>
-</head>
+      .error .icon svg circle{
+        fill: #333;
+      }
 
-<body>
-  <!-- This file lives in public/404.html -->
-  <div class="dialog">
-    <div>
-      <h1>The page you were looking for doesn't exist.</h1>
-      <p>You may have mistyped the address or the page may have moved.</p>
+      .error a, .error a:visited{
+        color: #000;
+        font-weight: bold;
+      }
+
+      .go-back{
+        font-size: 1.6rem;
+        margin-top: 2rem;
+        text-align: center;
+      }
+
+      .go-back a, .go-back a:visited{
+        background-color: #555B6E;
+        border: 1px solid #000;
+        border-radius: 5px;
+        color: #ecedf0;
+        padding: 0.75rem 1rem;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>Wundermarks</header>
+
+    <div class="error">
+      <div class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve" title="Owl by Julien Meysmans from the Noun Project"><circle cx="42.026" cy="37.087" r="4.765"/><circle cx="57.974" cy="37.087" r="4.765"/><path fill-rule="evenodd" clip-rule="evenodd" d="M68.847,15.276H33.492L17.123,7.201v74.857c0,0-1.091,13.095,12.44,13.095  c13.53,0,38.411,0,38.411,0s14.622-1.308,14.622-15.495c0-14.186,0-72.457,0-72.457L68.847,15.276z M35.769,47.994  c-6.203,0-11.232-5.028-11.232-11.231s5.029-11.231,11.232-11.231C41.971,25.531,47,30.559,47,36.762S41.971,47.994,35.769,47.994z   M51.839,53.52l-1.989,4.26l-1.99-4.26l-1.99-4.258h3.98h3.979L51.839,53.52z M64.216,47.994c-6.203,0-11.231-5.028-11.231-11.231  s5.028-11.231,11.231-11.231s11.231,5.028,11.231,11.231S70.419,47.994,64.216,47.994z"/></svg>
+      </div>
+      <p>The page you are looking for does not exist. This is a bit awkward!</p>
+      <p>If you haven't tried to do anything you should be ashamed of, please send me an email at <span class="spamspan"><span class="u">admin</span>@<span class="d">wundermarks.com</span> (<span class="subject">Error 404</span>)</span> to help me fix this problem.</p>
+      <p>Thank you for you help!<br/>James</p>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
-  </div>
-</body>
+
+    <div class="go-back">
+      <a href="/">Go back to the homepage</a>
+    </div>
+  </body>
 </html>

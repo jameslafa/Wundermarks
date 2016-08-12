@@ -8,10 +8,6 @@ Rails.application.routes.draw do
   get '/bookmarks/:id/:title', to: 'bookmarks#show', as: 'bookmark_permalink'
   get '/b/:id', to: 'bookmarks#show', as: 'bookmark_shortlink'
 
-  resources :emails, only: [:new, :create]
-  get '/emails', to: "emails#new"
-  get '/contact', to: "emails#new", as: 'contact'
-
   # JSON only
   scope :format => true, :constraints => { :format => 'json' } do
     get '/autocomplete_search/tags'                => "autocomplete_search#tags"

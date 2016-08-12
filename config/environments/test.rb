@@ -48,4 +48,10 @@ Rails.application.configure do
 
   Rails.application.default_url_options = config.action_mailer.default_url_options
   Rails.application.routes.default_url_options = config.action_mailer.default_url_options
+
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {
+          api_key: Rails.application.secrets.mailgun_api_key,
+          domain: Settings.mailgun.domain
+  }
 end
