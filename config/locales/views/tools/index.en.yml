@@ -1,0 +1,13 @@
+en:
+  tools:
+    index:
+      title: "Wundertools"
+      introduction: "We built a few tools to enhance your experience on Wundermarks."
+      bookmarklet:
+        title: "Bookmarklet"
+        description: "Create a bookmark from any website in 2 clicks."
+        action: "Install the bookmarklet"
+      import:
+        title: "Import your bookmarks"
+        description: "Import your existing bookmarks from Delicious"
+        action: "Import your bookmarks"

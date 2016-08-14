@@ -1,0 +1,23 @@
+en:
+  tools:
+    import:
+      title: "Import your bookmarks from Delicious"
+      introduction: "You have bookmarks on Delicious? Don't worry, with a few clicks you can import them all, with their tags, to Wundermarks."
+      export_delicious:
+        title: "How to export your bookmarks from Delicious"
+        steps:
+          step_1_html: "Connect to <a href=\"https://del.icio.us\" target=\"_blank\">Delicious</a>"
+          step_2_html: "On the top right of the page, click on <strong>Profile</strong> and then <strong>Settings</strong>"
+          step_3_html: "Click on the tab <strong>Export</strong>"
+          step_4_html: "Deselect <strong>Include My Notes</strong> and click on the button <strong>Export</strong>"
+          step_5_html: "Save the file <strong>delicious.html</strong> somewhere you can easily find it later, like your Desktop."
+        more_help: "Get more help"
+      upload:
+        title: "Import bookmarks to Wundermarks"
+        form:
+          file_label: "Select the file delicious.html downloaded from Delicious"
+          submit: "Import to Wundermarks"
+        errors:
+          wrong_file_type: |
+            The uploaded file type is incorrect. You must upload the html file you have downloaded from Delicious<br/>
+            <a href=%{url} class=" alert-link">Click here to see how to download file from delicious</a>.

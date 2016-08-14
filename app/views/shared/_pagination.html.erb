@@ -1,0 +1,6 @@
+<div class="row pagination-wrapper hidden-xs hidden-sm">
+  <%= will_paginate resource, renderer: BootstrapPagination::Rails %>
+</div>
+<div class="row pagination-wrapper hidden-md hidden-lg">
+  <%= will_paginate resource, renderer: BootstrapPagination::Rails, page_links: false %>
+</div>

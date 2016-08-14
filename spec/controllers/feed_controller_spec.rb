@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FeedController, type: :controller do
   include Helpers
-  
+
   describe "GET #index" do
     let(:user) { create(:user) }
     let(:other_user) { create(:user) }
@@ -22,7 +22,7 @@ RSpec.describe FeedController, type: :controller do
       before(:each) { sign_in_user(other_user) }
 
       context 'without query parameter' do
-        let(:visible_bookmarks) { [bookmarks, other_user_bookmarks, other_user_private_bookmarks].flatten }
+        let(:visible_bookmarks) { bookmarks + other_user_bookmarks + other_user_private_bookmarks }
 
         it "assigns only visible bookmarks as @bookmarks" do
           get :index
@@ -41,6 +41,26 @@ RSpec.describe FeedController, type: :controller do
         it "assigns all visible bookmarks matching the search results" do
           get :index, q: 'rails'
           expect(assigns(:bookmarks)).to match_array([@private_searched_bookmark, @searched_bookmark])
+        end
+      end
+
+      context 'when there are more than 25 bookmarks' do
+        let(:visible_bookmarks) { bookmarks + other_user_bookmarks + other_user_private_bookmarks }
+
+        it 'paginates the bookmarks list' do
+          bookmarks = visible_bookmarks + create_list(:bookmark, 25, user: other_user)
+          get :index
+          expect(assigns(:bookmarks)).to match_array(bookmarks.last(25))
+          get :index, page: 2
+          expect(assigns(:bookmarks)).to match_array(bookmarks.first(bookmarks.size - 25))
+        end
+
+        it 'paginates the search results' do
+          bookmarks = create_list(:bookmark, 28, user: other_user, title: 'ATRFGE')
+          get :index, q: 'ATRFGE'
+          expect(assigns(:bookmarks).to_a.size).to eq 25
+          get :index, q: 'ATRFGE', page: '2'
+          expect(assigns(:bookmarks).to_a.size).to eq 3
         end
       end
     end

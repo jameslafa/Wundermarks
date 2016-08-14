@@ -8,9 +8,12 @@
 @import "fonts";
 @import "devise";
 @import "views/home/index";
-@import "views/home/tools";
 @import "views/home/logos";
 @import "views/feed/index";
+@import "views/tools/index";
+@import "views/tools/bookmarklet";
+@import "views/tools/import";
+@import "views/tools/imported";
 @import "bookmarks";
 @import "user_profiles";
 

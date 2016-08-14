@@ -21,29 +21,6 @@ en:
   actions:
     create_bookmark: "Add a bookmark"
 
-  home:
-    tools:
-      title: "Useful tools"
-      bookmarklet:
-        title: "Bookmarklet"
-        link_title: "+ Add to Wundermarks"
-        introduction: This bookmarklet helps you create quickly a bookmark from any web page.
-        instructions:
-          see_tutorial: Watch the tutorial
-          installation_html: |
-            <p><strong>How to install it?</strong></p>
-            <ul>
-              <li>Make sure your bookmarks bar is visible. If not, go in the <u>View menu</u> of your browser</li>
-              <li>Drag the button '+ Add to Wundermarks' below and drop it into your bookmark toolbar</li>
-            </ul>
-            <p>Safari users need to enable third party cookies to remain logged in to the bookmarklet. This can be done by going to your Safari Preferences, selecting Privacy, and setting Block cookies and other website data to Never.</p>
-          usage_html: |
-            <p><strong>How to use it?</strong></p>
-            <ul>
-              <li>Go to your favorite website, click on the button '+ Add to Wundermarks' in your bookmarks bar and a popup will open</li>
-              <li><em>Tip:</em>Before clicking on the button '+ Add to Wundermarks', select a paragraph on the page and it will automatically fill the description of your bookmark</li>
-            </ul>
-
   bookmarks:
     index:
       time_ago: "%{time} ago"

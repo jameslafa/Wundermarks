@@ -1,0 +1,8 @@
+en:
+  layouts:
+    mailer:
+      signature_html: "All the best,<br/>James"
+      see_bookmarks: "See your bookmarks"
+      any_question: "If you have any questions, just reply to this email."
+      built_with_love: "Wundermarks is built with love and awesomeness in Berlin."
+      follow_us: "Follow us to get the latest news!"

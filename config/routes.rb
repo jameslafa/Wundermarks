@@ -10,11 +10,19 @@ Rails.application.routes.draw do
 
   # JSON only
   scope :format => true, :constraints => { :format => 'json' } do
-    get '/autocomplete_search/tags'                => "autocomplete_search#tags"
-    get '/autocomplete_search/username_available'  => "autocomplete_search#username_available"
+    get '/autocomplete_search/tags',                to: "autocomplete_search#tags"
+    get '/autocomplete_search/username_available',  to: "autocomplete_search#username_available"
   end
 
-  get "/tools",   to: "home#tools"
+  scope '/tools' do
+    get   '/',            to: "tools#index",        as: 'tools'
+    get   '/bookmarklet', to: "tools#bookmarklet",  as: 'bookmarklet_tool'
+    get   '/import',      to: "tools#import",       as: 'import_tool'
+    post  '/import',      to: "tools#import_file",  as: 'import_file_tool'
+    get   '/imported',    to: "tools#imported",     as: 'imported_tool'
+  end
+
+
   get "/logos",   to: "home#logos"
   get "/feed",    to: "feed#index"
 

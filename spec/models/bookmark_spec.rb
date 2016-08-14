@@ -4,6 +4,7 @@ RSpec.describe Bookmark, type: :model do
   it { is_expected.to belong_to :user }
   it { is_expected.to have_many(:bookmark_trackings).dependent(:destroy) }
 
+  it { is_expected.to validate_uniqueness_of(:url).scoped_to(:user_id) }
   it { is_expected.to validate_presence_of :title }
   it { is_expected.to validate_presence_of :url }
   it { is_expected.to validate_presence_of :user }
@@ -11,6 +12,7 @@ RSpec.describe Bookmark, type: :model do
   it { is_expected.to validate_length_of(:description).is_at_most(255) }
 
   it { is_expected.to define_enum_for(:privacy).with({everyone: 1, only_me: 2, friends: 3}) }
+  it { is_expected.to define_enum_for(:source).with({wundermarks: 0, delicious: 1}) }
 
   describe 'scopes' do
     describe 'belonging_to' do
@@ -29,6 +31,23 @@ RSpec.describe Bookmark, type: :model do
         bookmark_visible_to_only_me = create(:bookmark, privacy: 2, user: user)
 
         expect(Bookmark.visible_to_everyone).to match_array bookmarks_visible_to_everyone
+      end
+    end
+
+    describe 'last_first' do
+      it 'returns bookmarks ordered :desc' do
+        user = create(:user)
+        bookmarks = create_list(:bookmark, 3)
+        expect(Bookmark.last_first).to eq bookmarks.reverse
+      end
+    end
+
+    describe 'paginated' do
+      it 'returns bookmarks paginated bookmarks' do
+        user = create(:user)
+        bookmarks = create_list(:bookmark, 28)
+        expect(Bookmark.paginated("1").size).to eq 25
+        expect(Bookmark.paginated("2").reload.size).to eq 3
       end
     end
   end
@@ -120,6 +139,13 @@ RSpec.describe Bookmark, type: :model do
         "twitter" => 14,
         "total" => 39
       })
+    end
+  end
+
+  describe 'source' do
+    it 'is set to wundermarks per default' do
+      bookmark = Bookmark.new(user_id: 1, title: 'title', url: 'https://url.com')
+      expect(bookmark.source).to eq 'wundermarks'
     end
   end
 end

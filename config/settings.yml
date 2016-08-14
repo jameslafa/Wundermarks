@@ -1,6 +1,8 @@
 mailgun:
-  from: 'Wundermarks <james@wundermarks.com>'
-  admin_email: 'Wundermarks <admin@wundermarks.com>'
+  from: 'James Lafa <james@wundermarks.com>'
+  admin_email: 'James Lafa <admin@wundermarks.com>'
+  admin_email_address: 'admin@wundermarks.com'
+  admin_notification_address: 'admin+notification@wundermarks.com'
 
 facebook:
   app_id: '1746824045575538'

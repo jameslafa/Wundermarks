@@ -169,6 +169,41 @@ RSpec.describe BookmarksController, type: :controller do
           expect(flash[:notice]).to eq I18n.t("bookmarks.index.search.search_all_wundermarks", count: 1, search_all_url: feed_path(q: 'rails'))
         end
       end
+
+      context 'when a post_import parameter is defined' do
+        let!(:delicious_bookmarks) { create_list(:bookmark, 3, user: subject.current_user, source: 'delicious') }
+
+        it "assigns all bookmarks imported by the service" do
+          get :index, post_import: 'delicious'
+          expect(assigns(:bookmarks)).to match_array(delicious_bookmarks)
+        end
+      end
+
+      context 'when the user has more than 25 bookmarks' do
+        it 'paginates the bookmarks list' do
+          bookmarks = current_user_bookmarks + create_list(:bookmark, 25, user: subject.current_user)
+          get :index
+          expect(assigns(:bookmarks)).to match_array(bookmarks.last(25))
+          get :index, page: 2
+          expect(assigns(:bookmarks)).to match_array(bookmarks.first(3))
+        end
+
+        it 'paginates the search results' do
+          bookmarks = create_list(:bookmark, 28, user: subject.current_user, title: 'ATRFGE')
+          get :index, q: 'ATRFGE'
+          expect(assigns(:bookmarks).to_a.size).to eq 25
+          get :index, q: 'ATRFGE', page: '2'
+          expect(assigns(:bookmarks).to_a.size).to eq 3
+        end
+
+        it 'paginates the delicious imports' do
+          bookmarks = create_list(:bookmark, 28, user: subject.current_user, source: 'delicious')
+          get :index, post_import: 'delicious'
+          expect(assigns(:bookmarks)).to match_array(bookmarks.last(25))
+          get :index, post_import: 'delicious', page: '2'
+          expect(assigns(:bookmarks)).to match_array(bookmarks.first(3))
+        end
+      end
     end
 
     describe "GET #show" do

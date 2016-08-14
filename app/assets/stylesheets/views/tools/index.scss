@@ -1,0 +1,27 @@
+.c-tools{
+  &.a-index{
+    .page-title{
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .introduction{
+      margin-bottom: 3rem;
+    }
+
+    .tool{
+      margin-top: 2rem;
+
+      .title{
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+
+        a, a:visited{
+          color: $default-text-color;
+        }
+      }
+    }
+  }
+}

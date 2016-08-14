@@ -3,11 +3,11 @@ class FeedController < ApplicationController
 
   def index
     if params[:q].present? and @q = params[:q]
-      @bookmarks = policy_scope(Bookmark).search(@q)
+      @bookmarks = policy_scope(Bookmark).search(@q).paginated(params[:page])
       ahoy.track "feed-index", {q: @q}
     else
-      @bookmarks = policy_scope(Bookmark).order(created_at: :desc)
-      ahoy.track "feed-index", nil unless request.headers["No-Tracking"].present?
+      @bookmarks = policy_scope(Bookmark).paginated(params[:page]).last_first
+      ahoy.track "feed-index", nil
     end
   end
 end

@@ -1,0 +1,10 @@
+`<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="page-title"><%= t('.title') %></div>
+    <div class="icon hidden-xs hidden-sm"><span class="glyphicon glyphicon-refresh"></span></div>
+    <div class="description"><%= t('.description_html') %></div>
+    <div class="actions">
+      <%= link_to t(".back_to_feed"), feed_path, class: 'btn btn-default back' %>
+    </div>
+  </div>
+</div>

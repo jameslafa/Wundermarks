@@ -1,0 +1,44 @@
+.c-tools{
+  &.a-bookmarklet{
+    .page-title{
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    .introduction{
+      margin-bottom: 2rem;
+    }
+    
+    .instructions{
+      margin-top: 2rem;
+
+      .installation{
+        margin-bottom: 2rem;
+      }
+
+      .help-video{
+        background-color: #eee;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+        text-align: center;
+
+        img{
+          box-shadow: 0px 0px 10px 2px #aaa;
+          height: auto;
+          max-width: 90%;
+        }
+      }
+
+      .move{
+        cursor: move;
+      }
+    }
+
+    .btn.btn-default{
+      font-weight: 600;
+    }
+  }
+}

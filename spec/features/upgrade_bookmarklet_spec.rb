@@ -14,7 +14,10 @@ feature 'UpgradeBookmarklet' do
     expect(page).to have_css ".alert.upgrade_bookmarklet"
 
     # When the user visit the tool page, we stop displaying it
-    visit tools_path
+    visit bookmarklet_tool_path
+    expect(page).not_to have_css ".alert.upgrade_bookmarklet"
+
+    visit bookmarks_path
     expect(page).not_to have_css ".alert.upgrade_bookmarklet"
   end
 end

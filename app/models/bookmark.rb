@@ -24,6 +24,7 @@ class Bookmark < ActiveRecord::Base
 
 
   # Validations
+  validates_uniqueness_of :url, scope: :user_id
   validates :title, :url, :user, presence: true
   validates :title, length: { maximum: Bookmark::MAX_TITLE_LENGTH }
   validates :description, length: { maximum: Bookmark::MAX_DESCRIPTION_LENGTH }, allow_blank: true
@@ -32,6 +33,8 @@ class Bookmark < ActiveRecord::Base
 
   # Scopes
   scope :belonging_to, lambda { |user| where(:user => user) }
+  scope :last_first, lambda { |order = nil| order(created_at: (order || :desc)) }
+  scope :paginated, lambda { |page_number| paginate(page: page_number) }
   scope :visible_to_everyone, -> { where(privacy: 1) }
 
 
@@ -48,6 +51,11 @@ class Bookmark < ActiveRecord::Base
     'everyone': 1,
     'only_me': 2,
     'friends': 3
+  }
+
+  enum source: {
+    'wundermarks': 0,
+    'delicious': 1
   }
 
 

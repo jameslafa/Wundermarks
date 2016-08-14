@@ -16,3 +16,5 @@ en:
           attributes:
             tag_list:
               too_many: 'are limited to 5'
+            url:
+              taken: 'has already been bookmarked'

@@ -76,6 +76,13 @@ gem 'rinku'
 # Embed inline svg
 gem 'inline_svg'
 
+# Use MJML for email
+gem 'mjml-rails'
+
+# Pagination
+gem 'will_paginate', '~> 3.1.0'
+gem 'will_paginate-bootstrap'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -128,6 +135,7 @@ group :test do
   gem 'webmock'
   # Feature tests
   gem 'capybara'
+  gem 'capybara-email'
 end
 
 group :production do

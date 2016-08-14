@@ -1,3 +1,5 @@
+require 'sidekiq/api'
+
 class SidekiqUtil
 
   def self.queues

@@ -1,0 +1,5 @@
+en:
+  mailers:
+    import_mailer:
+      delicious_finish:
+        subject: "Your bookmarks have been imported!"

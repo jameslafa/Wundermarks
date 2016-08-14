@@ -7,11 +7,16 @@ class BookmarksController < ApplicationController
   # GET /bookmarks.json
   def index
     if params[:q].present? and @q = params[:q]
-      @bookmarks = Bookmark.belonging_to(current_user).search(@q)
+      @bookmarks = Bookmark.belonging_to(current_user).search(@q).paginated(params[:page])
       ahoy.track "bookmarks-search", q: @q, results_count: @bookmarks.try(:count)
       flash.now[:notice] = I18n.t("bookmarks.index.search.search_all_wundermarks", count: @bookmarks.count, search_all_url: feed_path(q: @q))
+
+    elsif params[:post_import].present? and @source = params[:post_import] and Bookmark.sources.keys.include?(@source)
+      @bookmarks = Bookmark.belonging_to(current_user).where(source: Bookmark.sources[@source]).paginated(params[:page]).last_first
+      ahoy.track "bookmarks-post_import", source: @source, count: @bookmarks.count
+
     else
-      @bookmarks = Bookmark.belonging_to(current_user).order(created_at: :desc)
+      @bookmarks = Bookmark.belonging_to(current_user).paginated(params[:page]).last_first
       ahoy.track "bookmarks-index", nil
     end
   end

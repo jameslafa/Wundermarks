@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="page-title"><%= t('.title') %></div>
+
+    <% unless @errors.present? %>
+    <div class="introduction"><%= t('.introduction') %></div>
+
+    <div class="export-delicious">
+      <div class="title"><%= t(".export_delicious.title") %></div>
+      <ol>
+        <li><%= t(".export_delicious.steps.step_1_html") %></li>
+        <li><%= t(".export_delicious.steps.step_2_html") %></li>
+        <li><%= t(".export_delicious.steps.step_3_html") %></li>
+        <li><%= t(".export_delicious.steps.step_4_html") %></li>
+        <li><%= t(".export_delicious.steps.step_5_html") %></li>
+      </ol>
+
+      <a href="#instructions-image" class="btn btn-default" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="instructions-image"><%= t(".export_delicious.more_help") %></a>
+      <div class="collapse" id="instructions-image">
+        <div class="help-image">
+          <%= image_tag('help/delicious_tutorial.png') %>
+        </div>
+      </div>
+    </div>
+    <% end %>
+
+    <div class="upload">
+      <div class="title"><%= t(".upload.title") %></div>
+
+      <% if @errors.present? %>
+      <div class="alert alert-danger" role="alert">
+        <%= @errors %>
+      </div>
+      <% end %>
+
+      <%= form_tag({action: :import_file}, multipart: true) do %>
+      <div class="form-group">
+        <%= label_tag :delicious, t(".upload.form.file_label"), class: 'control-label' %>
+        <%= file_field_tag :delicious, accept: 'text/html' %>
+      </div>
+
+      <%= submit_tag(t(".upload.form.submit"), class: 'btn btn-primary') %>
+      <% end %>
+    </div>
+  </div>
+</div>

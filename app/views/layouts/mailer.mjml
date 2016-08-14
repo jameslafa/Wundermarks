@@ -1,0 +1,68 @@
+<mjml>
+  <mj-head>
+    <mj-font name="Open Sans" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" />
+    <mj-attributes>
+      <mj-text padding="0" />
+      <mj-class name="btn-lg" color="white" border-radius="5px" font-weight="600" font-size="20px"/>
+      <mj-class name="btn-green" background-color="#00AA72"/>
+      <mj-class name="btn-blue" background-color="#0D58A6"/>
+      <mj-class name="btn-yellow" background-color="#FF9900"/>
+      <mj-all font-family="Open Sans, sans-serif" font-size="14px"/>
+    </mj-attributes>
+  </mj-head>
+  <mj-body>
+    <mj-container>
+      <!-- Company Header -->
+      <mj-section background-color="#555b6e">
+        <mj-column>
+          <mj-text font-weight="300" align="center" color="#fff" font-size="30"><a style="text-decoration:none;color:#fff;" href="https://wundermarks.com" target="_blank">Wundermarks</a></mj-text>
+        </mj-column>
+      </mj-section>
+
+      <!-- Email content -->
+      <%= yield %>
+
+      <!-- Signature -->
+      <mj-section padding-left="10px" padding-right="10px">
+        <mj-column>
+          <mj-text><%= t(".signature_html") %></mj-text>
+        </mj-column>
+      </mj-section>
+
+      <!-- Visit Wundermarks -->
+      <mj-section padding-top="0">
+        <mj-button mj-class="btn-green" href="https://wundermarks.com/bookmarks" target="_blank"><%= t(".see_bookmarks") %></mj-button>
+      </mj-section>
+
+      <!-- Reply -->
+      <mj-section padding-left="10px" padding-right="10px">
+        <mj-column>
+          <mj-text><%= t(".any_question") %></mj-text>
+        </mj-column>
+      </mj-section>
+
+      <!-- Built with love -->
+      <mj-section padding-bottom="0" background-color="#eee">
+        <mj-column>
+          <mj-text align="center"><%= t(".built_with_love") %></mj-text>
+        </mj-column>
+      </mj-section>
+
+      <!-- Social networks -->
+      <mj-section background-color="#eee">
+        <mj-column>
+          <mj-text align="center" padding="0" font-weight="600" font-size="14px"><%= t(".follow_us") %></mj-text>
+          <mj-social
+          mode="horizontal"
+          display="facebook:url twitter:url"
+          facebook-content="Facebook"
+          facebook-href="https://www.facebook.com/wundermarks/"
+          twitter-content="Twitter"
+          twitter-href="https://twitter.com/wundermarks"
+          padding="0"
+          padding-top="5px"/>
+        </mj-column>
+      </mj-section>
+    </mj-container>
+  </mj-body>
+</mjml>

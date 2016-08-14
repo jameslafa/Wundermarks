@@ -1,0 +1,18 @@
+`<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="page-title"><%= t('.title') %></div>
+    <div class="introduction"><%= t('.introduction') %></div>
+
+    <div class="tool">
+      <div class="title"><%= link_to t(".bookmarklet.title"), bookmarklet_tool_path %></div>
+      <p><%= t(".bookmarklet.description") %></p>
+      <p><%= link_to t(".bookmarklet.action"), bookmarklet_tool_path, class: 'btn btn-default' %></p>
+    </div>
+
+    <div class="tool">
+      <div class="title"><%= link_to t(".import.title"), import_tool_path %></div>
+      <p><%= t(".import.description") %></p>
+      <p><%= link_to t(".import.action"), import_tool_path, class: 'btn btn-default' %></p>
+    </div>
+  </div>
+</div>

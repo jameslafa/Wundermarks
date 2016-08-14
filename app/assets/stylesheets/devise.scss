@@ -22,10 +22,17 @@ body.devise{
     }
   }
 
+  .alert{
+    &.alert-dark{
+      background-color: lighten($navigation-bar-background-color, 10%);
+      border-color: lighten($navigation-bar-background-color, 20%);
+      color: #fff;
+    }
+  }
   label{
     font-weight: 600;
   }
-  
+
   .btn-primary{
     background-color: darken($navigation-bar-background-color, 5%);
     border-color: lighten($navigation-bar-background-color, 10%);

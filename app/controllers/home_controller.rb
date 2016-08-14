@@ -7,11 +7,6 @@ class HomeController < ApplicationController
     render :index, layout: "homepage"
   end
 
-  def tools
-    ahoy.track "home-tools", nil
-    session.delete(:upgrade_bookmarklet)
-  end
-
   def logos
     render :logos, layout: "homepage"
   end

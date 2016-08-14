@@ -17,6 +17,8 @@
   </div>
 </div>
 <% end %>
+<%= render partial: "shared/pagination", locals: {resource: @bookmarks} %>
+
 <% else %>
 <div class="row">
   <div class="col-md-12 text-center"><span class="start_new_search mega-octicon octicon-telescope"></span></div>
