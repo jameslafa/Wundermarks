@@ -35,8 +35,12 @@ body.devise{
 
   .btn-primary{
     background-color: darken($navigation-bar-background-color, 5%);
-    border-color: lighten($navigation-bar-background-color, 10%);
+    border-color: white;
     margin-top: 1rem;
+  }
+
+  .help-block{
+    color: #ddd;
   }
 
   .shared-links{
@@ -46,9 +50,9 @@ body.devise{
       color: $navigation-bar-text-color;
 
       &.btn-default{
-        background-color: $navigation-bar-text-color;
-        border-color: $navigation-bar-text-color;
-        color: $navigation-bar-background-color;
+        background-color: #666;
+        border-color: #555;
+        color: #eee;
       }
 
       &.btn-block{

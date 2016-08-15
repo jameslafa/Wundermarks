@@ -1,6 +1,6 @@
 mailgun:
-  from: 'James Lafa <james@wundermarks.com>'
-  admin_email: 'James Lafa <admin@wundermarks.com>'
+  from: 'Wundermarks <james@wundermarks.com>'
+  admin_email: 'Wundermarks <admin@wundermarks.com>'
   admin_email_address: 'admin@wundermarks.com'
   admin_notification_address: 'admin+notification@wundermarks.com'
 
