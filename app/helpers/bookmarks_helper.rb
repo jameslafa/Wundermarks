@@ -53,8 +53,6 @@ module BookmarksHelper
       'octicon octicon-globe'
     when 'only_me'
       'octicon octicon-lock'
-    when 'friends'
-      'octicon octicon-organization'
     end
   end
 end

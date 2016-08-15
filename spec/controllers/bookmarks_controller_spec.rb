@@ -74,26 +74,6 @@ RSpec.describe BookmarksController, type: :controller do
             end
           end
         end
-
-        context 'with a bookmark visible to friends' do
-          let(:bookmark) { create(:bookmark_visible_to_friends) }
-
-          context 'with a html format' do
-            it 'redirects to bookmarks_path with an alert' do
-              get :show, id: bookmark.id
-              expect(response).to redirect_to bookmarks_path
-              expect(flash[:alert]).to eq I18n.t("pundit.bookmark_policy.show?")
-            end
-          end
-
-          context 'with a json format' do
-            it 'responds with a 403' do
-              get :show, id: bookmark.id, format: :json
-              expect(response.status).to eq 403
-              expect(response_body).to eq({"error" => I18n.t("pundit.bookmark_policy.show?")})
-            end
-          end
-        end
       end
     end
 
@@ -258,27 +238,7 @@ RSpec.describe BookmarksController, type: :controller do
               expect(response_body).to eq({"error" => I18n.t("pundit.bookmark_policy.show?")})
             end
           end
-        end
-
-        context 'with a bookmark visible to friends' do
-          let(:bookmark) { create(:bookmark_visible_to_friends) }
-
-          context 'with a html format' do
-            it 'redirects to bookmarks_path with an alert' do
-              get :show, id: bookmark.id
-              expect(response).to redirect_to bookmarks_path
-              expect(flash[:alert]).to eq I18n.t("pundit.bookmark_policy.show?")
-            end
-          end
-
-          context 'with a json format' do
-            it 'responds with a 403' do
-              get :show, id: bookmark.id, format: :json
-              expect(response.status).to eq 403
-              expect(response_body).to eq({"error" => I18n.t("pundit.bookmark_policy.show?")})
-            end
-          end
-        end
+        end        
       end
     end
 

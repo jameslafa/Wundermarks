@@ -49,8 +49,7 @@ class Bookmark < ActiveRecord::Base
   ## Privacy
   enum privacy: {
     'everyone': 1,
-    'only_me': 2,
-    'friends': 3
+    'only_me': 2
   }
 
   enum source: {

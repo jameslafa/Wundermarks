@@ -11,7 +11,7 @@ RSpec.describe Bookmark, type: :model do
   it { is_expected.to validate_length_of(:title).is_at_most(80) }
   it { is_expected.to validate_length_of(:description).is_at_most(255) }
 
-  it { is_expected.to define_enum_for(:privacy).with({everyone: 1, only_me: 2, friends: 3}) }
+  it { is_expected.to define_enum_for(:privacy).with({everyone: 1, only_me: 2}) }
   it { is_expected.to define_enum_for(:source).with({wundermarks: 0, delicious: 1}) }
 
   describe 'scopes' do

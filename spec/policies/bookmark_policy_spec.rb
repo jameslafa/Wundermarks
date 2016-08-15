@@ -25,12 +25,6 @@ RSpec.describe BookmarkPolicy do
 
         it { is_expected.to permit_action(:show) }
       end
-
-      context "when privacy is set to friends" do
-        subject { described_class.new(user, create(:bookmark_visible_to_friends, user: user)) }
-
-        it { is_expected.to permit_action(:show) }
-      end
     end
 
     context "when the bookmark does not belong to the user" do
@@ -47,12 +41,6 @@ RSpec.describe BookmarkPolicy do
 
       context "when privacy is set to only me" do
         subject { described_class.new(user, create(:bookmark_visible_to_only_me, user: other_user)) }
-
-        it { is_expected.to forbid_action(:show) }
-      end
-
-      context "when privacy is set to friends" do
-        subject { described_class.new(user, create(:bookmark_visible_to_friends, user: other_user)) }
 
         it { is_expected.to forbid_action(:show) }
       end

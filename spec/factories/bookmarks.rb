@@ -17,9 +17,5 @@ FactoryGirl.define do
     factory :bookmark_visible_to_only_me do
       privacy 'only_me'
     end
-
-    factory :bookmark_visible_to_friends do
-      privacy 'friends'
-    end
   end
 end
