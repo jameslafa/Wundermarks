@@ -19,6 +19,13 @@ class ToolsController < ApplicationController
   def import_file
     input_file = params[:delicious]
 
+    # Check that a file is uploaded
+    unless input_file.present?
+      @errors = I18n.t("tools.import.upload.errors.no_file")
+      ahoy.track "tools-import_file", status: "error", error: @errors
+      return render :import
+    end
+
     # Check that the file type is correct
     unless input_file.content_type == 'text/html'
       @errors = I18n.t("tools.import.upload.errors.wrong_file_type", url: import_tool_path).html_safe

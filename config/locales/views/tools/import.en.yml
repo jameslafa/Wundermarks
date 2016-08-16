@@ -21,3 +21,4 @@ en:
           wrong_file_type: |
             The uploaded file type is incorrect. You must upload the html file you have downloaded from Delicious<br/>
             <a href=%{url} class=" alert-link">Click here to see how to download file from delicious</a>.
+          no_file: "No file where uploaded. Please select the file you downloaded from Delicious."

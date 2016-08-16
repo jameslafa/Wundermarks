@@ -86,6 +86,18 @@ RSpec.describe ToolsController, type: :controller do
           expect(assigns(:errors)).to eq I18n.t("tools.import.upload.errors.wrong_file_type", url: import_tool_path)
         end
       end
+
+      context "when no file is uploaded" do
+        before(:each) { post :import_file }
+
+        it "renders :import template" do
+          expect(response).to render_template :import
+        end
+
+        it "assigns @errors with an error message" do
+          expect(assigns(:errors)).to eq I18n.t("tools.import.upload.errors.no_file")
+        end
+      end
     end
   end
 end
