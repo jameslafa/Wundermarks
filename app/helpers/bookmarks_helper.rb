@@ -57,10 +57,16 @@ module BookmarksHelper
   end
 
   def bookmark_list_date(date)
-    if date > 7.days.ago.to_date
-      t("date.last_week_day", day_name: t(:"date.day_names")[date.cwday])
+    nb_day_difference = (Time.now.to_date - date.to_date).to_i
+    case nb_day_difference
+    when 0
+      return t("date.today")
+    when 1
+      return t("date.yesterday")
+    when 2..6
+      return t("date.last_week_day", day_name: t(:"date.day_names")[date.cwday])
     else
-      l(date, format: :long)
+      return l(date, format: :long)
     end
   end
 end

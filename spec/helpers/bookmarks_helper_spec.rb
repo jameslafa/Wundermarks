@@ -56,6 +56,18 @@ RSpec.describe 'BookmarksHelper', :type => :helper do
   end
 
   describe 'bookmark_list_date' do
+    context 'when the date is today' do
+      it 'returns today' do
+        expect(bookmark_list_date(Time.now.to_date)).to eq "Today"
+      end
+    end
+
+    context 'when the date is yesterday' do
+      it 'returns yesterday' do
+        expect(bookmark_list_date(1.day.ago.to_date)).to eq "Yesterday"
+      end
+    end
+    
     context 'when the date is less than 7 days old' do
       it 'returns the name of the day' do
         today = Date.new(2016,8,17) # Wednesday

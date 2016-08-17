@@ -19,6 +19,8 @@ en:
       - year
       - month
       - day
+    today: 'Today'
+    yesterday: 'Yesterday'
     last_week_day: 'Last %{day_name}'
 
   time:
