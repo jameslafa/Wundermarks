@@ -41,10 +41,6 @@
         color: $primary-color;
       }
     }
-
-    .pagination-wrapper{
-      text-align: center;
-    }
   }
 
   &.a-show{
@@ -161,68 +157,94 @@
       margin-bottom: 2rem;
     }
 
-    .bookmark{
-      border-bottom: 1px solid #eee;
-      line-height: 4rem;
+    .date_group{
+      .date{
+        color: $navigation-bar-background-color;
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        margin-top: 3rem;
+        text-align: center;
+      }
 
-      .title{
-        color: $primary-color;
+      .bookmark{
+        border-bottom: 1px solid #eee;
+        line-height: 4rem;
 
-        .privacy{
-          color: $default-text-color;
+        .title{
+          color: $primary-color;
+
+          .privacy{
+            color: $default-text-color;
+          }
         }
-      }
 
-      .title, .link, .user, .time{
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
+        .title, .link, .user, .time{
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
 
-      .link, .user{
-        a, a:visited{
-          color: $default-text-color;
+        .link, .user{
+          a, a:visited{
+            color: $default-text-color;
+          }
+        }
+
+        &.first-of-group{
+          border-top: 1px solid #eee;
         }
       }
     }
 
     &.viewport-xs, &.viewport-sm{
-      .bookmark{
-        .title{
-          cursor: pointer;
-          a{
-            display: inline-block;
-            text-decoration: none;
-          }
+      .date_group{
+        .date{
+          text-align: center;
+          font-size: 1.4rem;
         }
-        .details{
-          display: none;
-
-          .link{
-            color: $primary-color;
-
-            a, a:visited{
-              color: $primary-color;
-            }
-          }
-        }
-
-        &.open{
-          background-color: #eaeaea;
-
+        .bookmark{
           .title{
-            background-color: $primary-color;
+            cursor: pointer;
+            a{
+              display: inline-block;
+              text-decoration: none;
+            }
+          }
+          .details{
+            display: none;
 
-            a, .privacy{
-              color: white;
+            .link{
+              color: $primary-color;
+
+              a, a:visited{
+                color: $primary-color;
+              }
             }
           }
 
-          .details{
-            display: block;
+          &.open{
+            background-color: #eaeaea;
+
+            .title{
+              background-color: $primary-color;
+
+              a, .privacy{
+                color: white;
+              }
+            }
+
+            .details{
+              display: block;
+            }
           }
         }
       }
+    }
+
+    .pagination-wrapper{
+      margin-top: 2rem;
+      text-align: center;
     }
   }
 }

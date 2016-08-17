@@ -89,7 +89,7 @@ function ajustViewport(){
 function showBookmarkDetailsOnMobile(){
   $(document).on("click", "body.viewport-xs .bookmark .title, body.viewport-sm .bookmark .title", function(event){
     event.stopPropagation();
-    $(this).parent('.bookmark').toggleClass('open');
+    $(this).parents('.bookmark').toggleClass('open');
     return false;
   });
 }

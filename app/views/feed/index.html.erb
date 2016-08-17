@@ -4,18 +4,41 @@
   </div>
 </div>
 
-<% if @bookmarks.size > 0 %>
-<% @bookmarks.each do |bookmark| %>
+
+<% last_printed_date = nil %>
+<% bookmark_count = @bookmarks.size %>
+
+<% if bookmark_count > 0 %>
+<% @bookmarks.each_with_index do |bookmark, index| %>
+
+<% date = bookmark.created_at.to_date %>
+<% first_of_group = last_printed_date != date %>
+<% last_of_group = (date != @bookmarks[[index + 1, bookmark_count - 1].min].created_at.to_date) %>
+
+<% if first_of_group %>
+<div class="date_group">
+  <div class="date"><%= bookmark_list_date(date) %></div>
+  <% last_printed_date = date %>
+<% end %>
+
 <div class="row">
-  <div class="bookmark">
-    <div class="col-md-5 title"><%= link_to bookmark.title, bookmark_permalink(bookmark) %></div>
-    <div class="details">
-      <div class="col-md-3 link"><span class="glyphicon glyphicon-link"></span> <%= link_to bookmark.url_domain, bookmark_url(bookmark, redirect: 1), target: '_blank' %> <span class="hidden-md hidden-lg pull-right"><span class="glyphicon glyphicon-bookmark"></span> <%= link_to t(".bookmark.details"), bookmark_permalink(bookmark)%></span></div>
-      <div class="col-md-2 user"><span class="glyphicon glyphicon-user"></span> <%= link_to bookmark.user.user_profile.name, user_profile_permalink(bookmark.user.user_profile) %></div>
-      <div class="col-md-2 time"><span class="glyphicon glyphicon-time"></span> <%= t(".time_ago", time: time_ago_in_words(bookmark.created_at)) %></div>
+  <div class="bookmark col-md-12<%= ' first-of-group' if first_of_group %><%= ' last-of-group' if last_of_group %>">
+    <div class="row">
+      <div class="col-md-5 title"><%= link_to bookmark.title, bookmark_permalink(bookmark) %></div>
+      <div class="details">
+        <div class="col-md-3 link"><span class="glyphicon glyphicon-link"></span> <%= link_to bookmark.url_domain, bookmark_url(bookmark, redirect: 1), target: '_blank' %> <span class="hidden-md hidden-lg pull-right"><span class="glyphicon glyphicon-bookmark"></span> <%= link_to t(".bookmark.details"), bookmark_permalink(bookmark)%></span></div>
+        <div class="col-md-2 user"><span class="glyphicon glyphicon-user"></span> <%= link_to bookmark.user.user_profile.name, user_profile_permalink(bookmark.user.user_profile) %></div>
+        <div class="col-md-2 time"><span class="glyphicon glyphicon-time"></span> <%= t(".time_ago", time: time_ago_in_words(bookmark.created_at)) %></div>
+      </div>
     </div>
   </div>
 </div>
+
+<% if last_of_group %>
+</div>
 <% end %>
+
+<% end %>
+
 <%= render partial: "shared/pagination", locals: {resource: @bookmarks} %>
 <% end %>

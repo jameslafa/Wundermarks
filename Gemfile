@@ -95,6 +95,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.4'
   # Create test data instead of fixtures
   gem 'factory_girl'
+  # Freeze or travel in time
+  gem 'timecop'
 end
 
 group :development do

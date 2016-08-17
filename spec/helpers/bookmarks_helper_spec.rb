@@ -1,4 +1,5 @@
 require 'rails_helper'
+include ApplicationHelper
 include BookmarksHelper
 
 RSpec.describe 'BookmarksHelper', :type => :helper do
@@ -52,5 +53,25 @@ RSpec.describe 'BookmarksHelper', :type => :helper do
       base_url = base_facebook_url(bookmark)
       expect(share_facebook_popup_url(bookmark)).to eq "https://www.facebook.com/dialog/share?app_id=#{Settings.facebook.app_id}&display=popup&href=#{ERB::Util.url_encode(base_url)}&redirect_uri=#{ERB::Util.url_encode(bookmark_permalink(bookmark, true))}&hashtag=%23wundermarks"
     end
+  end
+
+  describe 'bookmark_list_date' do
+    context 'when the date is less than 7 days old' do
+      it 'returns the name of the day' do
+        today = Date.new(2016,8,17) # Wednesday
+        Timecop.freeze(today)
+        date = today - 2.days
+        expect(bookmark_list_date(date)).to eq "Last Monday"
+        Timecop.return
+      end
+    end
+
+    context 'when the date is 7 days old or more' do
+      it 'returns the date of the day' do
+        date = 10.days.ago.to_date
+        expect(bookmark_list_date(date)).to eq I18n.l(date, format: :long)
+      end
+    end
+
   end
 end

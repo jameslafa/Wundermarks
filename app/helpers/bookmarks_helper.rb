@@ -55,4 +55,12 @@ module BookmarksHelper
       'octicon octicon-lock'
     end
   end
+
+  def bookmark_list_date(date)
+    if date > 7.days.ago.to_date
+      t("date.last_week_day", day_name: t(:"date.day_names")[date.cwday])
+    else
+      l(date, format: :long)
+    end
+  end
 end
