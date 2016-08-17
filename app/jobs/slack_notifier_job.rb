@@ -9,6 +9,8 @@ class SlackNotifierJob < ActiveJob::Base
     notifier = Slack::Notifier.new Settings.slack_notifier.webhook_url
 
     if notification_type == "new_bookmark"
+      return if resource.user.admin? # I should stop notifying myself!
+
       message = "New bookmark from #{resource.user.user_profile.name}: #{resource.url}"
 
       bookmark_attachment = {
@@ -26,7 +28,6 @@ class SlackNotifierJob < ActiveJob::Base
     elsif notification_type == "new_user_registration"
       message = "New User registration: #{resource.user_profile.name}: #{resource.email}"
       notifier.ping Slack::Notifier::LinkFormatter.format(message)
-
     end
   end
 end
