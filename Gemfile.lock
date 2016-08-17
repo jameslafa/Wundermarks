@@ -56,6 +56,10 @@ GEM
     bcrypt (3.1.11)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    blazer (1.6.2)
+      chartkick
+      rails
+      safely_block (>= 0.1.1)
     bootstrap-sass (3.3.6)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
@@ -91,6 +95,7 @@ GEM
     capybara-email (2.5.0)
       capybara (~> 2.4)
       mail
+    chartkick (2.0.2)
     chronic (0.10.2)
     coderay (1.1.1)
     coffee-rails (4.1.1)
@@ -365,6 +370,7 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on (~> 3.4)
   ahoy_matey
+  blazer
   bootstrap-sass (~> 3.3)
   byebug
   capistrano

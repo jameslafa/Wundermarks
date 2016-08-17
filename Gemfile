@@ -64,6 +64,7 @@ gem 'whenever', :require => false
 
 # Analytics
 gem 'ahoy_matey'
+gem 'blazer'
 
 # Full text search
 gem 'pg_search'

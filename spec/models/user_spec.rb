@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   it { is_expected.to have_many :bookmarks }
   it { is_expected.to have_one :user_profile }
+  it { is_expected.to define_enum_for(:role).with({regular: 0, admin: 100}) }
 
   describe 'profile_name' do
     let(:user) { create(:user) }

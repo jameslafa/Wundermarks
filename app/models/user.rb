@@ -9,6 +9,13 @@ class User < ActiveRecord::Base
 
   accepts_nested_attributes_for :user_profile
 
+  # Enumerators
+
+  enum role: {
+    'regular': 0,
+    'admin': 100
+  }
+
   # Returns user's profile name
   def profile_name
     self.user_profile.try(:name)

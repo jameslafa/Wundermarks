@@ -54,4 +54,9 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource)
     request.referrer || root_path
   end
+
+  # require the user to be an admin
+  def authenticate_admin!
+    redirect_to new_user_session_path unless current_user && current_user.admin?
+  end
 end
