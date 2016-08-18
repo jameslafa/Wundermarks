@@ -1,0 +1,15 @@
+.c-bookmarks{
+  form{
+    textarea#bookmark_description{
+      height: 15rem;
+    }
+  }
+
+  &.popup{
+    form{
+      textarea#bookmark_description{
+        height: 10rem;
+      }
+    }
+  }
+}

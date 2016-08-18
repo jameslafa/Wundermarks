@@ -9,12 +9,14 @@
 @import "devise";
 @import "views/home/index";
 @import "views/home/logos";
+@import "views/bookmarks/index";
+@import "views/bookmarks/show";
+@import "views/bookmarks/form";
 @import "views/feed/index";
 @import "views/tools/index";
 @import "views/tools/bookmarklet";
 @import "views/tools/import";
 @import "views/tools/imported";
-@import "bookmarks";
 @import "user_profiles";
 
 html{

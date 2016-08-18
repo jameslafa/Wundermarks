@@ -1,4 +1,4 @@
-.c-feed{
+.c-bookmarks{
   &.a-index{
     background-color: #f8f8f8;
 
@@ -11,6 +11,20 @@
         @media(max-width:$screen-md-min){
           margin-bottom: 1rem;
         }
+      }
+    }
+
+    .start_new_search{
+      cursor: pointer;
+      color: #ddd;
+      font-size: 200px;
+      margin-top: 2rem;
+      &:hover{
+        color: #999;
+      }
+
+      &:active{
+        color: $primary-color;
       }
     }
 

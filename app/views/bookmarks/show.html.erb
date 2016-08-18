@@ -1,68 +1,70 @@
-<% if current_user %>
-<div class="row main-actions">
-  <div class="col-md-10 col-md-offset-1">
-    <%= link_to bookmarks_path, class: 'btn btn-default pull-left' do%>
-      <span class="glyphicon glyphicon-th-list"></span> <%= t(".action.index") %>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <% if current_user %>
+    <div class="main-actions">
+      <a href="<%= bookmarks_path %>" class="btn btn-default"><span class="glyphicon glyphicon-menu-left"></span> <%= t("actions.back") %></a>
+    </div>
     <% end %>
-    <% if current_user == @bookmark.user %>
-      <div class="btn-group pull-right" role="group">
-        <%= link_to @bookmark, class: 'action-destroy btn btn-default', method: :delete, data: { confirm: t("confirmations.bookmark_delete") } do %>
-        <span class="glyphicon glyphicon-trash"></span> <%= t(".action.delete") %>
+    <div class="bookmark">
+      <div class="actions clearfix">
+        <% if current_user == @bookmark.user %>
+          <div class="btn-group pull-right" role="group">
+            <%= link_to @bookmark, class: 'action-destroy btn btn-default', method: :delete, data: { confirm: t(".confirmations.bookmark_delete") } do %>
+            <span class="glyphicon glyphicon-trash"></span> <span class="hidden-xs"><%= t("actions.delete") %></span>
+            <% end %>
+            <%= link_to edit_bookmark_path(@bookmark), class: 'action-edit btn btn-default' do%>
+            <span class="glyphicon glyphicon-edit"></span> <span class="hidden-xs"><%= t("actions.edit") %></span>
+            <% end %>
+          </div>
         <% end %>
-        <%= link_to edit_bookmark_path(@bookmark), class: 'action-edit btn btn-default' do%>
-        <span class="glyphicon glyphicon-edit"></span> <%= t(".action.edit") %>
+        <div class="user-date pull-left">
+          <% if @bookmark.user == current_user %>
+          <span class='privacy <%= privacy_icon_class(@bookmark) %>'></span>
+          <% end %>
+          <a href="<%= user_profile_permalink(@bookmark.user.user_profile) %>" class="user"><span class="name"><%= @bookmark.user.user_profile.name %></span>
+            <% if @bookmark.user.user_profile.username.present? %>
+            <span class="username"><em>@</em><%= @bookmark.user.user_profile.username %></span>
+            <% end %>
+          </a>
+          <span class="time-ago"> <%= bookmark_time_ago(@bookmark.created_at) %></span>
+        </div>
+      </div>
+
+      <div class="header">
+        <div class="title">
+          <%= @bookmark.title %>
+        </div>
+        <div class="link"><%= link_to @bookmark.url.truncate(80), bookmark_url(@bookmark, redirect: 1), target: '_blank' %></div>
+      </div>
+
+      <div class="description"><%= text_to_html @bookmark.description %></div>
+
+      <div class="tags">
+        <% if @bookmark.tag_list.present? %>
+        <span class="glyphicon glyphicon-tags"></span>
+        <% @bookmark.tag_list.each_with_index do |tag, index| %>
+        <% if current_user %>
+        <%= link_to tag, bookmarks_path(q: tag), class: 'tag' %>
+        <% else %>
+        <span class='tag'><%= tag %></span>
+        <% end %>
+        <% end %>
+        <% else %>
+        &nbsp;
         <% end %>
       </div>
-    <% end %>
-  </div>
-</div>
-<% end %>
 
-<div class="row details">
-  <div class="col-md-10 col-md-offset-1">
-    <div class="title">
-      <% if @bookmark.user == current_user %>
-      <span class='privacy <%= privacy_icon_class(@bookmark) %>'></span>
-      <% end %>
-      <%= @bookmark.title %>
-    </div>
-    <div class="link"><%= link_to @bookmark.url, bookmark_url(@bookmark, redirect: 1) %></div>
-    <div class="description"><%= text_to_html @bookmark.description %></div>
-
-    <div class="tags">
-      <% if @bookmark.tag_list.present? %>
-      <span class="glyphicon glyphicon-tags"></span>
-      <% @bookmark.tag_list.each_with_index do |tag, index| %>
-      <% if current_user == @bookmark.user %>
-      <%= link_to tag, bookmarks_path(q: tag), class: 'tag' %>
-      <% else %>
-      <span class='tag'><%= tag %></span>
-      <% end %>
-      <% end %>
-      <% else %>
-      &nbsp;
-      <% end %>
-    </div>
-  </div>
-</div>
-
-<div class="share">
-  <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-      <div class="share-title"><%= t(".share.title")%></div>
-      <div class="share-options">
-        <a href="<%= share_twitter_popup_url(@bookmark) %>" class="social_share" data-social-media="twitter"><%= image_tag("social_medias/twitter.svg", class:'share twitter')%></a>
-        <a href="<%= share_facebook_popup_url(@bookmark) %>" class="social_share" data-social-media="facebook"><%= image_tag("social_medias/facebook.svg", class:'share facebook')%></a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <div class="share-help"><%= t(".share.help_html")%></div>
-      <div class="share-statistics">
-        <% @bookmark.sharing_statistics.each do |source| %>
-          <span class="stat"><strong><%= source[0].capitalize %></strong>: <%= source[1] %></span>
-        <% end %>
+      <div class="share">
+        <div class="title"><%= t(".share.title")%></div>
+        <div class="options">
+          <a href="<%= share_twitter_popup_url(@bookmark) %>" class="social-share" data-social-media="twitter"><%= image_tag("social_medias/twitter.svg", class:'twitter')%></a>
+          <a href="<%= share_facebook_popup_url(@bookmark) %>" class="social-share" data-social-media="facebook"><%= image_tag("social_medias/facebook.svg", class:'facebook')%></a>
+        </div>
+        <div class="statistics hidden-xs">
+          <% @bookmark.sharing_statistics.each do |source| %>
+            <span class="stat"><strong><%= source[0].capitalize %></strong>:&nbsp;<%= source[1] %></span>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

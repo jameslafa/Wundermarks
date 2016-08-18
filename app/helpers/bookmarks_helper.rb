@@ -57,7 +57,8 @@ module BookmarksHelper
   end
 
   def bookmark_list_date(date)
-    nb_day_difference = (Time.now.to_date - date.to_date).to_i
+    today = Time.now.to_date
+    nb_day_difference = (today - date.to_date).to_i
     case nb_day_difference
     when 0
       return t("date.today")
@@ -66,7 +67,27 @@ module BookmarksHelper
     when 2..6
       return t("date.last_week_day", day_name: t(:"date.day_names")[date.cwday])
     else
-      return l(date, format: :long)
+      if today.year == date.to_date.year
+        return l(date, format: :long_no_year)
+      else
+        return l(date, format: :long)
+      end
+    end
+  end
+
+  def bookmark_time_ago(datetime)
+    second_old = (Time.now - datetime).to_i
+
+    if second_old < 86400 # less than a day
+      if second_old < 60
+        "#{second_old}s"
+      elsif second_old < 3600
+        "#{(second_old / 60).to_i}m"
+      else
+        "#{(second_old / 3600).to_i}h"
+      end
+    else
+      I18n.l(datetime.to_date, format: :short)
     end
   end
 end

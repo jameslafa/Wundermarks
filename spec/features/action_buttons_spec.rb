@@ -31,7 +31,7 @@ feature 'ActionButtons' do
 
     # There are edit and delete button on the bookmark#show page
     visit bookmark_path(user_bookmark.id)
-    expect(page).to have_link(I18n.t("bookmarks.show.action.edit"))
-    expect(page).to have_link(I18n.t("bookmarks.show.action.delete"))
+    expect(page).to have_link(I18n.t("actions.edit"))
+    expect(page).to have_link(I18n.t("actions.delete"))
   end
 end

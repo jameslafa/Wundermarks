@@ -16,7 +16,6 @@ function pageLoaded(){
 // It contains listeners global to the application staying active even
 // when the page is reloaded with turbolinks
 function documentReady(){
-  showBookmarkDetailsOnMobile();
   trackClicks();
   startNewSearch();
   socialShare();
@@ -43,7 +42,7 @@ function startNewSearch(){
 
 // Open sharing popup when the user click on a social media icon
 function socialShare(){
-  $(document).on( "click", "a.social_share", function(event) {
+  $(document).on( "click", "a.social-share", function(event) {
     event.stopPropagation();
     var socialMedia = $(this).data('social-media');
     socialMedia = socialMedia.charAt(0).toUpperCase() + socialMedia.slice(1);
@@ -83,15 +82,6 @@ function ajustViewport(){
       })
     );
   })(jQuery, ResponsiveBootstrapToolkit);
-}
-
-// Track click, on mobile, on the bookmark title to display the details
-function showBookmarkDetailsOnMobile(){
-  $(document).on("click", "body.viewport-xs .bookmark .title, body.viewport-sm .bookmark .title", function(event){
-    event.stopPropagation();
-    $(this).parents('.bookmark').toggleClass('open');
-    return false;
-  });
 }
 
 // Validate that the username is available while user is typing it

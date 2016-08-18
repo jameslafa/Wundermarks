@@ -1,0 +1,161 @@
+.c-bookmarks{
+  &.a-show{
+    background-color: #f8f8f8;
+
+    .main-actions{
+      margin-bottom: 1rem;
+    }
+
+    .bookmark{
+      background-color: #fff;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      border-radius: 2px;
+      margin: 0 0 10px 0;
+      overflow: hidden;
+
+      .actions{
+        border-bottom: 1px solid #ebebeb;
+        padding: 0.7rem 1rem;
+
+        .user-date{
+          line-height: 34px;
+          .user{
+            text-decoration: none;
+
+            .name{
+              color: #000;
+              font-weight: 600;
+            }
+            .username{
+              color: #8899a6;
+              font-size: 0.8rem;
+
+              em{
+                color: #b1bbc3;
+              }
+            }
+          }
+
+          .time-ago{
+            color: #8899a6;
+            font-size: 0.8rem;
+
+            &:before{
+              content: "\00b7";
+            }
+          }
+        }
+      }
+
+      .header{
+        clear: both;
+        padding: 0.7rem 1rem;
+
+        .title{
+          font-size: 1.3rem;
+          font-weight: 600;
+        }
+
+        .link{
+          color: $secondary-color;
+          font-size: 1rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          word-wrap: break-word;
+
+          a, a:visited{
+            color: $secondary-color;
+          }
+        }
+      }
+
+      .description{
+        padding: 0.7rem 1rem;
+      }
+
+      .tags{
+        padding: 0.7rem 1rem 0 1rem;
+
+        .tag{
+          background-color: $navigation-bar-background-color;
+          border: 1px solid #888;
+          border-radius: $border-radius-base;
+          color: $navigation-bar-text-color;
+          display: inline-block;
+          margin: 0 3px 0.7rem 3px;
+          padding: 2px 5px;
+          text-decoration: none;
+          transition: all .3s;
+
+          &:first-of-type{
+            margin-left: 6px;
+          }
+
+          &:last-of-type{
+            margin-right: 0;
+          }
+        }
+
+        a.tag{
+          &:hover{
+            background-color: darken($navigation-bar-background-color, 15%);
+          }
+        }
+
+        span.tag{
+          cursor: default;
+        }
+      }
+
+      .share{
+        border-top: 1px solid #ebebeb;
+        padding: 0.7rem 1rem;
+        text-align: center;
+
+        .title{
+          font-size: 0.9rem;
+          color: $help-text-color;
+        }
+
+        .options{
+          padding-top: 0.5rem;
+          padding-bottom: 0.5rem;
+
+          .social-share{
+            margin-left: 1rem;
+            margin-right: 1rem;
+
+            img{
+              height: auto;
+              transition: transform .3s ease-in-out;
+              width: 30px;
+
+              &:hover{
+                transform: scale(1.3);
+              }
+            }
+          }
+        }
+
+        .statistics{
+          font-size: 0.9rem;
+          .stat{
+            margin: 0 1rem;
+
+            strong{
+              font-weight: 600;
+            }
+          }
+        }
+
+        .share-why-popup{
+          color: #777;
+          font-style: italic;
+          margin-top: 2rem;
+          text-align: justify;
+        }
+      }
+    }
+  }
+}

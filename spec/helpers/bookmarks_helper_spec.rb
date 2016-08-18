@@ -67,7 +67,7 @@ RSpec.describe 'BookmarksHelper', :type => :helper do
         expect(bookmark_list_date(1.day.ago.to_date)).to eq "Yesterday"
       end
     end
-    
+
     context 'when the date is less than 7 days old' do
       it 'returns the name of the day' do
         today = Date.new(2016,8,17) # Wednesday
@@ -79,11 +79,30 @@ RSpec.describe 'BookmarksHelper', :type => :helper do
     end
 
     context 'when the date is 7 days old or more' do
-      it 'returns the date of the day' do
+      it 'returns the date of the day without the year' do
         date = 10.days.ago.to_date
-        expect(bookmark_list_date(date)).to eq I18n.l(date, format: :long)
+        expect(bookmark_list_date(date)).to eq I18n.l(date, format: :long_no_year)
       end
     end
 
+    context 'when the date more than a year old' do
+      it 'returns the date of the day with the year' do
+        date = 400.days.ago.to_date
+        expect(bookmark_list_date(date)).to eq I18n.l(date, format: :long)
+      end
+    end
+  end
+
+  describe 'bookmark_time_ago' do
+    it 'returns a short time distance' do
+      expect(bookmark_time_ago(7.seconds.ago)).to eq "7s"
+      expect(bookmark_time_ago(63.seconds.ago)).to eq "1m"
+      expect(bookmark_time_ago(119.seconds.ago)).to eq "1m"
+      expect(bookmark_time_ago(320.seconds.ago)).to eq "5m"
+      expect(bookmark_time_ago(65.minutes.ago)).to eq "1h"
+      expect(bookmark_time_ago(118.minutes.ago)).to eq "1h"
+      expect(bookmark_time_ago(250.minutes.ago)).to eq "4h"
+      expect(bookmark_time_ago(38.hours.ago)).to eq I18n.l(1.day.ago.to_date, format: :short)
+    end
   end
 end

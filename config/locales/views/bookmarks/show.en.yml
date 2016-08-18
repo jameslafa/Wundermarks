@@ -1,0 +1,7 @@
+en:
+  bookmarks:
+    show:
+      confirmations:
+        bookmark_delete: "Are you sure you want to delete this bookmark?"
+      share:
+        title: Share this bookmark with your friends

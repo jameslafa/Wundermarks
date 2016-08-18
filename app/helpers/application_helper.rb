@@ -16,7 +16,7 @@ module ApplicationHelper
   def text_to_html(text)
     return "" unless text.present?
     clean_text = sanitize(text, tags: ['strong', 'b', 'em', 'i', 'a'], attributes: ['href'])
-    clean_text = simple_format(clean_text, {}, sanitize: false)    
+    clean_text = simple_format(clean_text, {}, sanitize: false)
     Rinku.auto_link(clean_text, :all, 'target="_blank" rel="nofollow"').html_safe
   end
 end

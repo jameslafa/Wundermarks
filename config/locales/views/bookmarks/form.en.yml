@@ -1,0 +1,10 @@
+en:
+  bookmarks:
+    form:
+      back_to_bookmarks: "Back to bookmarks list"
+      tag_list_help: "Maximum 5 tags separated by commas: ','"
+      tag_list_placeholder: "rails, javascript"
+      title_length: Title length
+      description_length: Description length
+      max: max.
+      cancel: 'Cancel and close'
