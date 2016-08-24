@@ -18,6 +18,12 @@
         <span class="first-letter">W</span>undermarks
       </div>
     </div>
+    <div class="row sign_in hidden-sm hidden-md hidden-lg">
+      <div class="col-md-12">
+        <%= link_to "Sign in", new_user_session_path, class: 'btn btn-default btn-lg btn-block' %>
+        <p class="or">or</p>
+      </div>
+    </div>
     <div class="row register">
       <%= render partial: "mini_registration_form" %>
     </div>
@@ -78,6 +84,12 @@
   </div>
 
   <div class="row register-bottom">
+    <div class="sign_in hidden-sm hidden-md hidden-lg">
+      <div class="col-md-12">
+        <%= link_to "Sign in", new_user_session_path, class: 'btn btn-default btn-lg btn-block' %>
+        <p class="or">or</p>
+      </div>
+    </div>
     <%= render partial: "mini_registration_form" %>
   </div>
 </div>

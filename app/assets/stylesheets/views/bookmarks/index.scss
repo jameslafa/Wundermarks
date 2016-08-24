@@ -7,11 +7,11 @@
 
       .actions{
         text-align: right;
-
-        @media(max-width:$screen-md-min){
-          margin-bottom: 1rem;
-        }
       }
+    }
+
+    .search-bookmark-mobile{
+      margin-bottom: 1rem;
     }
 
     .start_new_search{

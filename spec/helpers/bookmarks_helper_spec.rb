@@ -102,7 +102,7 @@ RSpec.describe 'BookmarksHelper', :type => :helper do
       expect(bookmark_time_ago(65.minutes.ago)).to eq "1h"
       expect(bookmark_time_ago(118.minutes.ago)).to eq "1h"
       expect(bookmark_time_ago(250.minutes.ago)).to eq "4h"
-      expect(bookmark_time_ago(38.hours.ago)).to eq I18n.l(1.day.ago.to_date, format: :short)
+      expect(bookmark_time_ago(25.hours.ago)).to eq I18n.l(1.day.ago.to_date, format: :short)
     end
   end
 end

@@ -37,7 +37,7 @@ en:
       new:
         title: Forgot your password?
         actions:
-          reset: "Send me reset password instructions"
+          reset: "Reset my password"
       edit:
         title: "Reset your password"
         new_password: "New password"

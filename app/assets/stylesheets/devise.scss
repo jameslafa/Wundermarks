@@ -20,6 +20,27 @@ body.devise{
       text-shadow: 1px 1px 1px #333;
       vertical-align: top;
     }
+
+    .action{
+      display: none;
+    }
+
+    @media(max-width:$screen-sm-max){
+      .logo{
+        float: left;
+        font-size: 2rem;
+        line-height: 2rem;
+        text-align: left;
+      }
+
+      .action{
+        display: block;
+        float: right;
+        font-size: 1.1rem;
+        font-weight: 300;
+        line-height: 1.3rem;
+      }
+    }
   }
 
   .alert{
@@ -34,9 +55,14 @@ body.devise{
   }
 
   .btn-primary{
-    background-color: darken($navigation-bar-background-color, 5%);
-    border-color: white;
-    margin-top: 1rem;
+    background-color: #fff;
+    border-color: lighten($navigation-bar-background-color, 5%);
+    color: $navigation-bar-background-color;
+    font-weight: 600;
+
+    &.btn-block{
+      margin-top: 2rem;
+    }
   }
 
   .help-block{
@@ -50,14 +76,25 @@ body.devise{
       color: $navigation-bar-text-color;
 
       &.btn-default{
-        background-color: #666;
-        border-color: #555;
-        color: #eee;
+        background-color: darken($navigation-bar-background-color, 5%);
+        border-color: lighten($navigation-bar-background-color, 5%);
+        color: #fff;
+        font-weight: 300;
       }
 
       &.btn-block{
         margin-top: 1rem;
       }
+    }
+  }
+
+  @media(max-width:$screen-sm-max){
+    h2{
+      display: none;
+    }
+
+    form{
+      margin-top: 2rem;
     }
   }
 }

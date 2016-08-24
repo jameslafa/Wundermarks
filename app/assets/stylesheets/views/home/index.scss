@@ -36,6 +36,16 @@
 
       @media (max-width: $screen-xs-max) {
         text-align: left;
+
+        .logo{
+          font-size: 2rem;
+        }
+
+        .actions{
+          .btn{
+            margin-top: -3px;
+          }
+        }
       }
     }
 
@@ -69,7 +79,7 @@
 
           &.xs{
             background: none;
-            margin-top: 30px;
+            margin-top: 0;
           }
 
           &.sm{
@@ -93,8 +103,8 @@
           height: auto;
         }
         .brand{
-          font-size: 1.8rem;
-          margin-top: 60px;
+          font-size: 1.6rem;
+          margin-top: 20px;
         }
       }
     }
@@ -112,6 +122,23 @@
         &:last-child{
           margin-bottom: 0;
         }
+      }
+    }
+
+    .sign_in{
+      .btn-default{
+        background-color: $navigation-bar-background-color;
+        border-color: lighten($navigation-bar-background-color, 5%);
+        color: #fff;
+        font-weight: 600;
+      }
+
+      p.or{
+        color: #fff;
+        font-size: 1.3rem;
+        line-height: 3rem;
+        margin-bottom: -5px;
+        text-align: center;
       }
     }
 
@@ -233,6 +260,14 @@
     .register-bottom{
       background-color: $navigation-bar-background-color;
       padding: 20px 0;
+
+      @media (max-width: $screen-xs-max) {
+        background-color: darken($navigation-bar-background-color, 10%);
+      }
+
+      .mini-registration-form.xs{
+        margin-top: 10px;
+      }
     }
   }
 }

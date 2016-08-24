@@ -15,6 +15,14 @@
       <div class="row devise-navbar">
         <div class="col-md-12">
           <span class="logo">W</span>
+          <% if params[:controller] == 'devise/sessions' && params[:action] == 'new' %>
+          <span class="action"><%= t("devise.sessions.new.title") %></span>
+          <% elsif params[:controller] == 'registrations' && params[:action] == 'new' %>
+          <span class="action"><%= t("devise.registrations.new.title") %></span>
+          <% elsif params[:controller] == 'devise/passwords' && params[:action] == 'new' %>
+          <span class="action"><%= t("devise.passwords.new.title") %></span>
+          <% end %>
+
         </div>
       </div>
       <%= render "devise/shared/flash" %>
