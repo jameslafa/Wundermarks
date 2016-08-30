@@ -43,7 +43,8 @@ class BookmarksController < ApplicationController
     if params.has_key? :id
       @origin_bookmark = Bookmark.find(params[:id])
       authorize @origin_bookmark, :show?
-      @bookmark.attributes = @origin_bookmark.slice(:title, :description, :url)
+      @bookmark.attributes = @origin_bookmark.slice(:title, :description, :url, :tag_list)
+
 
     # If not, we get attributes from bookmarklet_params
     # If there is no bookmarklet_params, it will simple keep the new bookmark empty

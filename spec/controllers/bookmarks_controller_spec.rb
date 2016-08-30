@@ -284,6 +284,7 @@ RSpec.describe BookmarksController, type: :controller do
           expect(new_bookmark.title).to eq original_bookmark.title
           expect(new_bookmark.description).to eq original_bookmark.description
           expect(new_bookmark.url).to eq original_bookmark.url
+          expect(new_bookmark.tag_list).to eq original_bookmark.tag_list
         end
 
         context "when the bookmark is not accessible to the user" do

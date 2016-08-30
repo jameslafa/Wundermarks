@@ -23,6 +23,7 @@ feature 'NewsFeed' do
       expect(page).to have_field(Bookmark.human_attribute_name(:title), with: other_users_bookmark.title)
       expect(page).to have_field(Bookmark.human_attribute_name(:url), with: other_users_bookmark.url)
       expect(page).to have_field(Bookmark.human_attribute_name(:description), with: other_users_bookmark.description)
+      expect(page).to have_field(Bookmark.human_attribute_name(:tag_list), with: other_users_bookmark.tag_list)
     end
   end
 end
