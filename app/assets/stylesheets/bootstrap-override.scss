@@ -14,3 +14,10 @@ $border-radius-base: 3px;
 
 $default-text-color: #47525d;
 $help-text-color: #777;
+
+$light-tooltip-background-color: darken($navigation-bar-text-color, 15%);
+
+// Customize tooltip
+.light-tooltip + .tooltip > .tooltip-inner {background-color: $light-tooltip-background-color; color: #000;}
+.light-tooltip + .tooltip.top > .tooltip-arrow {border-top-color: $light-tooltip-background-color;}
+.light-tooltip + .tooltip.left > .tooltip-arrow {border-left-color: $light-tooltip-background-color;}

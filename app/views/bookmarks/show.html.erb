@@ -16,6 +16,8 @@
             <span class="glyphicon glyphicon-edit"></span> <span class="hidden-xs"><%= t("actions.edit") %></span>
             <% end %>
           </div>
+        <% else %>
+          <a class="copy-bookmark light-tooltip" href="<%= copy_bookmark_path(id: @bookmark.id) %>" aria-label="<%= t("bookmarks.actions.copy") %>" data-toggle="tooltip" data-placement="left" title="<%= t("bookmarks.actions.copy") %>"><i class="material-icons md-24 md-dark" aria-hidden="true">library_add</i></a>
         <% end %>
         <div class="user-date pull-left">
           <% if @bookmark.user == current_user %>
@@ -26,7 +28,7 @@
             <span class="username"><em>@</em><%= @bookmark.user.user_profile.username %></span>
             <% end %>
           </a>
-          <span class="time-ago"> <%= bookmark_time_ago(@bookmark.created_at) %></span>
+          <time class="time-ago light-tooltip" datetime="<%= @bookmark.created_at %>" data-toggle="tooltip" data-placement="top" title="<%= l(@bookmark.created_at, format: :long) %>"><%= bookmark_time_ago(@bookmark.created_at) %></time>
         </div>
       </div>
 
@@ -34,7 +36,7 @@
         <div class="title">
           <%= @bookmark.title %>
         </div>
-        <div class="link"><%= link_to @bookmark.url.truncate(80), bookmark_url(@bookmark, redirect: 1), target: '_blank' %></div>
+        <div class="link"><%= link_to @bookmark.url.truncate(80), bookmark_url(@bookmark, redirect: 1), target: '_blank', rel:"nofollow noopener noreferrer" %></div>
       </div>
 
       <div class="description"><%= text_to_html @bookmark.description %></div>

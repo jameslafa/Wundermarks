@@ -5,11 +5,11 @@
 
     <% if error_count == 0 %>
       <mj-text>Congratulations, all your <%= @imported_bookmarks %> bookmark<%= 's' if @imported_bookmarks > 1 %> have been imported to Wundermarks!</mj-text>
-      <mj-text>You can now see <a style="color:#0D58A6" href="https://wundermarks.com/bookmarks?post_import=delicious" target="_blank">your imported bookmarks</a>.</mj-text>
+      <mj-text>You can now see <a style="color:#0D58A6" href="https://wundermarks.com/bookmarks?post_import=delicious" target="_blank" rel="nofollow noopener noreferrer">your imported bookmarks</a>.</mj-text>
 
     <% elsif @imported_bookmarks > 0 %>
       <mj-text>Congratulations, we have imported <%= @imported_bookmarks %> of your bookmark<%= 's' if @imported_bookmarks > 1 %> to Wundermarks!</mj-text>
-      <mj-text>You can now see <a style="color:#0D58A6" href="https://wundermarks.com/bookmarks?post_import=delicious" target="_blank">your imported bookmarks</a>.<br/><br/></mj-text>
+      <mj-text>You can now see <a style="color:#0D58A6" href="https://wundermarks.com/bookmarks?post_import=delicious" target="_blank" rel="nofollow noopener noreferrer">your imported bookmarks</a>.<br/><br/></mj-text>
       <mj-text><%= error_count %> of your bookmarks <%= error_count > 1 ? 'were' : 'was' %> not imported:</mj-text>
       <%= render partial: 'import_error_list', formats: [:html], locals: {invalid_bookmarks: @invalid_bookmarks} %>
       <mj-text><p>You can either add them manually or send us an email to <a href="mailto:<%= Settings.mailgun.admin_email_address %>"><%= Settings.mailgun.admin_email_address %></a> and we will help you!</p></mj-text>

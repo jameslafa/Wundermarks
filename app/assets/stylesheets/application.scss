@@ -2,11 +2,13 @@
 @import "bootstrap-override";
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "font-awesome";
 @import "lib/awesomplete";
 @import "lib/awesomplete-override";
 @import "lib/octicons";
 @import "fonts";
 @import "devise";
+@import "views/shared/bookmark";
 @import "views/home/index";
 @import "views/home/logos";
 @import "views/bookmarks/index";

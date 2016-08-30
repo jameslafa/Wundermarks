@@ -37,9 +37,21 @@ class BookmarksController < ApplicationController
 
   # GET /bookmarks/new
   def new
-    @bookmark = Bookmark.new(bookmarklet_params)
-    @bookmark.title = @bookmark.title.truncate(Bookmark::MAX_TITLE_LENGTH) if @bookmark.title.present?
-    @bookmark.description = @bookmark.description.truncate(Bookmark::MAX_DESCRIPTION_LENGTH) if @bookmark.description.present?
+    @bookmark = Bookmark.new
+
+    # If an :id is present in the parameters, we get attributes from this record
+    if params.has_key? :id
+      @origin_bookmark = Bookmark.find(params[:id])
+      authorize @origin_bookmark, :show?
+      @bookmark.attributes = @origin_bookmark.slice(:title, :description, :url)
+
+    # If not, we get attributes from bookmarklet_params
+    # If there is no bookmarklet_params, it will simple keep the new bookmark empty
+    else
+      @bookmark.attributes = bookmarklet_params
+      @bookmark.title = @bookmark.title.truncate(Bookmark::MAX_TITLE_LENGTH) if @bookmark.title.present?
+      @bookmark.description = @bookmark.description.truncate(Bookmark::MAX_DESCRIPTION_LENGTH) if @bookmark.description.present?
+    end
 
     respond_to do |format|
       if params[:layout] == 'popup'

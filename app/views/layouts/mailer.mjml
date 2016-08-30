@@ -15,7 +15,7 @@
       <!-- Company Header -->
       <mj-section background-color="#555b6e">
         <mj-column>
-          <mj-text font-weight="300" align="center" color="#fff" font-size="30"><a style="text-decoration:none;color:#fff;" href="https://wundermarks.com" target="_blank">Wundermarks</a></mj-text>
+          <mj-text font-weight="300" align="center" color="#fff" font-size="30"><a style="text-decoration:none;color:#fff;" href="https://wundermarks.com" target="_blank" rel="nofollow noopener noreferrer">Wundermarks</a></mj-text>
         </mj-column>
       </mj-section>
 
@@ -31,7 +31,7 @@
 
       <!-- Visit Wundermarks -->
       <mj-section padding-top="0">
-        <mj-button mj-class="btn-green" href="https://wundermarks.com/bookmarks" target="_blank"><%= t(".see_bookmarks") %></mj-button>
+        <mj-button mj-class="btn-green" href="https://wundermarks.com/bookmarks" target="_blank" rel="nofollow noopener noreferrer"><%= t(".see_bookmarks") %></mj-button>
       </mj-section>
 
       <!-- Reply -->

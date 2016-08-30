@@ -10,6 +10,7 @@
 // Should be executed each time the page is loaded by turbolinks
 function pageLoaded(){
   ajustViewport();
+  activateTooltips();
 }
 
 // Should be executed only once, when the application boostrap.
@@ -139,6 +140,14 @@ function bookmarkAttributeLength(){
   $(document).on("keyup", ".c-bookmarks.a-new #bookmark_description", function(event){
     $("#bookmark_description_help .description-length").text($(this).val().length);
   });
+}
+
+// Activate bootstrap tooltips
+function activateTooltips(){
+  // Remove existing tooltips. Some of them can be stuck by using turbolinks
+  $('div.tooltip').remove();
+  // Enable tooltip
+  $('[data-toggle="tooltip"]').tooltip({delay: { "show": 500, "hide": 100 }});
 }
 
 $(document).ready(documentReady);

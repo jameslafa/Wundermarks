@@ -43,6 +43,7 @@ feature 'BookmarkNavigation' do
     within '.actions' do
       expect(page).to have_link(I18n.t("actions.edit"), href: edit_bookmark_path(bookmark))
       expect(page).to have_link(I18n.t("actions.delete"), href: bookmark_path(bookmark))
+      expect(page).not_to have_link(nil, href: copy_bookmark_path(bookmark))
     end
 
     within('.header .title') do
@@ -68,6 +69,7 @@ feature 'BookmarkNavigation' do
     within '.actions' do
       expect(page).not_to have_link(I18n.t("actions.edit"), href: edit_bookmark_path(bookmark))
       expect(page).not_to have_link(I18n.t("actions.delete"), href: bookmark_path(bookmark))
+      expect(page).to have_link(nil, href: copy_bookmark_path(bookmark))
     end
 
     within '.user-date' do

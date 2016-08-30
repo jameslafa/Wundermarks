@@ -238,7 +238,7 @@ RSpec.describe BookmarksController, type: :controller do
               expect(response_body).to eq({"error" => I18n.t("pundit.bookmark_policy.show?")})
             end
           end
-        end        
+        end
       end
     end
 
@@ -248,8 +248,8 @@ RSpec.describe BookmarksController, type: :controller do
         expect(assigns(:bookmark)).to be_a_new(Bookmark)
       end
 
-      context "with url parameters" do
-        it "prefills field with data given as url parameters" do
+      context "with bookmarklet url parameters" do
+        it "sets attributes from data given as url parameters" do
           get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you"
           expect(assigns(:bookmark).url).to eq "https://www.google.com/"
           expect(assigns(:bookmark).title).to eq "Google: search engine"
@@ -271,6 +271,28 @@ RSpec.describe BookmarksController, type: :controller do
           it "renders the layout popup" do
             get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", layout: "popup"
             expect(response).to render_template(:new, layout: :popup)
+          end
+        end
+      end
+
+      context "with id parameter" do
+        let(:original_bookmark) { create(:bookmark, privacy: 'everyone') }
+
+        it "sets attributes with attributes of the bookmark identified by the id" do
+          get :new, id: original_bookmark.id
+          new_bookmark = assigns(:bookmark)
+          expect(new_bookmark.title).to eq original_bookmark.title
+          expect(new_bookmark.description).to eq original_bookmark.description
+          expect(new_bookmark.url).to eq original_bookmark.url
+        end
+
+        context "when the bookmark is not accessible to the user" do
+          let(:original_bookmark) { create(:bookmark, privacy: 'only_me') }
+
+          it "redirects the user to the bookmarks list and show an error message" do
+            get :new, id: original_bookmark.id
+            expect(response).to redirect_to bookmarks_path
+            expect(flash[:alert]).to eq I18n.t("pundit.bookmark_policy.show?")
           end
         end
       end

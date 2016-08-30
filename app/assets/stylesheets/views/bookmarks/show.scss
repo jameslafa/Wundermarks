@@ -16,6 +16,7 @@
       .actions{
         border-bottom: 1px solid #ebebeb;
         padding: 0.7rem 1rem;
+        text-align: right;
 
         .user-date{
           line-height: 34px;
@@ -41,8 +42,21 @@
             font-size: 0.8rem;
 
             &:before{
-              content: "\00b7";
+              content: "\00b7\00a0";
             }
+          }
+        }
+
+        a.copy-bookmark{
+          color: rgba(0, 0, 0, 0.54);
+          line-height: 34px;
+
+          &:visited{
+            color: rgba(0, 0, 0, 0.54);
+          }
+
+          i.material-icons{
+            vertical-align: middle;
           }
         }
       }

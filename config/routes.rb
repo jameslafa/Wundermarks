@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   resource :user_profiles, only: [:show, :edit, :update], path: '/profile', as: :current_user_profile
   get '/profile/:id', to: 'user_profiles#show', as: :user_profile
 
-  resources :bookmarks
+  resources :bookmarks do
+    get 'copy', on: :member, to: 'bookmarks#new', as: 'copy'
+  end
   get '/bookmarks/:id/:title', to: 'bookmarks#show', as: 'bookmark_permalink'
   get '/b/:id', to: 'bookmarks#show', as: 'bookmark_shortlink'
 

@@ -4,5 +4,5 @@ en:
       title: "We are importing your bookmarks"
       description_html: |
         <p>Depending on the number of bookmarks you are importing, it may take a some time.</p>
-        <p>To let you keep using Wundermarks in the meanwhile, we are importing them in background and will notify by email you as soon as they are imported.</p>
+        <p>To let you keep using Wundermarks, we are importing them in the background and will notify you by email as soon as they are imported.</p>
       back_to_feed: "Back to my feed"

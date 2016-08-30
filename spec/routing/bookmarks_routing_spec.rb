@@ -9,6 +9,8 @@ RSpec.describe BookmarksController, type: :routing do
 
     it "routes to #new" do
       expect(:get => "/bookmarks/new").to route_to("bookmarks#new")
+      expect(:get => "/bookmarks/7/copy").to route_to("bookmarks#new", :id => "7")
+
     end
 
     it "routes to #show" do
@@ -36,6 +38,5 @@ RSpec.describe BookmarksController, type: :routing do
     it "routes to #destroy" do
       expect(:delete => "/bookmarks/1").to route_to("bookmarks#destroy", :id => "1")
     end
-
   end
 end
