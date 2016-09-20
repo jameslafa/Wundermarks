@@ -63,10 +63,14 @@ class BookmarksController < ApplicationController
         upgrade_bookmarklet = Settings.bookmarklet.current_version.to_i > bookmarklet_version.to_i
         session[:upgrade_bookmarklet] = upgrade_bookmarklet
 
-        ahoy.track "bookmarks-new", {id: @bookmark.id, layout: 'popup', bm_v: bookmarklet_version, bm_updated: !upgrade_bookmarklet}
+        ahoy.track "bookmarks-new", {layout: 'popup', bm_v: bookmarklet_version, bm_updated: !upgrade_bookmarklet}
         format.html { render :new, layout: "popup" }
       else
-        ahoy.track "bookmarks-show", {id: @bookmark.id, layout: 'web'}
+        if params.has_key? :id
+          ahoy.track "bookmarks-new", {layout: 'web', copy_from_bookmark_id: params[:id]}
+        else
+          ahoy.track "bookmarks-new", {layout: 'web'}
+        end
         format.html { render :new }
       end
     end
