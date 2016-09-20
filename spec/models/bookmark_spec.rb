@@ -148,4 +148,20 @@ RSpec.describe Bookmark, type: :model do
       expect(bookmark.source).to eq 'wundermarks'
     end
   end
+
+  describe 'copy_from_bookmark_id' do
+    it 'can be set only on creation and cannot be updated later' do
+      bookmark = create(:bookmark, copy_from_bookmark_id: 50)
+      expect(bookmark.copy_from_bookmark_id).to eq 50
+
+      bookmark.copy_from_bookmark_id = 20
+      bookmark.save
+
+      expect(bookmark.errors.messages).to include :copy_from_bookmark_id
+      expect(bookmark.errors.messages[:copy_from_bookmark_id]).to eq [I18n.t("activerecord.errors.models.bookmark.attributes.copy_from_bookmark_id.cannot_be_updated")]
+
+      bookmark.reload
+      expect(bookmark.copy_from_bookmark_id).to eq 50
+    end
+  end
 end

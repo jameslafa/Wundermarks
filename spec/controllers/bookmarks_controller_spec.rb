@@ -285,6 +285,7 @@ RSpec.describe BookmarksController, type: :controller do
           expect(new_bookmark.description).to eq original_bookmark.description
           expect(new_bookmark.url).to eq original_bookmark.url
           expect(new_bookmark.tag_list).to eq original_bookmark.tag_list
+          expect(new_bookmark.copy_from_bookmark_id).to eq original_bookmark.id
         end
 
         context "when the bookmark is not accessible to the user" do
@@ -352,12 +353,13 @@ RSpec.describe BookmarksController, type: :controller do
         end
 
         it "assigns a newly created bookmark as @bookmark" do
-          post :create, {:bookmark => valid_attributes}
+          post :create, {:bookmark => valid_attributes.merge!({copy_from_bookmark_id: 5})}
           created_bookmark = assigns(:bookmark)
           expect(assigns(:bookmark)).to be_a(Bookmark)
           expect(assigns(:bookmark)).to contains_attributes_from valid_attributes.except(:tag_list, :privacy)
           expect(assigns(:bookmark).privacy).to eq valid_attributes[:privacy]
           expect(assigns(:bookmark).tag_list.to_s).to eq valid_attributes[:tag_list].downcase
+          expect(assigns(:bookmark).copy_from_bookmark_id).to eq valid_attributes[:copy_from_bookmark_id]
           expect(assigns(:bookmark)).to be_persisted
         end
 
@@ -392,9 +394,9 @@ RSpec.describe BookmarksController, type: :controller do
       end
 
       it "restricts parameters" do
-        params = attributes_for(:bookmark_with_tags, user_id: 1)
+        params = attributes_for(:bookmark_with_tags, user_id: 1, copy_from_bookmark_id: 5)
 
-        should permit(:title, :description, :url, :tag_list, :privacy)
+        should permit(:title, :description, :url, :tag_list, :privacy, :copy_from_bookmark_id)
         .for(:create, params: {bookmark: params}).on(:bookmark)
 
         should_not permit(:user_id)

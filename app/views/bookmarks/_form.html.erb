@@ -29,6 +29,8 @@
   <span id="tag_list_help" class="help-block"><%= t('.tag_list_help')%></span>
 </div>
 
+<%= f.hidden_field :copy_from_bookmark_id %>
+
 <div class="actions hidden-xs hidden-sm">
   <%= f.submit class: 'btn btn-primary' %>
   <% if @layout == 'popup' %>

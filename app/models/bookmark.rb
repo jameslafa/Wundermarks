@@ -29,6 +29,7 @@ class Bookmark < ActiveRecord::Base
   validates :title, length: { maximum: Bookmark::MAX_TITLE_LENGTH }
   validates :description, length: { maximum: Bookmark::MAX_DESCRIPTION_LENGTH }, allow_blank: true
   validate :max_5_tags
+  validate :copy_from_bookmark_id_not_updated
 
 
   # Scopes
@@ -94,6 +95,13 @@ class Bookmark < ActiveRecord::Base
   def max_5_tags
     if self.tag_list.size > 5
       errors.add(:tag_list, I18n.t("activerecord.errors.models.bookmark.attributes.tag_list.too_many"))
+    end
+  end
+
+  # Do not update copy_from_bookmark_id if the bookmark has already been persisted
+  def copy_from_bookmark_id_not_updated
+    if copy_from_bookmark_id_changed? && self.persisted?
+      errors.add(:copy_from_bookmark_id, I18n.t("activerecord.errors.models.bookmark.attributes.copy_from_bookmark_id.cannot_be_updated"))
     end
   end
 

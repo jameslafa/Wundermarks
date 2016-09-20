@@ -18,3 +18,5 @@ en:
               too_many: 'are limited to 5'
             url:
               taken: 'has already been bookmarked'
+            copy_from_bookmark_id:
+              cannot_be_updated: 'cannot be changed'

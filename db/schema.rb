@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816162543) do
+ActiveRecord::Schema.define(version: 20160920061305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,13 +91,15 @@ ActiveRecord::Schema.define(version: 20160816162543) do
     t.text     "description"
     t.string   "url"
     t.integer  "user_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "tag_search"
-    t.integer  "privacy",     default: 1, null: false
-    t.integer  "source",      default: 0
+    t.integer  "privacy",               default: 1, null: false
+    t.integer  "source",                default: 0
+    t.integer  "copy_from_bookmark_id"
   end
 
+  add_index "bookmarks", ["copy_from_bookmark_id"], name: "index_bookmarks_on_copy_from_bookmark_id", using: :btree
   add_index "bookmarks", ["description"], name: "index_bookmarks_on_description", using: :gin
   add_index "bookmarks", ["privacy"], name: "index_bookmarks_on_privacy", using: :btree
   add_index "bookmarks", ["tag_search"], name: "index_bookmarks_on_tag_search", using: :gin

@@ -40,11 +40,11 @@ class BookmarksController < ApplicationController
     @bookmark = Bookmark.new
 
     # If an :id is present in the parameters, we get attributes from this record
-    if params.has_key? :id
+    if params.has_key?(:id) && params[:id].present?
       @origin_bookmark = Bookmark.find(params[:id])
       authorize @origin_bookmark, :show?
       @bookmark.attributes = @origin_bookmark.slice(:title, :description, :url, :tag_list)
-
+      @bookmark.copy_from_bookmark_id = params[:id]
 
     # If not, we get attributes from bookmarklet_params
     # If there is no bookmarklet_params, it will simple keep the new bookmark empty
@@ -66,8 +66,8 @@ class BookmarksController < ApplicationController
         ahoy.track "bookmarks-new", {layout: 'popup', bm_v: bookmarklet_version, bm_updated: !upgrade_bookmarklet}
         format.html { render :new, layout: "popup" }
       else
-        if params.has_key? :id
-          ahoy.track "bookmarks-new", {layout: 'web', copy_from_bookmark_id: params[:id]}
+        if @bookmark.copy_from_bookmark_id
+          ahoy.track "bookmarks-new", {layout: 'web', copy_from_bookmark_id: @bookmark.copy_from_bookmark_id}
         else
           ahoy.track "bookmarks-new", {layout: 'web'}
         end
@@ -139,7 +139,7 @@ class BookmarksController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def bookmark_params
-    params.require(:bookmark).permit(:title, :description, :url, :tag_list, :privacy)
+    params.require(:bookmark).permit(:title, :description, :url, :tag_list, :privacy, :copy_from_bookmark_id)
   end
 
   def bookmarklet_params
