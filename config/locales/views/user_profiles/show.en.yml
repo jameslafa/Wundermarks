@@ -1,0 +1,18 @@
+en:
+  user_profiles:
+    no_username_html: "You haven't choosen your username yet. %{reserve}"
+    no_username_reserve: "Reserve it now!"
+
+    show:
+      follow: "Follow"
+      unfollow: "Unfollow"
+      following: "Following"
+      actions:
+        edit: "Edit profile"
+
+    user_profile:
+      member_since: "Member for %{days} days"
+      create_username: "Reserve your username"
+      born_on: "Born on %{date}"
+      twitter: "Twitter"
+      github: "Github"

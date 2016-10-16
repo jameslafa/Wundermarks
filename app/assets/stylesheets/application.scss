@@ -9,6 +9,8 @@
 @import "fonts";
 @import "devise";
 @import "views/shared/bookmark";
+@import "views/shared/bookmark_list_with_date";
+@import "views/shared/user_profiles";
 @import "views/home/index";
 @import "views/home/logos";
 @import "views/bookmarks/index";
@@ -19,7 +21,8 @@
 @import "views/tools/bookmarklet";
 @import "views/tools/import";
 @import "views/tools/imported";
-@import "user_profiles";
+@import "views/user_profiles/show";
+@import "views/user_profiles/form";
 
 html{
   color: $default-text-color;
@@ -164,4 +167,14 @@ body{
 
 .field_with_errors {
   @extend .has-error;
+}
+
+form{
+  fieldset{
+    margin-top: 2rem;
+  }
+
+  .input-group{
+    width: 100%;
+  }
 }

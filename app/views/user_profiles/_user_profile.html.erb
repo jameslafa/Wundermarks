@@ -1,0 +1,42 @@
+<div class="avatar big">
+  <%= image_tag @profile.avatar.big.url %>
+</div>
+<h1 class="user-profile-name"><%= @profile.name %></h1>
+<h2 class="user-profile-username">
+  <% if @profile.username.present? %>
+  <%= link_to "@#{@profile.username}", user_profile_permalink(@profile), class: 'user_profile_permalink' %>
+  <% elsif @profile.user == current_user %>
+    <%= link_to(t('.create_username'), edit_current_user_profile_path, class: 'create_username') %>
+  <% end %>
+</h2>
+<p class="user-profile-bio">
+  <%= text_to_html @profile.introduction %>
+</p>
+
+<% if @profile.city.present? or @profile.country.present? %>
+  <p class="user-profile-place">
+    <span class="glyphicon glyphicon-map-marker"></span> <%= user_profile_place(@profile) %>
+  </p>
+<% end %>
+
+<% if @profile.birthday.present? %>
+  <p class="user-profile-birthday">
+    <span class="glyphicon glyphicon-gift"></span> <%= t('.born_on', date: l(@profile.birthday, format: :long)) %>
+  </p>
+<% end %>
+
+<% if @profile.twitter_username.present? %>
+  <p class="user-profile-twitter">
+    <span class="fa fa-twitter"></span> <%= t('.twitter') %> <%= twitter_link(@profile.twitter_username, {target: '_blank', rel: 'nofollow', class: 'social-link'}) %>
+  </p>
+<% end %>
+
+<% if @profile.github_username.present? %>
+  <p class="user-profile-github">
+    <span class="fa fa-github"></span> <%= t('.github') %> <%= github_link(@profile.github_username, {target: '_blank', rel: 'nofollow', class: 'social-link'}) %>
+  </p>
+<% end %>
+
+<p class="user-profile-member-since">
+  <span class="fa fa-birthday-cake"></span> <%= t(".member_since", days: (Time.now.to_date - @profile.created_at.to_date).to_i) %>
+</p>

@@ -174,13 +174,6 @@ en:
         back: "Go back to homepage"
 
   user_profiles:
-    show:
-      action:
-        edit: "Edit your profile"
-    user_profile_item:
-      member_since: "Member for %{days} days"
-      no_username_html: "You haven't choosen your username yet. %{reserve}"
-      no_username_reserve: "Reserve it now!"
     form:
       back_to_profile: "Cancel"
       user_name_help: "Must contain only letters and numbers and be at least 5 characters long"

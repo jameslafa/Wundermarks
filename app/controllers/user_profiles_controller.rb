@@ -16,6 +16,21 @@ class UserProfilesController < ApplicationController
       @profile = get_current_user_profile
     end
 
+    # Show all bookmark from the profile's user
+    if current_user.try(:id) == @profile.user.id
+      @bookmarks = Bookmark.where(user_id: @profile.user.id).paginated(params[:page]).last_first
+    else
+      @bookmarks = policy_scope(Bookmark).where(user_id: @profile.user.id).paginated(params[:page]).last_first
+    end
+
+    # Is current_user following this profile
+    if current_user && current_user.id != params[:id]
+      @following = current_user.following?(@profile.user)
+    end
+
+    # User's statistics
+    @statistics = @profile.user.statistics
+
     ahoy.track "user_profiles-show", {id: @profile.id, current_user: (current_user.try(:id) == @profile.user.id) }
   end
 
@@ -48,6 +63,7 @@ class UserProfilesController < ApplicationController
   end
 
   def user_profile_params
-    params.require(:user_profile).permit(:name, :introduction, :username)
+    params.require(:user_profile).permit(:name, :introduction, :username,
+    :country, :city, :website, :birthday, :twitter_username, :github_username, :avatar, :avatar_cache)
   end
 end

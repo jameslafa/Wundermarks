@@ -61,4 +61,6 @@
 /* Rules for using icons as white on a dark background. */
   &.md-light { color: rgba(255, 255, 255, 1); }
   &.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+  &.top { vertical-align: top }
 }

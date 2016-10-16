@@ -1,5 +1,15 @@
-<%= form_for(@profile, url: current_user_profile_path) do |f| %>
-  <%= render partial: 'shared/form_errors', locals: { resource: @profile, full_message: true } %>
+<%= form_for(@profile, url: current_user_profile_path, html: { multipart: true }) do |f| %>
+<%= render partial: 'shared/form_errors', locals: { resource: @profile, full_message: true } %>
+
+<fieldset>
+  <div class="form-group">
+    <%= f.file_field :avatar, style: 'display: none', accept: 'image/png, image/jpeg' %>
+    <%= f.hidden_field :avatar_cache %>
+    <div class="avatar-container">
+      <div class="image" style="background-image: url(<%= f.object.avatar.big.url %>)"></div>
+      <div class="overlay upload"><i class="fa fa-camera" aria-hidden="true"></i><br/><%= t('.change_picture') %></div>
+    </div>
+  </div>
 
   <div class="form-group">
     <%= f.label :name, class: 'control-label' %>
@@ -17,19 +27,63 @@
     </div>
     <span id="user_profile_username_help" class="help-block"><span class="validation_message"></span><%= t(".user_name_help") %></span>
   </div>
+</fieldset>
 
+<fieldset>
+  <legend><%= t('.who_are_you') %></legend>
   <div class="form-group">
     <%= f.label :introduction, class: 'control-label' %>
     <%= f.text_area :introduction, class: 'form-control' %>
+    <p class="help-block"><%= t('.introduction_help') %></p>
   </div>
 
-  <div class="actions hidden-xs hidden-sm">
-    <%= f.submit class: 'btn btn-primary' %>
-    <%= link_to t(".back_to_profile"), current_user_profile_path, class: 'btn btn-default pull-right hidden-xs hidden-sm' %>
+  <div class="form-group">
+    <%= f.label :birthday, class: 'control-label' %>
+    <%= f.date_field :birthday, class: 'form-control' %>
+  </div>
+</fieldset>
+
+<fieldset>
+  <legend><%= t('.where_do_you_live') %></legend>
+  <div class="form-group">
+    <%= f.label :country, class: 'control-label' %>
+    <%= f.country_select :country, {priority_countries: ["DE"], include_blank: true}, {class: 'form-control'} %>
   </div>
 
-  <div class="actions hidden-md hidden-lg">
-    <%= f.submit class: 'btn btn-primary btn-block btn-lg' %>
-    <%= link_to t(".back_to_profile"), current_user_profile_path, class: 'btn btn-default btn-block btn-lg' %>
+  <div class="form-group">
+    <%= f.label :city, class: 'control-label' %>
+    <%= f.text_field :city, class: 'form-control' %>
   </div>
+</fieldset>
+
+
+<fieldset>
+  <legend><%= t('.where_people_can_find_you') %></legend>
+  <div class="form-group">
+    <%= f.label :twitter_username, class: 'control-label' %>
+    <div class="input-group">
+      <span class="input-group-addon hidden-xs hidden-sm">@</span>
+      <%= f.text_field :twitter_username, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :github_username, class: 'control-label' %>
+    <div class="input-group">
+      <span class="input-group-addon hidden-xs hidden-sm">@</span>
+      <%= f.text_field :github_username, class: 'form-control' %>
+    </div>
+  </div>
+</fieldset>
+
+
+<div class="actions hidden-xs hidden-sm">
+  <%= f.submit class: 'btn btn-primary' %>
+  <%= link_to t(".back_to_profile"), current_user_profile_path, class: 'btn btn-default pull-right hidden-xs hidden-sm' %>
+</div>
+
+<div class="actions hidden-md hidden-lg">
+  <%= f.submit class: 'btn btn-primary btn-block btn-lg' %>
+  <%= link_to t(".back_to_profile"), current_user_profile_path, class: 'btn btn-default btn-block btn-lg' %>
+</div>
 <% end %>

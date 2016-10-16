@@ -4,7 +4,6 @@ en:
       new_bookmark: "Add a bookmark"
       search:
         search_all_wundermarks:
-          zero: "No match in your bookmarks. <a href=\"%{search_all_url}\" class=\"alert-link\">Search all of Wundermarks?</a>"
-          one: "One match in your bookmarks. <a href=\"%{search_all_url}\" class=\"alert-link\">Search all of Wundermarks?</a>"
-          other: "%{count} matches in your bookmarks. <a href=\"%{search_all_url}\" class=\"alert-link\">Search all of Wundermarks?</a>"
-        nothing_found_html: "Oups, nothing found! <a href=\"#\" class=\"start_new_search\">Start a new search</a>."
+          zero: "No match in your bookmarks. <a href=\"%{search_friends_url}\" class=\"alert-link\">Search all of people you follow?</a> or <a href=\"%{search_all_url}\" class=\"alert-link\">Search all of Wundermarks?</a>"
+          one: "One match in your bookmarks. <a href=\"%{search_friends_url}\" class=\"alert-link\">Search all of people you follow?</a> or <a href=\"%{search_all_url}\" class=\"alert-link\">Search all of Wundermarks?</a>"
+          other: "%{count} matches in your bookmarks. <a href=\"%{search_friends_url}\" class=\"alert-link\">Search all of people you follow?</a> or <a href=\"%{search_all_url}\" class=\"alert-link\">Search all of Wundermarks?</a>"

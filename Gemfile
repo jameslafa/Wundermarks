@@ -35,6 +35,9 @@ gem 'puma'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Migration progress bar
+gem 'progressbar'
+
 # Authentication
 gem 'devise', '~> 4.1'
 # Authorizations
@@ -84,6 +87,20 @@ gem 'mjml-rails'
 # Pagination
 gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate-bootstrap'
+
+# Follow users
+gem 'acts_as_follower'
+
+# Countries
+gem 'country_select'
+
+# Validators
+gem 'date_validator'
+gem 'validate_url'
+
+# Upload files
+gem 'carrierwave', '>= 1.0.0.beta', '< 2.0'
+gem 'mini_magick', '~> 4.5'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

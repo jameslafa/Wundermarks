@@ -3,11 +3,30 @@ class FeedController < ApplicationController
 
   def index
     if params[:q].present? and @q = params[:q]
-      @bookmarks = policy_scope(Bookmark).search(@q).paginated(params[:page])
-      ahoy.track "feed-index", {q: @q}
+      @bookmarks = bookmarks_users_scope.search(@q).paginated(params[:page])
+      if @bookmarks.count > 0
+        flash.now[:notice] = I18n.t("feed.index.search.search_all_wundermarks", count: @bookmarks.count, search_all_url: feed_path(q: @q, filter: 'everyone'))
+      else
+        flash.now[:notice] = I18n.t("feed.index.search.nothing_found_html")
+      end
+      ahoy.track "feed-search", q: @q, results_count: @bookmarks.try(:count)
     else
-      @bookmarks = policy_scope(Bookmark).paginated(params[:page]).last_first
-      ahoy.track "feed-index", nil
+      @bookmarks = bookmarks_users_scope.paginated(params[:page]).last_first
+      sliced_params = params.slice(:q, :filter)
+      ahoy.track "feed-index", sliced_params.empty? ? nil : sliced_params
+    end
+  end
+
+  private
+
+  def bookmarks_users_scope
+    #TODO: This could be optimized in only one query instead of Followins -> Bookmarks
+    if params[:filter] == "everyone"
+      policy_scope(Bookmark)
+    else
+      users = current_user.all_following
+      users << current_user
+      policy_scope(Bookmark).where(user: users)
     end
   end
 end

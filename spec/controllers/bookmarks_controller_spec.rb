@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe BookmarksController, type: :controller do
   include ActiveJob::TestHelper
-  include Helpers
+  include ActionView::Helpers::UrlHelper
 
   let(:valid_attributes) { attributes_for(:bookmark_with_tags) }
   let(:invalid_attributes) { attributes_for(:bookmark_with_tags, title: '') }
@@ -22,6 +22,15 @@ RSpec.describe BookmarksController, type: :controller do
         it "renders template :show" do
           get :show, {id: bookmark.id}
           expect(response).to render_template :show
+        end
+
+        it 'tracks an ahoy event' do
+          expect{
+            get :show, {id: bookmark.id}
+          }.to change(Ahoy::Event, :count).by(1)
+          event = Ahoy::Event.last
+          expect(event.name).to eq 'bookmarks-show'
+          expect(event.properties).to eq({"id" => bookmark.id})
         end
       end
 
@@ -133,6 +142,15 @@ RSpec.describe BookmarksController, type: :controller do
         expect(assigns(:bookmarks)).to eq(ordered_list)
       end
 
+      it "tracks an ahoy event" do
+        expect{
+          get :index
+        }.to change(Ahoy::Event, :count).by(1)
+        event = Ahoy::Event.last
+        expect(event.name).to eq 'bookmarks-index'
+        expect(event.properties).to be_nil
+      end
+
       context 'when a query parameter is defined' do
         before(:each) do
           @searched_bookmark = current_user_bookmarks.second
@@ -146,7 +164,16 @@ RSpec.describe BookmarksController, type: :controller do
 
         it "displays a notice and offer to search in all wundermarks" do
           get :index, q: 'rails'
-          expect(flash[:notice]).to eq I18n.t("bookmarks.index.search.search_all_wundermarks", count: 1, search_all_url: feed_path(q: 'rails'))
+          expect(flash[:notice]).to eq I18n.t("bookmarks.index.search.search_all_wundermarks", count: 1, search_friends_url: feed_path(q: 'rails'), search_all_url: feed_path(q: 'rails', filter: 'everyone'))
+        end
+
+        it "tracks an ahoy event" do
+          expect{
+            get :index, q: 'rails'
+          }.to change(Ahoy::Event, :count).by(1)
+          event = Ahoy::Event.last
+          expect(event.name).to eq 'bookmarks-search'
+          expect(event.properties).to eq({"q" => 'rails', "results_count" => 1})
         end
       end
 
@@ -156,6 +183,15 @@ RSpec.describe BookmarksController, type: :controller do
         it "assigns all bookmarks imported by the service" do
           get :index, post_import: 'delicious'
           expect(assigns(:bookmarks)).to match_array(delicious_bookmarks)
+        end
+
+        it "tracks an ahoy event" do
+          expect{
+            get :index, post_import: 'delicious'
+          }.to change(Ahoy::Event, :count).by(1)
+          event = Ahoy::Event.last
+          expect(event.name).to eq 'bookmarks-post_import'
+          expect(event.properties).to eq({"source" => 'delicious', "count" => 3})
         end
       end
 
@@ -193,6 +229,15 @@ RSpec.describe BookmarksController, type: :controller do
         get :show, {:id => bookmark.id}
         expect(assigns(:bookmark)).to eq(bookmark)
         expect(response).to render_template :show
+      end
+
+      it 'tracks an ahoy event' do
+        expect{
+          get :show, {id: bookmark.id}
+        }.to change(Ahoy::Event, :count).by(1)
+        event = Ahoy::Event.last
+        expect(event.name).to eq 'bookmarks-show'
+        expect(event.properties).to eq({"id" => bookmark.id})
       end
 
       context 'when no utm_medium is defined' do
@@ -248,6 +293,15 @@ RSpec.describe BookmarksController, type: :controller do
         expect(assigns(:bookmark)).to be_a_new(Bookmark)
       end
 
+      it "tracks an ahoy event" do
+        expect{
+          get :new
+        }.to change(Ahoy::Event, :count).by(1)
+        event = Ahoy::Event.last
+        expect(event.name).to eq 'bookmarks-new'
+        expect(event.properties).to eq({"layout" => "web"})
+      end
+
       context "with bookmarklet url parameters" do
         it "sets attributes from data given as url parameters" do
           get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you"
@@ -272,6 +326,25 @@ RSpec.describe BookmarksController, type: :controller do
             get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", layout: "popup"
             expect(response).to render_template(:new, layout: :popup)
           end
+
+          it "tracks an ahoy event" do
+            expect{
+              get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", v: "1469795299", layout: "popup"
+            }.to change(Ahoy::Event, :count).by(1)
+            event = Ahoy::Event.last
+            expect(event.name).to eq 'bookmarks-new'
+            expect(event.properties).to eq({"layout" => 'popup', "bm_v" => 1469795299, "bm_updated" => true, "duplicate_bookmark_warning" => false})
+          end
+        end
+
+        context "when the a bookmark with the same url exists" do
+          let(:bookmark) { create(:bookmark, user: subject.current_user) }
+
+          it 'displays alert to notify user that the bookmark already exists' do
+            get :new, url: bookmark.url, title: "Google: search engine"
+            expect(assigns(:bookmark).url).to eq bookmark.url
+            expect(flash[:alert]).to eq "#{I18n.t("errors.bookmarks.already_exists")}. #{link_to(I18n.t("errors.bookmarks.see_existing_bookmark"), bookmark_path(bookmark.id), class: 'alert-link')}."
+          end
         end
       end
 
@@ -286,6 +359,15 @@ RSpec.describe BookmarksController, type: :controller do
           expect(new_bookmark.url).to eq original_bookmark.url
           expect(new_bookmark.tag_list).to eq original_bookmark.tag_list
           expect(new_bookmark.copy_from_bookmark_id).to eq original_bookmark.id
+        end
+
+        it "tracks an ahoy event" do
+          expect{
+            get :new, id: original_bookmark.id
+          }.to change(Ahoy::Event, :count).by(1)
+          event = Ahoy::Event.last
+          expect(event.name).to eq 'bookmarks-new'
+          expect(event.properties).to eq({"layout" => 'web', "copy_from_bookmark_id" => original_bookmark.id, "duplicate_bookmark_warning" => false})
         end
 
         context "when the bookmark is not accessible to the user" do
@@ -303,6 +385,15 @@ RSpec.describe BookmarksController, type: :controller do
         it "sets upgrade_bookmarklet in the user session" do
           get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", layout: "popup", v: (Settings.bookmarklet.current_version.to_i - 1000).to_s
           expect(session[:upgrade_bookmarklet]).to be true
+        end
+
+        it "tracks an ahoy event" do
+          expect{
+            get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", layout: "popup", v: (Settings.bookmarklet.current_version.to_i - 1000).to_s
+          }.to change(Ahoy::Event, :count).by(1)
+          event = Ahoy::Event.last
+          expect(event.name).to eq 'bookmarks-new'
+          expect(event.properties).to eq({"layout" => 'popup', "bm_v" => (Settings.bookmarklet.current_version.to_i - 1000).to_i, "bm_updated" => false, "duplicate_bookmark_warning" => false})
         end
       end
 
@@ -324,6 +415,15 @@ RSpec.describe BookmarksController, type: :controller do
         it "assigns the requested bookmark as @bookmark and render :edit" do
           get :edit, {:id => bookmark.id}
           expect(assigns(:bookmark)).to eq(bookmark)
+        end
+
+        it "tracks an ahoy event" do
+          expect{
+            get :edit, {:id => bookmark.id}
+          }.to change(Ahoy::Event, :count).by(1)
+          event = Ahoy::Event.last
+          expect(event.name).to eq 'bookmarks-edit'
+          expect(event.properties).to eq({"id" => bookmark.id})
         end
       end
 
@@ -375,6 +475,15 @@ RSpec.describe BookmarksController, type: :controller do
             expect(args).to eq(["new_bookmark", @bookmark])
           }
         end
+
+        it "tracks an ahoy event" do
+          expect{
+            @bookmark = post :create, {:bookmark => valid_attributes}
+          }.to change(Ahoy::Event, :count).by(1)
+          event = Ahoy::Event.last
+          expect(event.name).to eq 'bookmarks-create'
+          expect(event.properties).to eq({"id" => Bookmark.last.id})
+        end
       end
 
       context "with invalid params" do
@@ -425,6 +534,15 @@ RSpec.describe BookmarksController, type: :controller do
           it "redirects to the bookmark page" do
             put :update, {:id => bookmark.id, :bookmark => new_attributes}
             expect(response).to redirect_to(bookmark_path(bookmark))
+          end
+
+          it "tracks an ahoy event" do
+            expect{
+              put :update, {:id => bookmark.id, :bookmark => new_attributes}
+            }.to change(Ahoy::Event, :count).by(1)
+            event = Ahoy::Event.last
+            expect(event.name).to eq 'bookmarks-update'
+            expect(event.properties).to eq({"id" => bookmark.id})
           end
         end
 
@@ -486,6 +604,15 @@ RSpec.describe BookmarksController, type: :controller do
           expect {
             delete :destroy, {:id => bookmark.id}
           }.to change(Bookmark, :count).by(-1)
+        end
+
+        it "tracks an ahoy event" do
+          expect{
+            delete :destroy, {:id => bookmark.id}
+          }.to change(Ahoy::Event, :count).by(1)
+          event = Ahoy::Event.last
+          expect(event.name).to eq 'bookmarks-destroy'
+          expect(event.properties).to eq({"id" => bookmark.id})
         end
       end
 

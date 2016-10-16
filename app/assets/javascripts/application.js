@@ -22,6 +22,7 @@ function documentReady(){
   socialShare();
   validateUsernameAvailability();
   bookmarkAttributeLength();
+  uploadAvatar();
 }
 
 // Track clicks to external links for analytics
@@ -148,6 +149,40 @@ function activateTooltips(){
   $('div.tooltip').remove();
   // Enable tooltip
   $('[data-toggle="tooltip"]').tooltip({delay: { "show": 500, "hide": 100 }});
+}
+
+// Upload avatar when click on the image
+function uploadAvatar(){
+  // Open file selector when user click on the image
+  $(document).on("click", ".avatar-container .upload", function(){
+    $("#user_profile_avatar").focus().click();
+  });
+
+  // When an image has been selected, display a preview
+  $(document).on("change", "#user_profile_avatar", function(){
+    var input = $(this)[0];
+    if (input.files && input.files[0]) {
+      var picture = input.files[0];
+      var file_type = picture.type;
+
+      // Check that the file type is correct
+      if (['image/png', 'image/jpeg'].indexOf(file_type) > -1){
+
+        // Display a preview
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $('.avatar-container .image').css('background-image', 'url(' + e.target.result + ')');
+        }
+
+        reader.readAsDataURL(picture);
+      }
+      else{
+        // File type is incorrect, remove the file from the upload field
+        input.value = "";
+      }
+    }
+  });
 }
 
 $(document).ready(documentReady);

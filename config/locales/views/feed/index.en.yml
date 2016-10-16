@@ -4,3 +4,9 @@ en:
       time_ago: "%{time} ago"
       bookmark:
         details: "Details"
+      search:
+        search_all_wundermarks:
+          zero: "No match in the bookmarks of people you follow. <a href=\"%{search_all_url}\" class=\"alert-link\">Search all of Wundermarks?</a>"
+          one: "One match in the bookmarks of people you follow. <a href=\"%{search_all_url}\" class=\"alert-link\">Search all of Wundermarks?</a>"
+          other: "%{count} matches in the bookmarks of people you follow. <a href=\"%{search_all_url}\" class=\"alert-link\">Search all of Wundermarks?</a>"
+        nothing_found_html: "Oups, nothing found! <a href=\"#\" class=\"start_new_search alert-link\">Start a new search</a>."

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe HomeController, type: :controller do
-  include Helpers
 
   describe "GET #index" do
     context "when the user is not signed_in" do

@@ -30,6 +30,15 @@ RSpec.describe RegistrationsController, type: :controller do
           expect(args).to eq(["new_user_registration", @user])
         }
       end
+
+      it "tracks an ahoy event" do
+        expect{
+          @user = post :create, {user: valid_params}
+        }.to change(Ahoy::Event, :count).by(1)
+        event = Ahoy::Event.last
+        expect(event.name).to eq 'registrations-create'
+        expect(event.properties).to eq({"user_id" => User.last.id })
+      end
     end
 
     context 'with invalid attributes' do # no user_profile.name
