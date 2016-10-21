@@ -116,5 +116,16 @@
         margin-bottom: .5rem;
       }
     }
+
+    .private_user_profile{
+      background-color: white;
+      padding: 1rem;
+      text-align: center;
+
+      .private_icon{
+        color: #999;
+        font-size: 7rem;
+      }
+    }
   }
 }

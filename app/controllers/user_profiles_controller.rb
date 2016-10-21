@@ -16,20 +16,34 @@ class UserProfilesController < ApplicationController
       @profile = get_current_user_profile
     end
 
-    # Show all bookmark from the profile's user
-    if current_user.try(:id) == @profile.user.id
-      @bookmarks = Bookmark.where(user_id: @profile.user.id).paginated(params[:page]).last_first
-    else
-      @bookmarks = policy_scope(Bookmark).where(user_id: @profile.user.id).paginated(params[:page]).last_first
-    end
+    # User's preferences
+    @preferences = @profile.user.preferences
 
-    # Is current_user following this profile
-    if current_user && current_user.id != params[:id]
-      @following = current_user.following?(@profile.user)
-    end
+    # Check if the profile should stay private
+    @public_profile = current_user.present? || @preferences.public_profile == true
 
-    # User's statistics
-    @statistics = @profile.user.statistics
+    # Set no index meta_tag if necessary
+    update_meta_tag('noindex', !@public_profile || !@preferences.search_engine_index)
+    
+    if @public_profile
+      # Show all bookmark from the profile's user
+      if current_user.try(:id) == @profile.user.id
+        @bookmarks = Bookmark.where(user_id: @profile.user.id).paginated(params[:page]).last_first
+      else
+        @bookmarks = policy_scope(Bookmark).where(user_id: @profile.user.id).paginated(params[:page]).last_first
+      end
+
+      # Is current_user following this profile
+      if current_user && current_user.id != params[:id]
+        @following = current_user.following?(@profile.user)
+      end
+
+      # User's statistics
+      @statistics = @profile.user.statistics
+
+      update_meta_tag('title', "#{@profile.name} (@#{@profile.username})")
+      update_meta_tag('description', @profile.introduction) if @profile.introduction.present?
+    end
 
     ahoy.track "user_profiles-show", {id: @profile.id, current_user: (current_user.try(:id) == @profile.user.id) }
   end

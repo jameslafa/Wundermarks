@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="private_user_profile">
+      <p class="private_icon"><i class="fa fa-user-secret" aria-hidden="true"></i></p>
+      <%= t(".please_connect_html", sign_url: new_user_session_path) %>
+      <br/>
+      <%= link_to t('.back_home'), root_path, class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div>

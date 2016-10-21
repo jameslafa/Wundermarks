@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161012162812) do
+ActiveRecord::Schema.define(version: 20161019061125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,6 +151,17 @@ ActiveRecord::Schema.define(version: 20161012162812) do
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
+  create_table "user_preferences", force: :cascade do |t|
+    t.integer  "user_id"
+    t.boolean  "search_engine_index", default: true
+    t.boolean  "public_profile",      default: true
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "user_preferences", ["public_profile"], name: "index_user_preferences_on_public_profile", using: :btree
+  add_index "user_preferences", ["user_id"], name: "index_user_preferences_on_user_id", using: :btree
+
   create_table "user_profiles", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "name"
@@ -234,5 +245,6 @@ ActiveRecord::Schema.define(version: 20161012162812) do
   add_foreign_key "bookmark_trackings", "bookmarks"
   add_foreign_key "bookmarks", "users"
   add_foreign_key "identities", "users"
+  add_foreign_key "user_preferences", "users"
   add_foreign_key "user_profiles", "users"
 end

@@ -27,7 +27,7 @@ feature 'ActionButtons' do
 
     # There is an edit button on the user_profile#show page
     visit user_profile_path(user_profile.id)
-    expect(page).to have_link(I18n.t("user_profiles.show.actions.edit"))
+    expect(page).to have_link(I18n.t("user_profiles.user_profile_bar.actions.edit"))
 
     # There are edit and delete button on the bookmark#show page
     visit bookmark_path(user_bookmark.id)

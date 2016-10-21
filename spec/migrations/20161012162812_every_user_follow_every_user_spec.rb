@@ -24,5 +24,4 @@ describe EveryUserFollowEveryUser, migration: true do
       expect(users[2].all_following).to match_array [users[0], users[1]]
     end
   end
-
 end

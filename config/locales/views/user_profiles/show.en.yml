@@ -3,7 +3,7 @@ en:
     no_username_html: "You haven't choosen your username yet. %{reserve}"
     no_username_reserve: "Reserve it now!"
 
-    show:
+    user_profile_bar:
       follow: "Follow"
       unfollow: "Unfollow"
       following: "Following"
@@ -16,3 +16,9 @@ en:
       born_on: "Born on %{date}"
       twitter: "Twitter"
       github: "Github"
+
+    private_user_profile:
+      please_connect_html: |
+        <p>This member chose to display his/her profile only to members of Wundermarks.</p>
+        <p>If you have a Wundermarks' account, please <a href="%{sign_url}">sign in</a>.</p>
+      back_home: Go back to Wundermarks

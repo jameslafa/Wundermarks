@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   it { is_expected.to have_many :bookmarks }
   it { is_expected.to have_one :user_profile }
+  it { is_expected.to have_one :user_preference }
   it { is_expected.to define_enum_for(:role).with({regular: 0, admin: 100}) }
 
   describe 'profile_name' do
@@ -36,6 +37,30 @@ RSpec.describe User, type: :model do
         user.follow(other_user)
       end
       expect(user.statistics['following_count']).to eq other_users.size
+    end
+  end
+
+  describe 'preferences' do
+    it 'returns the associated user_prefrence' do
+      user = build(:user)
+      user_prefrence = user.create_user_preference()
+      expect(user.preferences).to eq user_prefrence
+    end
+  end
+
+  describe 'profile' do
+    it 'returns the associated user_profile' do
+      user = build(:user)
+      user_profile = user.create_user_profile()
+      expect(user.profile).to eq user_profile
+    end
+  end
+
+  describe 'build_missing_preferences' do
+    it 'build missing user_preference when user is save' do
+      user = build(:user)
+      user.save
+      expect(UserPreference.find_by(user_id: user.id)).to be_truthy
     end
   end
 end

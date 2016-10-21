@@ -30,6 +30,8 @@ Rails.application.routes.draw do
     get   '/imported',    to: "tools#imported",     as: 'imported_tool'
   end
 
+  resource :preferences, only: [:edit, :update]
+  get "/preferences", to: "preferences#edit"
 
   get "/logos",   to: "home#logos"
   get "/feed",    to: "feed#index"

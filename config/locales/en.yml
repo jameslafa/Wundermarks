@@ -144,14 +144,19 @@ en:
     delete: "Delete"
     create_bookmark: "Add a bookmark"
 
+  meta_tag:
+    site_name: "Wundermarks"
+    title: "Your bookmarks, safe and easy to find from anywhere"
+    description: "Wundermarks allow you to save with one click any interesting web page. We save it for you, let you search for it from any device, in a second."
   header:
     navigation:
       toogle_navigation: Toggle navigation
       brand: W
       bookmarks: My bookmarks
       feed: News feed
-      profile: Your profile
-      account: Your account
+      profile: My profile
+      account: My account
+      preferences: My preferences
       contact: Contact us
       tools: Tools
     sign:

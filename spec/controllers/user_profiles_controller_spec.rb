@@ -79,9 +79,21 @@ RSpec.describe UserProfilesController, type: :controller do
       end
 
       context "when the user is NOT logged in" do
-        it "assigns only visible bookmarks to @bookmarks" do
-          get :show, {id: other_profile.id}
-          expect(assigns(:bookmarks)).to match_array public_bookmarks
+        context "when user's preferences allow public viewing" do
+          it "assigns only visible bookmarks to @bookmarks" do
+            get :show, {id: other_profile.id}
+            expect(assigns(:bookmarks)).to match_array public_bookmarks
+          end
+        end
+
+        context "when user's preferences does now allow public viewing" do
+          it "does not assign bookmarks" do
+            other_profile.user.preferences.update_attributes({:public_profile => false})
+            get :show, {id: other_profile.id}
+            expect(assigns(:public_profile)).to eq false
+            expect(assigns(:bookmarks)).to be_nil
+            expect(assigns(:statistics)).to be_nil
+          end
         end
       end
     end
@@ -128,7 +140,7 @@ RSpec.describe UserProfilesController, type: :controller do
     end
   end
 
-  describe "GET #update" do
+  describe "PUT #update" do
     context "when the user is logged in" do
       login_user
       let!(:current_user_profile) { create(:user_profile, user: subject.current_user) }

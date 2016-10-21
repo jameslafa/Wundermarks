@@ -31,6 +31,9 @@ class BookmarksController < ApplicationController
 
     return redirect_to @bookmark.url if params["redirect"].present? && params["redirect"].to_bool
 
+    update_meta_tag('title', @bookmark.title) if @bookmark.title.present?
+    update_meta_tag('description', @bookmark.description) if @bookmark.description.present?
+
     # Track action
     ahoy.track "bookmarks-show", {id: @bookmark.id}
   end

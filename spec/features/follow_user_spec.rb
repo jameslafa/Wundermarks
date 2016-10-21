@@ -10,7 +10,7 @@ feature 'FollowUser' do
 
     visit user_profile_path(other_user_profile.username)
 
-    follow_link = find_link(I18n.t("user_profiles.show.follow"))
+    follow_link = find_link(I18n.t("user_profiles.user_profile_bar.follow"))
     expect(follow_link['href']).to eq user_relationships_path(user_id: other_user_profile.user.id)
     expect(follow_link['data-method']).to eq 'post'
 
@@ -19,7 +19,7 @@ feature 'FollowUser' do
     expect(current_path).to eq user_profile_path(other_user_profile.username)
     expect(current_user.following?(other_user)).to be_truthy
 
-    following_link = find_link(I18n.t("user_profiles.show.following"))
+    following_link = find_link(I18n.t("user_profiles.user_profile_bar.following"))
     expect(following_link['href']).to eq user_relationship_path(other_user_profile.user.id)
     expect(following_link['data-method']).to eq 'delete'
 
