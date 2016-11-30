@@ -9,7 +9,8 @@ class UserProfilesController < ApplicationController
                             .paginate(page: params[:page])
 
     # TODO: Get following_ids only of users in the current page
-    @following_ids =  current_user.following_ids.to_set
+    @following_ids = current_user.following_ids.to_set
+
     ahoy.track "user_profiles-index", {current_user: current_user.id }
   end
 

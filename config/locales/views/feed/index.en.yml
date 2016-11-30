@@ -10,3 +10,6 @@ en:
           one: "One match in the bookmarks of people you follow. <a href=\"%{search_all_url}\" class=\"alert-link\">Search all of Wundermarks?</a>"
           other: "%{count} matches in the bookmarks of people you follow. <a href=\"%{search_all_url}\" class=\"alert-link\">Search all of Wundermarks?</a>"
         nothing_found_html: "Oups, nothing found! <a href=\"#\" class=\"start_new_search alert-link\">Start a new search</a>."
+      no_following_html: |
+        <p>Do you know that you can discover many great websites by following other members?</p>
+        <p><a href="%{url}" class="btn btn-default">Discover who to follow</a></p>

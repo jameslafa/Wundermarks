@@ -6,6 +6,16 @@
 
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
+    <% if current_user.metadata.followings_count == 0 %>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-warning no-following" role="alert">
+          <%= t("feed.index.no_following_html", url: user_profiles_path) %>
+        </div>
+      </div>
+    </div>
+    <% end %>
+
     <%= render partial: 'shared/bookmark_list_with_date', locals: {bookmarks: @bookmarks} %>
   </div>
 </div>
