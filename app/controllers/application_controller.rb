@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
   # after signing in), which is what the :unless prevents
   before_filter :store_current_location, :unless => :devise_controller?
 
+  # Set default meta_tag for seo
+  # They will be overriten in the controller action if necessary using update_meta_tag()
+  before_action :prepare_meta_tags, if: "request.get?"
+
   def after_sign_in_path_for(resource)
     # FYI: stored_location_for(:user) can be called only once, second time it returns nil
     stored_location = stored_location_for(:user)
@@ -26,7 +30,48 @@ class ApplicationController < ActionController::Base
     else
       edit_current_user_profile_path
     end
+  end
 
+  # Prepare meta tags for SEO
+  def prepare_meta_tags(options={})
+    site_name   = I18n.t('meta_tag.site_name')
+    title       = I18n.t('meta_tag.title')
+    description = I18n.t('meta_tag.description')
+    image       = options[:image] || ActionController::Base.helpers.image_url('/homepage/teaser_bg.jpg')
+    current_url = request.url
+
+    # Let's prepare a nice set of defaults
+    defaults = {
+      site:        site_name,
+      title:       title,
+      image:       image,
+      description: description,
+      keywords:    %w[bookmarks web mobile free application],
+      twitter: {
+        site_name: site_name,
+        site: '@wundermarks',
+        card: 'summary',
+        description: :description,
+        image: image
+      },
+      og: {
+        url: current_url,
+        site_name: site_name,
+        title: :title,
+        image: image,
+        description: :description,
+        type: 'website'
+      }
+    }
+
+    options.reverse_merge!(defaults)
+
+    set_meta_tags options
+  end
+
+  # Update one specific meta_tag
+  def update_meta_tag(key, value)
+    set_meta_tags({key => value})
   end
 
   private

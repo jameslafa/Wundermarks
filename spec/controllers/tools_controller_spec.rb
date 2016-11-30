@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe ToolsController, type: :controller do
-  include Helpers
 
   let(:user_profile) { create(:user_profile) }
   let(:user) { user_profile.user}
@@ -45,6 +44,15 @@ RSpec.describe ToolsController, type: :controller do
         get :bookmarklet
         expect(session[:upgrade_bookmarklet]).to be nil
       end
+
+      it "tracks an ahoy event" do
+        expect{
+          get :bookmarklet
+        }.to change(Ahoy::Event, :count).by(1)
+        event = Ahoy::Event.last
+        expect(event.name).to eq 'tools-bookmarket'
+        expect(event.properties).to be_nil
+      end
     end
 
     describe "POST #import_file" do
@@ -72,6 +80,14 @@ RSpec.describe ToolsController, type: :controller do
           expect(response).to redirect_to imported_tool_path
         end
 
+        it "tracks an ahoy event" do
+          expect{
+            post :import_file, delicious: file
+          }.to change(Ahoy::Event, :count).by(1)
+          event = Ahoy::Event.last
+          expect(event.name).to eq 'tools-import_file'
+          expect(event.properties).to eq({"status" => "success"})
+        end
       end
 
       context "when uploaded file is NOT an HTML file" do
@@ -85,6 +101,12 @@ RSpec.describe ToolsController, type: :controller do
         it "assigns @errors with an error message" do
           expect(assigns(:errors)).to eq I18n.t("tools.import.upload.errors.wrong_file_type", url: import_tool_path)
         end
+
+        it "tracks an ahoy event" do
+          event = Ahoy::Event.last
+          expect(event.name).to eq 'tools-import_file'
+          expect(event.properties).to eq({"status" => "error", "error" => I18n.t("tools.import.upload.errors.wrong_file_type", url: import_tool_path)})
+        end
       end
 
       context "when no file is uploaded" do
@@ -96,6 +118,12 @@ RSpec.describe ToolsController, type: :controller do
 
         it "assigns @errors with an error message" do
           expect(assigns(:errors)).to eq I18n.t("tools.import.upload.errors.no_file")
+        end
+
+        it "tracks an ahoy event" do
+          event = Ahoy::Event.last
+          expect(event.name).to eq 'tools-import_file'
+          expect(event.properties).to eq({"status" => "error", "error" => I18n.t("tools.import.upload.errors.no_file")})
         end
       end
     end

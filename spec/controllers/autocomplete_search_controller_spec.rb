@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe AutocompleteSearchController, type: :controller do
-  include Helpers
 
   context 'without a signed_in user' do
     describe "GET #tags" do

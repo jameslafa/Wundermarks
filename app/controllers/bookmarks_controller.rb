@@ -7,16 +7,16 @@ class BookmarksController < ApplicationController
   # GET /bookmarks.json
   def index
     if params[:q].present? and @q = params[:q]
-      @bookmarks = Bookmark.belonging_to(current_user).search(@q).paginated(params[:page])
+      @bookmarks = Bookmark.belonging_to(current_user).search(@q).paginate(page: params[:page])
       ahoy.track "bookmarks-search", q: @q, results_count: @bookmarks.try(:count)
-      flash.now[:notice] = I18n.t("bookmarks.index.search.search_all_wundermarks", count: @bookmarks.count, search_all_url: feed_path(q: @q))
+      flash.now[:notice] = I18n.t("bookmarks.index.search.search_all_wundermarks", count: @bookmarks.count, search_friends_url: feed_path(q: @q), search_all_url: feed_path(q: @q, filter: 'everyone'))
 
     elsif params[:post_import].present? and @source = params[:post_import] and Bookmark.sources.keys.include?(@source)
-      @bookmarks = Bookmark.belonging_to(current_user).where(source: Bookmark.sources[@source]).paginated(params[:page]).last_first
+      @bookmarks = Bookmark.belonging_to(current_user).where(source: Bookmark.sources[@source]).paginate(page: params[:page]).last_first
       ahoy.track "bookmarks-post_import", source: @source, count: @bookmarks.count
 
     else
-      @bookmarks = Bookmark.belonging_to(current_user).paginated(params[:page]).last_first
+      @bookmarks = Bookmark.belonging_to(current_user).paginate(page: params[:page]).last_first
       ahoy.track "bookmarks-index", nil
     end
   end
@@ -30,6 +30,9 @@ class BookmarksController < ApplicationController
     BookmarkTracking.track_click(@bookmark, params[:utm_medium]) unless @bookmark.user == current_user
 
     return redirect_to @bookmark.url if params["redirect"].present? && params["redirect"].to_bool
+
+    update_meta_tag('title', @bookmark.title) if @bookmark.title.present?
+    update_meta_tag('description', @bookmark.description) if @bookmark.description.present?
 
     # Track action
     ahoy.track "bookmarks-show", {id: @bookmark.id}
@@ -54,6 +57,13 @@ class BookmarksController < ApplicationController
       @bookmark.description = @bookmark.description.truncate(Bookmark::MAX_DESCRIPTION_LENGTH) if @bookmark.description.present?
     end
 
+    # Check if the current user already bookmarked this url
+    if @bookmark.url.present?
+      if @existing_bookmark = check_bookmark_does_not_exist(@bookmark.url)
+        flash.now.alert = "#{I18n.t("errors.bookmarks.already_exists")}. #{view_context.link_to(I18n.t("errors.bookmarks.see_existing_bookmark"), bookmark_path(@existing_bookmark.id), class: 'alert-link')}.".html_safe
+      end
+    end
+
     respond_to do |format|
       if params[:layout] == 'popup'
         @layout = 'popup'
@@ -63,11 +73,11 @@ class BookmarksController < ApplicationController
         upgrade_bookmarklet = Settings.bookmarklet.current_version.to_i > bookmarklet_version.to_i
         session[:upgrade_bookmarklet] = upgrade_bookmarklet
 
-        ahoy.track "bookmarks-new", {layout: 'popup', bm_v: bookmarklet_version, bm_updated: !upgrade_bookmarklet}
+        ahoy.track "bookmarks-new", {layout: 'popup', bm_v: bookmarklet_version, bm_updated: !upgrade_bookmarklet, duplicate_bookmark_warning: @existing_bookmark.present?}
         format.html { render :new, layout: "popup" }
       else
         if @bookmark.copy_from_bookmark_id
-          ahoy.track "bookmarks-new", {layout: 'web', copy_from_bookmark_id: @bookmark.copy_from_bookmark_id}
+          ahoy.track "bookmarks-new", {layout: 'web', copy_from_bookmark_id: @bookmark.copy_from_bookmark_id, duplicate_bookmark_warning: @existing_bookmark.present?}
         else
           ahoy.track "bookmarks-new", {layout: 'web'}
         end
@@ -90,6 +100,9 @@ class BookmarksController < ApplicationController
 
     respond_to do |format|
       if @bookmark.save
+        # Update user's metadata
+        UserMetadataUpdater.update_bookmarks_count(@bookmark)
+
         # Add a notification into slack
         SlackNotifierJob.perform_later("new_bookmark", @bookmark)
         ahoy.track "bookmarks-create", {id: @bookmark.id}
@@ -124,6 +137,10 @@ class BookmarksController < ApplicationController
     authorize @bookmark
     bookmark_id = @bookmark.id
     @bookmark.destroy
+
+    # Update user's metadata
+    UserMetadataUpdater.update_bookmarks_count(@bookmark)
+    
     ahoy.track "bookmarks-destroy", {id: bookmark_id}
     respond_to do |format|
       format.html { redirect_to bookmarks_url, notice: 'Bookmark was successfully destroyed.' }
@@ -160,5 +177,17 @@ class BookmarksController < ApplicationController
       format.html { redirect_to bookmarks_path, alert: error_message }
       format.json { render json: {error: error_message}, status: :forbidden }
     end
+  end
+
+  # Search if the bookmark already exist for the current user.
+  # Return the bookmark if it does, if not, return nil
+  def check_bookmark_does_not_exist(url)
+    existing_bookmark = nil
+
+    if url.present?
+      existing_bookmark = Bookmark.find_by(user_id: current_user.id, url: url)
+    end
+
+    existing_bookmark
   end
 end

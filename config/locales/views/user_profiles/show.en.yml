@@ -1,0 +1,21 @@
+en:
+  user_profiles:
+    no_username_html: "You haven't choosen your username yet. %{reserve}"
+    no_username_reserve: "Reserve it now!"
+
+    user_profile_bar:      
+      actions:
+        edit: "Edit profile"
+
+    user_profile:
+      member_since: "Member for %{days} days"
+      create_username: "Reserve your username"
+      born_on: "Born on %{date}"
+      twitter: "Twitter"
+      github: "Github"
+
+    private_user_profile:
+      please_connect_html: |
+        <p>This member chose to display his/her profile only to members of Wundermarks.</p>
+        <p>If you have a Wundermarks' account, please <a href="%{sign_url}">sign in</a>.</p>
+      back_home: Go back to Wundermarks

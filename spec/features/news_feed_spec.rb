@@ -11,7 +11,7 @@ feature 'NewsFeed' do
     other_users_bookmark = create(:bookmark, user: other_user)
 
     # Copy_bookmark button is visible only for someone else bookmark
-    visit feed_path
+    visit feed_path(filter: 'everyone')
     expect(page).not_to have_link(nil, href: copy_bookmark_path(users_bookmark))
     expect(page).to have_link(nil, href: copy_bookmark_path(other_users_bookmark))
 

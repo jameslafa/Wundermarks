@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160920061305) do
+ActiveRecord::Schema.define(version: 20161130105703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,16 +107,18 @@ ActiveRecord::Schema.define(version: 20160920061305) do
   add_index "bookmarks", ["url"], name: "index_bookmarks_on_url", using: :btree
   add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
 
-  create_table "identities", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "provider"
-    t.string   "uid"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "follows", force: :cascade do |t|
+    t.integer  "followable_id",                   null: false
+    t.string   "followable_type",                 null: false
+    t.integer  "follower_id",                     null: false
+    t.string   "follower_type",                   null: false
+    t.boolean  "blocked",         default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "identities", ["user_id", "provider"], name: "index_identities_on_user_id_and_provider", unique: true, using: :btree
-  add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
+  add_index "follows", ["followable_id", "followable_type"], name: "fk_followables", using: :btree
+  add_index "follows", ["follower_id", "follower_type"], name: "fk_follows", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
@@ -138,13 +140,46 @@ ActiveRecord::Schema.define(version: 20160920061305) do
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
+  create_table "user_metadata", force: :cascade do |t|
+    t.integer  "followers_count",        default: 0
+    t.integer  "followings_count",       default: 0
+    t.integer  "bookmarks_count",        default: 0
+    t.integer  "public_bookmarks_count", default: 0
+    t.integer  "user_id"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "user_metadata", ["bookmarks_count"], name: "index_user_metadata_on_bookmarks_count", using: :btree
+  add_index "user_metadata", ["followers_count"], name: "index_user_metadata_on_followers_count", using: :btree
+  add_index "user_metadata", ["followings_count"], name: "index_user_metadata_on_followings_count", using: :btree
+  add_index "user_metadata", ["public_bookmarks_count"], name: "index_user_metadata_on_public_bookmarks_count", using: :btree
+
+  create_table "user_preferences", force: :cascade do |t|
+    t.integer  "user_id"
+    t.boolean  "search_engine_index", default: true
+    t.boolean  "public_profile",      default: true
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "user_preferences", ["public_profile"], name: "index_user_preferences_on_public_profile", using: :btree
+  add_index "user_preferences", ["user_id"], name: "index_user_preferences_on_user_id", using: :btree
+
   create_table "user_profiles", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "name"
     t.text     "introduction"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.string   "username"
+    t.string   "country"
+    t.string   "city"
+    t.string   "website"
+    t.date     "birthday"
+    t.string   "twitter_username"
+    t.string   "github_username"
+    t.string   "avatar"
   end
 
   add_index "user_profiles", ["user_id"], name: "index_user_profiles_on_user_id", using: :btree
@@ -213,6 +248,6 @@ ActiveRecord::Schema.define(version: 20160920061305) do
 
   add_foreign_key "bookmark_trackings", "bookmarks"
   add_foreign_key "bookmarks", "users"
-  add_foreign_key "identities", "users"
+  add_foreign_key "user_preferences", "users"
   add_foreign_key "user_profiles", "users"
 end

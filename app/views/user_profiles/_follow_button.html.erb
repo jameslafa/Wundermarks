@@ -1,0 +1,16 @@
+<span id="<%= "follow-user-button-#{user_id}" %>" class="follow-user-button<%= ' mobile-friendly' if local_assigns[:mobile_friendly].present? %>">
+  <% if following == true %>
+    <%= link_to unfollow_user_path(user_id: user_id), method: "delete", remote: true, class: 'btn btn-default following' do %>
+      <span class="long">
+        <span class="following-text"><%= t(".following") %></span>
+        <span class="unfollow-text"><%= t(".unfollow") %></span>
+      </span>
+      <span class="short"><i class="material-icons md-18">person</i></span>
+    <% end %>
+  <% elsif following == false %>
+    <%= link_to follow_user_path(user_id: user_id), method: "post", remote: true, class: 'btn btn-default not-following' do %>
+      <span class="long"><i class="material-icons md-18">person_add</i> <%= t(".follow") %></span>
+      <span class="short"><i class="material-icons md-18">person_add</i></span>
+    <% end %>
+  <% end %>
+</span>

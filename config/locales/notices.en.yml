@@ -1,3 +1,4 @@
 en:
   notices:
     upgrade_bookmarklet_html: 'Your bookmarklet is outdated. <a href="%{url}" class="alert-link">Upgrade your bookmarklet</a>'
+    user_preferences_updated: 'Your preferences have been updated.'

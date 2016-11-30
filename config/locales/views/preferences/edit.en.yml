@@ -1,0 +1,23 @@
+en:
+  preferences:
+    edit:
+      cancel: 'Cancel'
+      section:
+        privacy: 'Privacy preferences'
+      explanation:
+        search_engine_index: 'Do you want search engines outside of Wundermarks to link to your profile?'
+        public_profile: 'Do you want people outside of Wundemarks to see your profile?'
+      detail:
+        search_engine_index_html: |
+          <ul>
+          <li>When this setting is on, search engines may link to your profile in their results.</li>
+          <li>When this setting is off, search engines will stop linking to your profile, but this may take some time.</li>
+          </ul>
+        public_profile_html: |
+          <ul>
+          <li>When this setting is on, a person having your profile's url can see your profile without being a member of Wundermarks.</li>
+          <li>When this setting is off, only logged in members of Wundermarks can see your profile.</li>
+          </ul>
+      label:
+        search_engine_index: 'Allow search engines outside of Wundermarks to link to my profile'
+        public_profile: 'Allow people outside of Wundermarks to see my profile'

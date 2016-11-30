@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <%= form_for(@preference, url: preferences_path) do |f| %>
+      <%= render partial: 'shared/form_errors', locals: { resource: @preference, full_message: true } %>
+
+      <fieldset>
+        <legend><%= t('.section.privacy') %></legend>
+
+        <div class="form-group">
+          <label class='control-label'>
+            <%= t('.explanation.search_engine_index') %>
+            <i class="fa fa-question-circle help-button" data-toggle="collapse" data-target="#help_search_engine_index" aria-expanded="false" aria-controls="help_search_engine_index"></i>
+          </label>
+          <div class="collapse" id="help_search_engine_index">
+            <div class="help"><%= t('.detail.search_engine_index_html') %></div>
+          </div>
+          <div class="checkbox">
+            <label>
+              <%= f.check_box :search_engine_index, class: 'checkbox' %> <%= t('.label.search_engine_index') %>
+            </label>
+          </div>
+        </div>
+        <br/>
+        <div class="form-group">
+          <label class='control-label'>
+            <%= t('.explanation.public_profile') %>
+            <i class="fa fa-question-circle help-button" data-toggle="collapse" data-target="#help_public_profile" aria-expanded="false" aria-controls="help_public_profile"></i>
+          </label>
+          <div class="collapse" id="help_public_profile">
+            <div class="help"><%= t('.detail.public_profile_html') %></div>
+          </div>
+          <div class="checkbox">
+            <label>
+              <%= f.check_box :public_profile, class: 'checkbox' %> <%= t('.label.public_profile') %>
+            </label>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="actions hidden-xs hidden-sm">
+        <%= f.submit class: 'btn btn-primary' %>
+        <%= link_to t(".cancel"), root_path, class: 'btn btn-default pull-right hidden-xs hidden-sm' %>
+      </div>
+
+      <div class="actions hidden-md hidden-lg">
+        <%= f.submit class: 'btn btn-primary btn-block btn-lg' %>
+        <%= link_to t(".cancel"), root_path, class: 'btn btn-default btn-block btn-lg' %>
+      </div>
+    <% end %>
+  </div>
+</div>

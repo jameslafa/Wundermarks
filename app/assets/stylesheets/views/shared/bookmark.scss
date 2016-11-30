@@ -1,106 +1,104 @@
-body.a-index{
-  .bookmark{
-    background-color: #fff;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-    border-radius: 2px;
-    margin: 0 0 10px 0;
-    overflow: hidden;
+.bookmark-card{
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  border-radius: 2px;
+  margin: 0 0 10px 0;
+  overflow: hidden;
 
-    .header{
-      border-bottom: 1px solid #ebebeb;
-      padding: 0.7rem 1rem;
+  .header{
+    border-bottom: 1px solid #ebebeb;
+    padding: 0.7rem 1rem;
 
-      .title{
-        font-size: 1rem;
-        line-height: 20px;
+    .title{
+      font-size: 1rem;
+      line-height: 20px;
 
-        a, a:visited{
-          color: $primary-color;
-        }
+      a, a:visited{
+        color: $primary-color;
       }
+    }
 
-      .link{
+    .link{
+      color: $secondary-color;
+      font-size: 0.9rem;
+      line-height: 20px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      word-wrap: break-word;
+
+      a, a:visited{
         color: $secondary-color;
-        font-size: 0.9rem;
-        line-height: 20px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        word-wrap: break-word;
-
-        a, a:visited{
-          color: $secondary-color;
-        }
       }
     }
+  }
 
-    .description{
-      padding: 0.7rem 1rem;
+  .description{
+    padding: 0.7rem 1rem;
 
-      p{
-        margin: 0;
-      }
+    p{
+      margin: 0;
+    }
+  }
+
+  .footer{
+    border-top: 1px solid #ebebeb;
+    padding: 0.7rem 1rem;
+
+    &.no-description{
+      border: none;
     }
 
-    .footer{
-      border-top: 1px solid #ebebeb;
-      padding: 0.7rem 1rem;
+    .user-date{
+      .user{
+        text-decoration: none;
 
-      &.no-description{
-        border: none;
-      }
-
-      .user-date{
-        .user{
-          text-decoration: none;
-
-          .name{
-            color: #000;
-            font-weight: 600;
-          }
-          .username{
-            color: #8899a6;
-            font-size: 0.8rem;
-
-            em{
-              color: #b1bbc3;
-            }
-          }
+        .name{
+          color: #000;
+          font-weight: 600;
         }
-
-        .time-ago{
+        .username{
           color: #8899a6;
-          cursor: help;
           font-size: 0.8rem;
 
-          &:before{
-            content: "\00b7\00a0";
+          em{
+            color: #b1bbc3;
           }
         }
       }
 
-      .actions{
-        text-align: right;
+      .time-ago{
+        color: #8899a6;
+        cursor: help;
+        font-size: 0.8rem;
 
-        a{
+        &:before{
+          content: "\00b7\00a0";
+        }
+      }
+    }
+
+    .actions{
+      text-align: right;
+
+      a{
+        color: rgba(0, 0, 0, 0.54);
+
+        &:visited{
           color: rgba(0, 0, 0, 0.54);
-
-          &:visited{
-            color: rgba(0, 0, 0, 0.54);
-          }
-
-          i.material-icons{
-            vertical-align: bottom;
-          }
         }
 
-        @media (max-width: $screen-xs-max) {
-          text-align: center;
+        i.material-icons{
+          vertical-align: bottom;
+        }
+      }
 
-          a{
-            i.material-icons{
-              margin-top: 0.5rem;
-            }
+      @media (max-width: $screen-xs-max) {
+        text-align: center;
+
+        a{
+          i.material-icons{
+            margin-top: 0.5rem;
           }
         }
       }

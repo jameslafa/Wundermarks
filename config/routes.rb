@@ -1,14 +1,22 @@
 Rails.application.routes.draw do
   devise_for :users, :controllers => { registrations: 'registrations' }
 
+  # User profiles
   resource :user_profiles, only: [:show, :edit, :update], path: '/profile', as: :current_user_profile
+  get '/profiles', to: 'user_profiles#index', as: :user_profiles
   get '/profile/:id', to: 'user_profiles#show', as: :user_profile
 
+  # Bookmarks
   resources :bookmarks do
     get 'copy', on: :member, to: 'bookmarks#new', as: 'copy'
   end
   get '/bookmarks/:id/:title', to: 'bookmarks#show', as: 'bookmark_permalink'
   get '/b/:id', to: 'bookmarks#show', as: 'bookmark_shortlink'
+
+  # User relationships
+  post '/user_relationships/:user_id', to: 'user_relationships#create', as: 'follow_user'
+  delete '/user_relationships/:user_id', to: 'user_relationships#destroy', as: 'unfollow_user'
+
 
   # JSON only
   scope :format => true, :constraints => { :format => 'json' } do
@@ -24,6 +32,8 @@ Rails.application.routes.draw do
     get   '/imported',    to: "tools#imported",     as: 'imported_tool'
   end
 
+  resource :preferences, only: [:edit, :update]
+  get "/preferences", to: "preferences#edit"
 
   get "/logos",   to: "home#logos"
   get "/feed",    to: "feed#index"

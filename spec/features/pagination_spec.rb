@@ -44,28 +44,28 @@ feature 'Pagination' do
 
     # He goes on this bookmark page
     # There no pagination, because he has less than 25 bookmarks
-    visit feed_path
+    visit feed_path(filter: 'everyone')
     expect(page).not_to have_css(".pagination")
 
     # We create 49 new bookmarks
     # It will shows pagination with 3 pages
     bookmarks += create_list(:bookmark, 49, user: other_user, tag_list: 'rails')
-    visit feed_path
+    visit feed_path(filter: 'everyone')
     expect(page).to have_css(".pagination")
 
     within(".pagination-wrapper.hidden-xs .pagination") do
       expect(page).to have_css("li.active", text: 1)
-      expect(page).to have_link("2", href: feed_path(page: 2))
-      expect(page).to have_link("3", href: feed_path(page: 3))
+      expect(page).to have_link("2", href: feed_path(page: 2, filter: 'everyone'))
+      expect(page).to have_link("3", href: feed_path(page: 3, filter: 'everyone'))
     end
 
     # User now search for the word "rails". It should return 49 links paginated on 2 pages
-    visit feed_path(q: 'rails')
+    visit feed_path(q: 'rails', filter: 'everyone')
     expect(page).to have_css(".pagination")
 
     within(".pagination-wrapper.hidden-xs .pagination") do
       expect(page).to have_css("li.active", text: 1)
-      expect(page).to have_link("2", href: feed_path(page: 2, q: 'rails'))
+      expect(page).to have_link("2", href: feed_path(page: 2, q: 'rails', filter: 'everyone'))
       expect(page).not_to have_link("3")
     end
   end

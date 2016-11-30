@@ -8,24 +8,7 @@
       .actions{
         text-align: right;
       }
-    }
-
-    .date-group{
-      .date{
-        color: $navigation-bar-background-color;
-        font-size: 1.8rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-        margin-top: 3rem;
-        text-align: center;
-      }
-
-      &.first{
-        .date{
-          margin-top: 0;
-        }
-      }
-    }
+    }    
 
     .pagination-wrapper{
       text-align: center;

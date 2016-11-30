@@ -1,0 +1,64 @@
+.c-user_profiles{
+  form{
+    input#user_profile_username{
+      text-transform: lowercase;
+    }
+
+    #user_profile_username_help{
+      .validation_message{
+        font-weight: 700;
+      }
+    }
+
+    #user_profile_introduction{
+      height: 12rem;
+    }
+
+    .avatar-container{
+      border: 5px solid #fff;
+      border-radius: 12px;
+      box-shadow: 0 1px 1px rgba(136,153,166,0.15);
+      height: 210px;
+      position: relative;
+      width: 210px;
+
+      .image{
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 12px;
+        display: block;
+        height: 200px;
+        width: 200px;
+      }
+
+      .overlay.upload{
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 12px;
+        color: white;
+        cursor: pointer;
+        font-size: 1.2rem;
+        font-weight: 600;
+        height: 200px;
+        padding: 4rem 1rem 0 1rem;
+        position: absolute;
+        text-align: center;
+        top: 0;
+        width: 200px;
+
+        .fa-camera{
+          font-size: 2rem;
+        }
+
+        &:hover{
+          background-color: rgba(0, 0, 0, 0.8);
+          color: #ddd;
+        }
+      }
+    }
+
+    .actions{
+      margin-top: 2rem;
+    }
+  }
+}

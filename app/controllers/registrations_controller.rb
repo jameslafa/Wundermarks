@@ -2,6 +2,7 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     super
     SlackNotifierJob.perform_later("new_user_registration", @user) if @user.persisted?
+    ahoy.track "registrations-create", {user_id: @user.id}
   end
 
   private

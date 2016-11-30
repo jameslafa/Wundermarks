@@ -1,13 +1,27 @@
-<% if current_user && current_user == @profile.user %>
-<div class="row main-actions">
-  <div class="col-md-12">
-    <%= link_to t(".action.edit"), edit_current_user_profile_path, class: 'btn btn-primary' %>
+<% if @public_profile %>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="hidden-md hidden-lg">
+        <div class="user-profile">
+          <%= render partial: 'user_profile' %>
+        </div>
+      </div>
+      <div class="profile-bar">
+        <%= render partial: 'user_profile_bar' %>
+      </div>
+    </div>
   </div>
-</div>
-<% end %>
 
-<div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <%= render partial: "user_profiles/user_profile_item", locals: {profile: @profile} %>
+  <div class="row">
+    <div class="col-md-4 hidden-xs hidden-sm">
+      <div class="user-profile">
+        <%= render partial: 'user_profile' %>
+      </div>
+    </div>
+    <div class="col-md-8 col-sm-12">
+      <%= render partial: 'shared/bookmark_list_with_date', locals: {bookmarks: @bookmarks} %>
+    </div>
   </div>
-</div>
+<% else %>
+  <%= render partial: 'private_user_profile' %>
+<% end %>

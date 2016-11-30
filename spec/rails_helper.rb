@@ -67,12 +67,18 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include Devise::TestHelpers, :type => :controller
+  config.include Helpers, :type => :controller
   config.extend ControllerMacros, :type => :controller
   config.extend FeatureMacros, :type => :feature
   config.include Capybara::Email::DSL, :type => :mailer
 
   # When a test has focus: true, only this one will run
   config.filter_run :focus => true
+
+  # Filter migration test by default
+  # rspec --tag migration spec/migrations/ to run them
+  config.filter_run_excluding :migration => true
+
   # If no test has any focus: true, then we run all of them
   config.run_all_when_everything_filtered = true
 

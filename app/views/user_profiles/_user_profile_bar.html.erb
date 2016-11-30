@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-md-4">
+  </div>
+  <div class="col-md-8">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="stats clearfix">
+          <div class="stat">
+            <div class="stat-title">Bookmarks</div>
+            <div class="stat-count"><%= @profile.user.metadata.public_bookmarks_count %></div>
+          </div>
+          <div class="stat">
+            <div class="stat-title">Following</div>
+            <div class="stat-count"><%= @profile.user.metadata.followings_count %></div>
+          </div>
+          <div class="stat">
+            <div class="stat-title">Followers</div>
+            <div class="stat-count"><%= @profile.user.metadata.followers_count %></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="actions">
+          <% if current_user %>
+            <% if current_user == @profile.user %>
+            <%= link_to t(".actions.edit"), edit_current_user_profile_path, class: 'btn btn-default' %>
+            <% else %>
+              <%= render partial: 'follow_button', locals: {user_id: @profile.user_id, following: @following, mobile_friendly: false} %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

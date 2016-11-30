@@ -144,14 +144,20 @@ en:
     delete: "Delete"
     create_bookmark: "Add a bookmark"
 
+  meta_tag:
+    site_name: "Wundermarks"
+    title: "Your bookmarks, safe and easy to find from anywhere"
+    description: "Wundermarks allow you to save with one click any interesting web page. We save it for you, let you search for it from any device, in a second."
   header:
     navigation:
       toogle_navigation: Toggle navigation
       brand: W
+      user_profiles: Who to follow 
       bookmarks: My bookmarks
       feed: News feed
-      profile: Your profile
-      account: Your account
+      profile: My profile
+      account: My account
+      preferences: My preferences
       contact: Contact us
       tools: Tools
     sign:
@@ -174,13 +180,6 @@ en:
         back: "Go back to homepage"
 
   user_profiles:
-    show:
-      action:
-        edit: "Edit your profile"
-    user_profile_item:
-      member_since: "Member for %{days} days"
-      no_username_html: "You haven't choosen your username yet. %{reserve}"
-      no_username_reserve: "Reserve it now!"
     form:
       back_to_profile: "Cancel"
       user_name_help: "Must contain only letters and numbers and be at least 5 characters long"

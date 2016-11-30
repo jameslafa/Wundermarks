@@ -1,0 +1,57 @@
+.c-user_profiles{
+  .follow-user-button{
+
+    .short{
+      display: none;
+    }
+
+    &.mobile-friendly{
+      @media (max-width: $screen-xs-max) {        
+        .short{
+          display: inline;
+        }
+
+        .long{
+          display: none;
+        }
+
+        .following{
+          min-width: 0;
+        }
+      }
+    }
+
+
+    .following{
+      background-color: lighten($primary-color, 20%);
+      border-color: lighten($primary-color, 20%);
+      color: white;
+      min-width: 90px;
+
+      .following-text{
+        display: block;
+      }
+      .unfollow-text{
+        display: none;
+      }
+
+      &:hover{
+        background-color: $danger-color;
+        border-color: $danger-color;
+
+        .following-text{
+          display: none;
+        }
+        .unfollow-text{
+          display: block;
+        }
+      }
+    }
+
+    .not-following{
+      i.material-icons{
+        color: lighten($primary-color, 20%);
+      }
+    }
+  }
+}

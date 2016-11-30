@@ -11,15 +11,23 @@ RSpec.describe UserProfilesController, type: :controller do
           get :show, {id: profile.id}
           expect(assigns(:profile)).to eq profile
         end
+
+        it "tracks an ahoy event" do
+          expect{
+            get :show, {id: profile.id}
+          }.to change(Ahoy::Event, :count).by(1)
+          event = Ahoy::Event.last
+          expect(event.name).to eq 'user_profiles-show'
+          expect(event.properties).to eq({"id" => profile.id, "current_user" => false })
+        end
       end
 
-      context 'when the :id is s strong' do
+      context 'when the :id is a string' do
         it "assigns to @profile the profile identified by :username" do
           get :show, {id: profile.username}
           expect(assigns(:profile)).to eq profile
         end
       end
-
     end
 
     context "when :id is nil" do
@@ -30,6 +38,139 @@ RSpec.describe UserProfilesController, type: :controller do
       it "assigns to @profile the profile of the current_user" do
         get :show
         expect(assigns(:profile)).to eq profile
+      end
+    end
+
+    context "when the profile is someone else's user" do
+      let!(:other_profile) { create(:user_profile) }
+      let!(:public_bookmarks) { create_list(:bookmark_visible_to_everyone, 2, user: other_profile.user) }
+      let!(:private_bookmarks) { create_list(:bookmark_visible_to_only_me, 2, user: other_profile.user) }
+
+      context "when the user is logged in" do
+        login_user
+
+        it "assigns only visible bookmarks to @bookmarks" do
+          get :show, {id: other_profile.id}
+          expect(assigns(:bookmarks)).to match_array public_bookmarks
+        end
+
+        context "and already follows the user" do
+          it 'sets @following to true' do
+            subject.current_user.follow other_profile.user
+            get :show, {id: other_profile.id}
+            expect(assigns(:following)).to be true
+          end
+        end
+
+        context "and does not follow the user" do
+          it 'sets @following to false' do
+            get :show, {id: other_profile.id}
+            expect(assigns(:following)).to be false
+          end
+        end
+      end
+
+      context "when the user is NOT logged in" do
+        context "when user's preferences allow public viewing" do
+          it "assigns only visible bookmarks to @bookmarks" do
+            get :show, {id: other_profile.id}
+            expect(assigns(:bookmarks)).to match_array public_bookmarks
+          end
+        end
+
+        context "when user's preferences does now allow public viewing" do
+          it "does not assign bookmarks" do
+            other_profile.user.preferences.update_attributes({:public_profile => false})
+            get :show, {id: other_profile.id}
+            expect(assigns(:public_profile)).to eq false
+            expect(assigns(:bookmarks)).to be_nil
+            expect(assigns(:statistics)).to be_nil
+          end
+        end
+      end
+    end
+
+    context "when the profile is the current_user's profile" do
+      login_user
+      let!(:profile) { create(:user_profile, user_id: subject.current_user.id) }
+      let!(:public_bookmarks) { create_list(:bookmark_visible_to_everyone, 2, user: profile.user) }
+      let!(:private_bookmarks) { create_list(:bookmark_visible_to_only_me, 2, user: profile.user) }
+
+      it "assigns public and private bookmarks to @bookmarks" do
+        get :show, {id: profile.id}
+        expect(assigns(:bookmarks)).to match_array (public_bookmarks + private_bookmarks)
+      end
+    end
+  end
+
+
+
+  describe "GET #index" do
+    context "when the user is logged in" do
+      login_user
+
+      it "assigns to @profiles the list of user profiles ordered by number of bookmarks" do
+        user_profile_1 = create(:user_profile, name: "User 1")
+        user_profile_2 = create(:user_profile, name: "User 2")
+        user_profile_3 = create(:user_profile, name: "User 3")
+
+        create_list(:bookmark, 2, user: user_profile_1.user)
+        create_list(:bookmark, 4, user: user_profile_2.user)
+        create_list(:bookmark, 3, user: subject.current_user) #logged in user
+
+        UserMetadataUpdater.reset_user_metadatum(user_profile_1.user)
+        UserMetadataUpdater.reset_user_metadatum(user_profile_2.user)
+        UserMetadataUpdater.reset_user_metadatum(user_profile_3.user)
+        UserMetadataUpdater.reset_user_metadatum(subject.current_user)
+
+        get :index
+
+        expect(assigns(:profiles).to_a).to eq [user_profile_2, user_profile_1, user_profile_3]
+      end
+
+      it "paginates the list of user profiles @profiles" do
+        user_profiles = create_list(:user_profile, 30)
+
+        get :index
+
+        expect(assigns(:profiles).size).to eq 25
+        first_page_profile_ids = assigns(:profiles).pluck(:id)
+
+        get :index, page: 2
+        assigns(:profiles).reload
+
+        expect(assigns(:profiles).size).to eq 5
+        second_page_profile_ids = assigns(:profiles).pluck(:id)
+
+        # No common profile ids
+        expect(first_page_profile_ids & second_page_profile_ids).to eq []
+      end
+
+      it "assigns to @following_ids the list of user_ids the user is following" do
+        user_profiles = create_list(:user_profile, 3)
+
+        subject.current_user.follow(user_profiles.first.user)
+        subject.current_user.follow(user_profiles.second.user)
+
+        get :index
+
+        expect(assigns(:following_ids)).to match_array [user_profiles.first.user_id, user_profiles.second.user_id]
+      end
+
+      it "tracks an ahoy event" do
+        expect{
+          get :index
+        }.to change(Ahoy::Event, :count).by(1)
+        event = Ahoy::Event.last
+        expect(event.name).to eq 'user_profiles-index'
+        expect(event.properties).to eq({"current_user" => subject.current_user.id})
+      end
+    end
+
+    context "when the user is NOT logged in" do
+      it "redirects the user to the login page" do
+        get :index
+        expect(response).to redirect_to new_user_session_path
       end
     end
   end
@@ -44,6 +185,15 @@ RSpec.describe UserProfilesController, type: :controller do
         get :edit
         expect(assigns(:profile)).to eq profile
       end
+
+      it "tracks an ahoy event" do
+        expect{
+          get :edit
+        }.to change(Ahoy::Event, :count).by(1)
+        event = Ahoy::Event.last
+        expect(event.name).to eq 'user_profiles-edit'
+        expect(event.properties).to eq({"id" => profile.id})
+      end
     end
 
     context "when the user is NOT logged in" do
@@ -54,24 +204,41 @@ RSpec.describe UserProfilesController, type: :controller do
     end
   end
 
-  describe "GET #update" do
+  describe "PUT #update" do
     context "when the user is logged in" do
       login_user
       let!(:current_user_profile) { create(:user_profile, user: subject.current_user) }
 
       context "with valid params" do
-        let(:new_attributes) { {name: 'John Snow', introduction: 'I like women with red hairs' } }
+        let(:new_attributes) { {name: 'John Snow', introduction: 'I like women with red hairs',
+          country: 'FR', city: 'Lyon', website: 'http://google.com', birthday: '1988-12-23',
+          twitter_username: 'johnsnow', github_username: 'johnsnow' } }
 
         it "updates the current_user's profile" do
           put :update, user_profile: new_attributes
           current_user_profile.reload
           expect(current_user_profile.name).to eq new_attributes[:name]
           expect(current_user_profile.introduction).to eq new_attributes[:introduction]
+          expect(current_user_profile.country).to eq new_attributes[:country]
+          expect(current_user_profile.city).to eq new_attributes[:city]
+          expect(current_user_profile.website).to eq new_attributes[:website]
+          expect(current_user_profile.birthday).to eq Date.strptime(new_attributes[:birthday], "%Y-%m-%d")
+          expect(current_user_profile.twitter_username).to eq new_attributes[:twitter_username]
+          expect(current_user_profile.github_username).to eq new_attributes[:github_username]
         end
 
         it "redirects to the profile" do
           put :update, user_profile: new_attributes
           expect(response).to redirect_to current_user_profile_path
+        end
+
+        it "tracks an ahoy event" do
+          expect{
+            put :update, user_profile: new_attributes
+          }.to change(Ahoy::Event, :count).by(1)
+          event = Ahoy::Event.last
+          expect(event.name).to eq 'user_profiles-update'
+          expect(event.properties).to eq({"id" => current_user_profile.id})
         end
       end
 
@@ -102,7 +269,8 @@ RSpec.describe UserProfilesController, type: :controller do
         profile = create(:user_profile, user: subject.current_user)
         params = attributes_for(:user_profile, user_id: 22)
 
-        should permit(:name, :introduction, :username)
+        should permit(:name, :introduction, :username, :country, :city, :website,
+        :birthday, :twitter_username, :github_username, :avatar, :avatar_cache)
         .for(:update, params: {user_profile: params, user_id: subject.current_user.id}).on(:user_profile)
 
         should_not permit(:user_id)

@@ -2,6 +2,8 @@ en:
   helpers:
     submit:
       user_profile:
-        update: "Update your profile"
+        update: "Update my profile"
       email:
         create: "Send"
+      user_preference:
+        update: "Update my preferences"
