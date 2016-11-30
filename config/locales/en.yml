@@ -152,6 +152,7 @@ en:
     navigation:
       toogle_navigation: Toggle navigation
       brand: W
+      user_profiles: Who to follow 
       bookmarks: My bookmarks
       feed: News feed
       profile: My profile

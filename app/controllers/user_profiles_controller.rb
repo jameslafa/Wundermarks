@@ -1,6 +1,17 @@
 class UserProfilesController < ApplicationController
   before_action :authenticate_user!, except: [:show]
-  after_action :verify_authorized, except: [:show]
+  after_action :verify_authorized, except: [:show, :index]
+
+  def index
+    @profiles = UserProfile.includes(user: :user_metadatum)
+                            .where("users.id != #{current_user.id}")
+                            .order("user_metadata.public_bookmarks_count DESC")
+                            .paginate(page: params[:page])
+
+    # TODO: Get following_ids only of users in the current page
+    @following_ids =  current_user.following_ids.to_set
+    ahoy.track "user_profiles-index", {current_user: current_user.id }
+  end
 
   def show
     # If there is no id specified, we shot the current_user's profile
@@ -24,22 +35,19 @@ class UserProfilesController < ApplicationController
 
     # Set no index meta_tag if necessary
     update_meta_tag('noindex', !@public_profile || !@preferences.search_engine_index)
-    
+
     if @public_profile
       # Show all bookmark from the profile's user
       if current_user.try(:id) == @profile.user.id
-        @bookmarks = Bookmark.where(user_id: @profile.user.id).paginated(params[:page]).last_first
+        @bookmarks = Bookmark.where(user_id: @profile.user.id).paginate(page: params[:page]).last_first
       else
-        @bookmarks = policy_scope(Bookmark).where(user_id: @profile.user.id).paginated(params[:page]).last_first
+        @bookmarks = policy_scope(Bookmark).where(user_id: @profile.user.id).paginate(page: params[:page]).last_first
       end
 
       # Is current_user following this profile
       if current_user && current_user.id != params[:id]
         @following = current_user.following?(@profile.user)
       end
-
-      # User's statistics
-      @statistics = @profile.user.statistics
 
       update_meta_tag('title', "#{@profile.name} (@#{@profile.username})")
       update_meta_tag('description', @profile.introduction) if @profile.introduction.present?

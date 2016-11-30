@@ -36,7 +36,7 @@ gem 'puma'
 # gem 'capistrano-rails', group: :development
 
 # Migration progress bar
-gem 'progressbar'
+gem 'ruby-progressbar'
 
 # Authentication
 gem 'devise', '~> 4.1'
@@ -46,6 +46,7 @@ gem 'pundit', '~> 1.1'
 # Bootstrap
 gem 'bootstrap-sass', '~> 3.3'
 gem 'font-awesome-rails'
+gem 'material_icons'
 
 # Tags
 gem 'acts-as-taggable-on', '~> 3.4'

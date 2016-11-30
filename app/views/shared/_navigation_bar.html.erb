@@ -32,6 +32,7 @@
 
       <ul class="nav navbar-nav navbar-right">
         <% if current_user %>
+        <li><%= link_to t('header.navigation.user_profiles'), user_profiles_path %></a></li>
         <li><%= link_to t('header.navigation.bookmarks'), bookmarks_path %></a></li>
         <li><%= link_to t('header.navigation.feed'), feed_path %></a></li>
         <% end %>

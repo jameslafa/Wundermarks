@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   # User profiles
   resource :user_profiles, only: [:show, :edit, :update], path: '/profile', as: :current_user_profile
+  get '/profiles', to: 'user_profiles#index', as: :user_profiles
   get '/profile/:id', to: 'user_profiles#show', as: :user_profile
 
   # Bookmarks
@@ -13,7 +14,8 @@ Rails.application.routes.draw do
   get '/b/:id', to: 'bookmarks#show', as: 'bookmark_shortlink'
 
   # User relationships
-  resources :user_relationships, only: [:create, :destroy]
+  post '/user_relationships/:user_id', to: 'user_relationships#create', as: 'follow_user'
+  delete '/user_relationships/:user_id', to: 'user_relationships#destroy', as: 'unfollow_user'
 
 
   # JSON only

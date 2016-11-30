@@ -1,0 +1,1 @@
+$("<%= "#follow-user-button-#{@user_id}" %>").html("<%= escape_javascript(render(partial: '/user_profiles/follow_button', formats: :html, locals: {user_id: @user_id, following: @following})) %>")

@@ -44,32 +44,6 @@
         @media (max-width: $screen-sm-max) {
           text-align: center;
         }
-
-        .following-button{
-          background-color: lighten($primary-color, 20%);
-          border-color: lighten($primary-color, 20%);
-          color: white;
-          min-width: 90px;
-
-          .following-text{
-            display: block;
-          }
-          .unfollow-text{
-            display: none;
-          }
-
-          &:hover{
-            background-color: $danger-color;
-            border-color: $danger-color;
-
-            .following-text{
-              display: none;
-            }
-            .unfollow-text{
-              display: block;
-            }
-          }
-        }
       }
     }
 

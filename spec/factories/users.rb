@@ -9,5 +9,9 @@ FactoryGirl.define do
     factory :admin do
       role 'admin'
     end
+
+    factory :user_with_metadatum do
+      association :user_metadatum
+    end
   end
 end

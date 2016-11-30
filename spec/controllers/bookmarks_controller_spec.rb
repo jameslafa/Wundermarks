@@ -463,6 +463,12 @@ RSpec.describe BookmarksController, type: :controller do
           expect(assigns(:bookmark)).to be_persisted
         end
 
+        it "updates user metadata" do
+          post :create, {:bookmark => valid_attributes}
+          subject.current_user.metadata.reload
+          expect(subject.current_user.metadata.bookmarks_count).to eq 1
+        end
+
         it "redirects to the bookmark page" do
           post :create, {:bookmark => valid_attributes}
           expect(response).to redirect_to bookmark_path(Bookmark.last)
@@ -499,6 +505,12 @@ RSpec.describe BookmarksController, type: :controller do
         it "re-renders the 'new' template" do
           post :create, {:bookmark => invalid_attributes}
           expect(response).to render_template("new")
+        end
+
+        it "does not update user metadata" do
+          post :create, {:bookmark => invalid_attributes}
+          subject.current_user.metadata.reload
+          expect(subject.current_user.metadata.bookmarks_count).to eq 0
         end
       end
 
@@ -606,6 +618,13 @@ RSpec.describe BookmarksController, type: :controller do
           }.to change(Bookmark, :count).by(-1)
         end
 
+        it "updates user metadata" do
+          UserMetadataUpdater.reset_user_metadatum(subject.current_user)
+          delete :destroy, {:id => bookmark.id}
+          subject.current_user.metadata.reload
+          expect(subject.current_user.metadata.bookmarks_count).to eq 0
+        end
+
         it "tracks an ahoy event" do
           expect{
             delete :destroy, {:id => bookmark.id}
@@ -623,6 +642,13 @@ RSpec.describe BookmarksController, type: :controller do
           expect {
             delete :destroy, {:id => bookmark.id}
           }.to change(Bookmark, :count).by(0)
+        end
+
+        it "does not update user metadata" do
+          UserMetadataUpdater.reset_user_metadatum(bookmark.user)
+          delete :destroy, {:id => bookmark.id}
+          bookmark.user.metadata.reload
+          expect(bookmark.user.metadata.bookmarks_count).to eq 1
         end
       end
 

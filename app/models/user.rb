@@ -11,16 +11,18 @@ class User < ActiveRecord::Base
   has_many :bookmarks
   has_one :user_profile, dependent: :destroy, inverse_of: :user
   has_one :user_preference, dependent: :destroy, inverse_of: :user
+  has_one :user_metadatum, dependent: :destroy, inverse_of: :user
 
   # Association aliases
   alias_attribute :profile, :user_profile
   alias_attribute :preferences, :user_preference
+  alias_attribute :metadata, :user_metadatum
 
   # Nested attributes
   accepts_nested_attributes_for :user_profile
 
   # Hooks
-  before_save :build_missing_preferences
+  before_save :build_missing_preferences, :build_missing_metadata
 
   # Enumerators
   enum role: {
@@ -34,12 +36,9 @@ class User < ActiveRecord::Base
     self.user_profile.try(:name)
   end
 
-  def statistics
-    {
-      'followers_count' => self.followers_by_type_count('User'),
-      'following_count' => self.following_by_type_count('User'),
-      'bookmarks_count' => self.bookmarks.size
-    }
+  # Returns the list of IDs the user is following
+  def following_ids
+    self.follows.pluck(:followable_id)
   end
 
 
@@ -49,6 +48,12 @@ class User < ActiveRecord::Base
   def build_missing_preferences
     if self.user_preference.blank?
       self.build_user_preference()
+    end
+  end
+
+  def build_missing_metadata
+    if self.user_metadatum.blank?
+      self.build_user_metadatum()
     end
   end
 end

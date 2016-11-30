@@ -6,6 +6,7 @@
 @import "lib/awesomplete";
 @import "lib/awesomplete-override";
 @import "lib/octicons";
+@import "material_icons";
 @import "fonts";
 @import "devise";
 @import "views/shared/bookmark";
@@ -21,6 +22,8 @@
 @import "views/tools/bookmarklet";
 @import "views/tools/import";
 @import "views/tools/imported";
+@import "views/user_profiles/shared";
+@import "views/user_profiles/index";
 @import "views/user_profiles/show";
 @import "views/user_profiles/form";
 @import "views/preferences/edit";

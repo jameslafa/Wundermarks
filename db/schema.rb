@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161019061125) do
+ActiveRecord::Schema.define(version: 20161130105703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,17 +120,6 @@ ActiveRecord::Schema.define(version: 20161019061125) do
   add_index "follows", ["followable_id", "followable_type"], name: "fk_followables", using: :btree
   add_index "follows", ["follower_id", "follower_type"], name: "fk_follows", using: :btree
 
-  create_table "identities", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "provider"
-    t.string   "uid"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "identities", ["user_id", "provider"], name: "index_identities_on_user_id_and_provider", unique: true, using: :btree
-  add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
-
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
@@ -150,6 +139,21 @@ ActiveRecord::Schema.define(version: 20161019061125) do
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
+
+  create_table "user_metadata", force: :cascade do |t|
+    t.integer  "followers_count",        default: 0
+    t.integer  "followings_count",       default: 0
+    t.integer  "bookmarks_count",        default: 0
+    t.integer  "public_bookmarks_count", default: 0
+    t.integer  "user_id"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "user_metadata", ["bookmarks_count"], name: "index_user_metadata_on_bookmarks_count", using: :btree
+  add_index "user_metadata", ["followers_count"], name: "index_user_metadata_on_followers_count", using: :btree
+  add_index "user_metadata", ["followings_count"], name: "index_user_metadata_on_followings_count", using: :btree
+  add_index "user_metadata", ["public_bookmarks_count"], name: "index_user_metadata_on_public_bookmarks_count", using: :btree
 
   create_table "user_preferences", force: :cascade do |t|
     t.integer  "user_id"
@@ -244,7 +248,6 @@ ActiveRecord::Schema.define(version: 20161019061125) do
 
   add_foreign_key "bookmark_trackings", "bookmarks"
   add_foreign_key "bookmarks", "users"
-  add_foreign_key "identities", "users"
   add_foreign_key "user_preferences", "users"
   add_foreign_key "user_profiles", "users"
 end

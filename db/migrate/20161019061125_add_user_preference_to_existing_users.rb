@@ -1,19 +1,16 @@
-require 'progressbar'
-
 class AddUserPreferenceToExistingUsers < ActiveRecord::Migration
   def up
     say_with_time("Add default UserPreference to every existing user") do
       users = User.all
       ActiveRecord::Base.transaction do
-        pbar = ProgressBar.new("Loop on every users", users.size)
+        pbar = ProgressBar.create(:title => "Loop on every users", :starting_at => 0, :total => users.size)
         users.each do |user|
           unless user.user_preference.present?
             user.build_user_preference
             user.save
           end
-          pbar.inc
+          pbar.increment
         end
-        pbar.finish
       end
     end
   end

@@ -20,14 +20,6 @@ RSpec.describe UserProfilesController, type: :controller do
           expect(event.name).to eq 'user_profiles-show'
           expect(event.properties).to eq({"id" => profile.id, "current_user" => false })
         end
-
-        it "assigns @statistics with the user's profile statistics" do
-          get :show, {id: profile.id}
-          expect(assigns(:statistics)).to be_a Hash
-          expect(assigns(:statistics)).to be_has_key 'bookmarks_count'
-          expect(assigns(:statistics)).to be_has_key 'followers_count'
-          expect(assigns(:statistics)).to be_has_key 'following_count'
-        end
       end
 
       context 'when the :id is a string' do
@@ -107,6 +99,78 @@ RSpec.describe UserProfilesController, type: :controller do
       it "assigns public and private bookmarks to @bookmarks" do
         get :show, {id: profile.id}
         expect(assigns(:bookmarks)).to match_array (public_bookmarks + private_bookmarks)
+      end
+    end
+  end
+
+
+
+  describe "GET #index" do
+    context "when the user is logged in" do
+      login_user
+
+      it "assigns to @profiles the list of user profiles ordered by number of bookmarks" do
+        user_profile_1 = create(:user_profile, name: "User 1")
+        user_profile_2 = create(:user_profile, name: "User 2")
+        user_profile_3 = create(:user_profile, name: "User 3")
+
+        create_list(:bookmark, 2, user: user_profile_1.user)
+        create_list(:bookmark, 4, user: user_profile_2.user)
+        create_list(:bookmark, 3, user: subject.current_user) #logged in user
+
+        UserMetadataUpdater.reset_user_metadatum(user_profile_1.user)
+        UserMetadataUpdater.reset_user_metadatum(user_profile_2.user)
+        UserMetadataUpdater.reset_user_metadatum(user_profile_3.user)
+        UserMetadataUpdater.reset_user_metadatum(subject.current_user)
+
+        get :index
+
+        expect(assigns(:profiles).to_a).to eq [user_profile_2, user_profile_1, user_profile_3]
+      end
+
+      it "paginates the list of user profiles @profiles" do
+        user_profiles = create_list(:user_profile, 30)
+
+        get :index
+
+        expect(assigns(:profiles).size).to eq 25
+        first_page_profile_ids = assigns(:profiles).pluck(:id)
+
+        get :index, page: 2
+        assigns(:profiles).reload
+
+        expect(assigns(:profiles).size).to eq 5
+        second_page_profile_ids = assigns(:profiles).pluck(:id)
+
+        # No common profile ids
+        expect(first_page_profile_ids & second_page_profile_ids).to eq []
+      end
+
+      it "assigns to @following_ids the list of user_ids the user is following" do
+        user_profiles = create_list(:user_profile, 3)
+
+        subject.current_user.follow(user_profiles.first.user)
+        subject.current_user.follow(user_profiles.second.user)
+
+        get :index
+
+        expect(assigns(:following_ids)).to match_array [user_profiles.first.user_id, user_profiles.second.user_id]
+      end
+
+      it "tracks an ahoy event" do
+        expect{
+          get :index
+        }.to change(Ahoy::Event, :count).by(1)
+        event = Ahoy::Event.last
+        expect(event.name).to eq 'user_profiles-index'
+        expect(event.properties).to eq({"current_user" => subject.current_user.id})
+      end
+    end
+
+    context "when the user is NOT logged in" do
+      it "redirects the user to the login page" do
+        get :index
+        expect(response).to redirect_to new_user_session_path
       end
     end
   end

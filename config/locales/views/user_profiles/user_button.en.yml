@@ -1,0 +1,6 @@
+en:
+  user_profiles:
+    follow_button:
+      follow: "Follow"
+      unfollow: "Unfollow"
+      following: "Following"

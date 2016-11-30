@@ -3,10 +3,7 @@ en:
     no_username_html: "You haven't choosen your username yet. %{reserve}"
     no_username_reserve: "Reserve it now!"
 
-    user_profile_bar:
-      follow: "Follow"
-      unfollow: "Unfollow"
-      following: "Following"
+    user_profile_bar:      
       actions:
         edit: "Edit profile"
 

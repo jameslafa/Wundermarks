@@ -1,0 +1,40 @@
+.c-user_profiles{
+  &.a-index{
+    .profile-card{
+      background-color: #fff;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      border-radius: 2px;
+      margin: 0 0 10px 0;
+      overflow: hidden;
+      padding-bottom: 0.7rem;
+      padding-top: 0.7rem;
+
+      .avatar{
+        box-shadow: 0 1px 1px rgba(136, 153, 166, 1);
+        max-width: 100%;
+        height: auto;
+      }
+
+      .user-infos{
+        vertical-align: top;
+
+        .user{
+          text-decoration: none;
+
+          .name{
+            color: #000;
+            font-weight: 600;
+          }
+          .username{
+            color: #8899a6;
+            font-size: 0.8rem;
+
+            em{
+              color: #b1bbc3;
+            }
+          }
+        }
+      }
+    }
+  }
+}

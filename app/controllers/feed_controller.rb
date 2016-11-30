@@ -3,7 +3,7 @@ class FeedController < ApplicationController
 
   def index
     if params[:q].present? and @q = params[:q]
-      @bookmarks = bookmarks_users_scope.search(@q).paginated(params[:page])
+      @bookmarks = bookmarks_users_scope.search(@q).paginate(page: params[:page])
       if @bookmarks.count > 0
         flash.now[:notice] = I18n.t("feed.index.search.search_all_wundermarks", count: @bookmarks.count, search_all_url: feed_path(q: @q, filter: 'everyone'))
       else
@@ -11,7 +11,7 @@ class FeedController < ApplicationController
       end
       ahoy.track "feed-search", q: @q, results_count: @bookmarks.try(:count)
     else
-      @bookmarks = bookmarks_users_scope.paginated(params[:page]).last_first
+      @bookmarks = bookmarks_users_scope.paginate(page: params[:page]).last_first
       sliced_params = params.slice(:q, :filter)
       ahoy.track "feed-index", sliced_params.empty? ? nil : sliced_params
     end
