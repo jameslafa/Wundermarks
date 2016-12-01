@@ -28,7 +28,7 @@ require 'capistrano/rails'
 require 'capistrano/bundler'
 require 'capistrano/puma'
 require 'capistrano/sidekiq'
-require 'capistrano/sidekiq/monit'
+#require 'capistrano/sidekiq/monit'
 require 'whenever/capistrano'
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
