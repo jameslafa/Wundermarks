@@ -79,17 +79,28 @@ RSpec.describe 'BookmarksHelper', :type => :helper do
     end
 
     context 'when the date is 7 days old or more' do
-      it 'returns the date of the day without the year' do
-        date = 10.days.ago.to_date
-        expect(bookmark_list_date(date)).to eq I18n.l(date, format: :long_no_year)
-      end
-    end
+      context 'when the year is the current year' do
+        let(:today) {Date.new(Time.new.year, 8, 17)}
 
-    context 'when the date more than a year old' do
-      it 'returns the date of the day with the year' do
-        date = 400.days.ago.to_date
-        expect(bookmark_list_date(date)).to eq I18n.l(date, format: :long)
+        it 'returns the date of the day without the year' do
+          Timecop.freeze(today)
+          date = 10.days.ago.to_date
+          expect(bookmark_list_date(date)).to eq I18n.l(date, format: :long_no_year)
+          Timecop.return
+        end
       end
+
+      context 'when the year is different than the current year' do
+        let(:today) {Date.new(Time.new.year, 1, 2)}
+
+        it 'returns the date of the day with the year' do
+          Timecop.freeze(today)
+          date = 10.days.ago.to_date
+          expect(bookmark_list_date(date)).to eq I18n.l(date, format: :long)
+          Timecop.return
+        end
+      end
+
     end
   end
 
