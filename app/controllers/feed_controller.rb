@@ -15,6 +15,8 @@ class FeedController < ApplicationController
       sliced_params = params.slice(:q, :filter)
       ahoy.track "feed-index", sliced_params.empty? ? nil : sliced_params
     end
+
+    @bookmarks = BookmarkService.set_user_bookmark_likes(@bookmarks, current_user.id)
   end
 
   private

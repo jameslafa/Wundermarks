@@ -36,7 +36,8 @@
           </div>
           <div class="actions col-md-3 col-sm-3">
             <% unless current_user.try(:id) == bookmark.user_id %>
-            <a href="<%= copy_bookmark_path(id: bookmark.id) %>" class="light-tooltip" aria-label="<%= t("bookmarks.actions.copy") %>" data-toggle="tooltip" data-placement="left" title="<%= t("bookmarks.actions.copy") %>"><i class="material-icons md-24 md-dark" aria-hidden="true">library_add</i></a>
+            <%= render partial: "bookmarks/like_button", locals: {bookmark: bookmark} %>
+            <a href="<%= copy_bookmark_path(id: bookmark.id) %>" class="light-tooltip" aria-label="<%= t("bookmarks.actions.copy") %>" data-toggle="tooltip" data-placement="top" title="<%= t("bookmarks.actions.copy") %>"><i class="material-icons md-24 md-dark" aria-hidden="true">library_add</i></a>
             <% end %>
           </div>
         </div>

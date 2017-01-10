@@ -90,4 +90,18 @@ module BookmarksHelper
       I18n.l(datetime.to_date, format: :short)
     end
   end
+
+  def bookmark_like_link(bookmark)
+    bookmark_like_count = bookmark.likes.size > 0 ? bookmark.likes.size : ''
+
+    if bookmark.liked?
+      link_to(unlike_bookmark_path(bookmark_id: bookmark.id), {method: 'delete', remote: true, class: "light-tooltip bookmark-like liked", 'aria-label': t("bookmarks.actions.undo_like"), 'data-toggle': "tooltip", 'data-placement': "top", 'title': t("bookmarks.actions.undo_like")}) do
+        "<i class=\"material-icons md-24\" aria-hidden=\"true\">favorite</i> <span=\"bookmark-likes-count\">#{bookmark_like_count}</span>".html_safe
+      end
+    else
+      link_to(like_bookmark_path(bookmark_id: bookmark.id), {method: 'post', remote: true, class: "light-tooltip bookmark-like not-liked", 'aria-label': t("bookmarks.actions.like"), 'data-toggle': "tooltip", 'data-placement': "top", 'title': t("bookmarks.actions.like")}) do
+        "<i class=\"material-icons md-24 md-dark\" aria-hidden=\"true\">favorite_border</i> <span=\"bookmark-likes-count\">#{bookmark_like_count}</span>".html_safe
+      end
+    end
+  end
 end

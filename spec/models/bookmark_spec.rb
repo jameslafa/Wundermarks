@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Bookmark, type: :model do
   it { is_expected.to belong_to :user }
   it { is_expected.to have_many(:bookmark_trackings).dependent(:destroy) }
+  it { is_expected.to have_many(:bookmark_likes).dependent(:destroy) }
 
   it { is_expected.to validate_uniqueness_of(:url).scoped_to(:user_id) }
   it { is_expected.to validate_presence_of :title }
@@ -13,6 +14,30 @@ RSpec.describe Bookmark, type: :model do
 
   it { is_expected.to define_enum_for(:privacy).with({everyone: 1, only_me: 2}) }
   it { is_expected.to define_enum_for(:source).with({wundermarks: 0, delicious: 1}) }
+
+  describe 'attribute aliases' do
+    describe 'alias bookmark_likes -> likes' do
+      it 'returns the associated bookmark_likes' do
+        user = build(:user)
+        bookmark = build(:bookmark)
+        bookmark_like = bookmark.bookmark_likes.build(user: user)
+        expect(bookmark.likes).to eq [bookmark_like]
+      end
+    end
+  end
+
+  describe "liked and liked?" do
+    it "has a default value set to false" do
+      bookmark = Bookmark.new
+      expect(bookmark.liked?).to be false
+    end
+
+    it "updates its value" do
+      bookmark = Bookmark.new
+      bookmark.liked = true
+      expect(bookmark.liked?).to be true
+    end
+  end
 
   describe 'scopes' do
     describe 'belonging_to' do

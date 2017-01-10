@@ -21,6 +21,10 @@ class Bookmark < ActiveRecord::Base
   # Associations
   belongs_to :user
   has_many :bookmark_trackings, dependent: :destroy
+  has_many :bookmark_likes, dependent: :destroy
+
+  # Association aliases
+  alias_attribute :likes, :bookmark_likes
 
 
   # Validations
@@ -41,6 +45,9 @@ class Bookmark < ActiveRecord::Base
 
   # Hooks
 
+  ## Initialize default attributes values
+  after_initialize :set_default_attributes_values_on_initialize
+
   ## Update tag_search while saving
   before_save :update_tag_search
 
@@ -57,6 +64,16 @@ class Bookmark < ActiveRecord::Base
     'wundermarks': 0,
     'delicious': 1
   }
+
+  # Attributes accessors
+
+  def liked?
+    @liked == true
+  end
+
+  def liked=(value)
+    @liked = value
+  end
 
 
   # Instance methods
@@ -90,6 +107,10 @@ class Bookmark < ActiveRecord::Base
 
 
   private
+
+  def set_default_attributes_values_on_initialize
+    @liked ||= false
+  end
 
   # Validate that there is maximum 5 tags on the bookmark
   def max_5_tags

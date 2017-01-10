@@ -149,6 +149,24 @@ RSpec.describe FeedController, type: :controller do
           expect(assigns(:bookmarks).to_a.size).to eq 3
         end
       end
+
+      # Bookmark likes
+
+      context 'when current user liked a bookmark' do
+        let!(:userB_bookmarks) { create_list(:bookmark, 3, user: userB) }
+
+        it "sets to @bookmarks which bookmark the current user liked" do
+          liked_bookmarked = userB_bookmarks[1]
+          BookmarkLike.create(bookmark_id: liked_bookmarked.id, user_id: userA.id)
+
+          get :index
+
+          bookmarks = assigns(:bookmarks)
+          bookmarks.each do |b|
+            expect(b.liked?).to eq(b.id == liked_bookmarked.id)
+          end
+        end
+      end
     end
   end
 

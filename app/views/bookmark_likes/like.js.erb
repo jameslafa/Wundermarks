@@ -1,0 +1,2 @@
+$("<%= "#bookmark-like-button-#{@bookmark.id}" %>").html("<%= escape_javascript(render(partial: '/bookmarks/like_button', formats: :html, locals: {bookmark: @bookmark})) %>")
+$("<%= "#bookmark-like-button-#{@bookmark.id}" %> [data-toggle=\"tooltip\"]").tooltip({delay: { "show": 500, "hide": 100 }});

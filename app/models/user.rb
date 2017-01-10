@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   acts_as_follower
 
   has_many :bookmarks
+  has_many :bookmark_likes, dependent: :destroy
   has_one :user_profile, dependent: :destroy, inverse_of: :user
   has_one :user_preference, dependent: :destroy, inverse_of: :user
   has_one :user_metadatum, dependent: :destroy, inverse_of: :user

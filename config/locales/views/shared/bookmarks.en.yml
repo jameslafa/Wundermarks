@@ -1,4 +1,6 @@
 en:
   bookmarks:
     actions:
-      copy: Copy to my bookmarks
+      copy: Copy
+      like: Like
+      undo_like: Undo like

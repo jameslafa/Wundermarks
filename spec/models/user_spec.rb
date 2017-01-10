@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   it { is_expected.to have_many :bookmarks }
+  it { is_expected.to have_many(:bookmark_likes).dependent(:destroy) }
   it { is_expected.to have_one(:user_profile).dependent(:destroy) }
   it { is_expected.to have_one(:user_preference).dependent(:destroy) }
   it { is_expected.to have_one(:user_metadatum).dependent(:destroy) }
@@ -16,27 +17,29 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'alias preferences' do
-    it 'returns the associated user_preference' do
-      user = build(:user)
-      user_prefrence = user.create_user_preference()
-      expect(user.preferences).to eq user_prefrence
+  describe 'attribute aliases' do
+    describe 'alias user_preference -> preferences' do
+      it 'returns the associated user_preference' do
+        user = build(:user)
+        user_preference = user.create_user_preference()
+        expect(user.preferences).to eq user_preference
+      end
     end
-  end
 
-  describe 'alias profile' do
-    it 'returns the associated user_profile' do
-      user = build(:user)
-      user_profile = user.create_user_profile()
-      expect(user.profile).to eq user_profile
+    describe 'alias user_profile -> profile' do
+      it 'returns the associated user_profile' do
+        user = build(:user)
+        user_profile = user.create_user_profile()
+        expect(user.profile).to eq user_profile
+      end
     end
-  end
 
-  describe 'alias metadata' do
-    it 'returns the associated user_metadatum' do
-      user = build(:user)
-      user_metadatum = user.create_user_metadatum()
-      expect(user.metadata).to eq user_metadatum
+    describe 'alias user_metadatum -> metadata' do
+      it 'returns the associated user_metadatum' do
+        user = build(:user)
+        user_metadatum = user.create_user_metadatum()
+        expect(user.metadata).to eq user_metadatum
+      end
     end
   end
 

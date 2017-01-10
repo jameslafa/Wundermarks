@@ -17,6 +17,10 @@ Rails.application.routes.draw do
   post '/user_relationships/:user_id', to: 'user_relationships#create', as: 'follow_user'
   delete '/user_relationships/:user_id', to: 'user_relationships#destroy', as: 'unfollow_user'
 
+  # Bookmark likes
+  post '/bookmark_likes/:bookmark_id', to: 'bookmark_likes#create', as: 'like_bookmark'
+  delete '/bookmark_likes/:bookmark_id', to: 'bookmark_likes#destroy', as: 'unlike_bookmark'
+
 
   # JSON only
   scope :format => true, :constraints => { :format => 'json' } do
