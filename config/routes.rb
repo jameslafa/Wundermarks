@@ -42,11 +42,5 @@ Rails.application.routes.draw do
   get "/logos",   to: "home#logos"
   get "/feed",    to: "feed#index"
 
-  authenticate :user, lambda { |user| user.admin? } do
-    scope '/admin' do
-      mount Blazer::Engine, at: "blazer"
-    end
-  end
-
   root to: "home#index"
 end
