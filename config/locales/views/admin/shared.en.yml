@@ -1,0 +1,7 @@
+en:
+  admin:
+    navigation_bar:
+      user_analyses:
+        title: User Analyses
+        last_connections: Last Connections
+        use_bookmarklet: Use Bookmarklet

@@ -10,4 +10,12 @@ module Helpers
     user.user_profile.save
     sign_in user
   end
+
+  def sign_in_admin(user=nil)
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    user ||= FactoryGirl.create(:admin)
+    user.user_profile ||= build(:user_profile, user: user)
+    user.user_profile.save
+    sign_in user
+  end
 end

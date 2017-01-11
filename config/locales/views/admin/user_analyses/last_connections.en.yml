@@ -1,0 +1,5 @@
+en:
+  admin:
+    user_analyses:
+      last_connections:
+        title: Last Connections

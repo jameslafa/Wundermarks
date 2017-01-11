@@ -1,5 +1,5 @@
 <% if current_user %>
-<%= form_tag({controller: 'bookmarks', action: 'index'}, method: 'get', class: "#{mobile ? 'search-bookmark-mobile hidden-md hidden-lg' : 'navbar-form navbar-left hidden-xs hidden-sm'}") do %>
+<%= form_tag({controller: '/bookmarks', action: 'index'}, method: 'get', class: "#{mobile ? 'search-bookmark-mobile hidden-md hidden-lg' : 'navbar-form navbar-left hidden-xs hidden-sm'}") do %>
 <div class="search-bookmark input-group">
   <%= search_field_tag(:q, q, class: 'form-control', 'aria-label': t("shared.navigation_bar.search.aria-label"), placeholder: t("shared.navigation_bar.search.placeholder"), autocomplete: 'off', autocorrect: 'off', autocapitalize: 'off') %>
   <span class="input-group-btn">

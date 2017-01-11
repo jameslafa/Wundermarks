@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="<%= image_url("apple-touch-icon.png") %>">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <%= display_meta_tags %>
+  </head>
+  <body class="<%= "c-#{params[:controller].parameterize} a-#{params[:action].parameterize}" %>">
+    <%= render "/admin/navigation_bar" %>
+    <div class="container">
+      <%= yield %>
+    </div>
+  </body>
+</html>

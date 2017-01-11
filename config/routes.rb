@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   devise_for :users, :controllers => { registrations: 'registrations' }
 
   # User profiles
@@ -41,6 +42,12 @@ Rails.application.routes.draw do
 
   get "/logos",   to: "home#logos"
   get "/feed",    to: "feed#index"
+
+  namespace :admin do
+    get '/', to: "dashboard#index"
+    get '/user_analyses/last_connections'
+    get '/user_analyses/use_bookmarklet'
+  end
 
   root to: "home#index"
 end
