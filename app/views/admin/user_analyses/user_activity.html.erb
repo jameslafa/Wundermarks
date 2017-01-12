@@ -5,11 +5,14 @@
 <table class="table table-striped table-bordered">
   <tr>
     <th>ID</th>
-    <th>Created At</th>
     <th>Name</th>
-    <th>Username</th>
     <th>Email</th>
-    <th>Last Visit At</th>
+    <th>Total Bookmarks</th>
+    <th>Last 30 days</th>
+    <th>Last 7 days</th>
+    <th>8-14 days</th>
+    <th>15-21 days</th>
+    <th>22-29 days</th>
   </tr>
 <% @user_data.each do |user| %>
 <% if user[:last_visit] && user[:last_visit] > 1.week.ago %>
@@ -20,11 +23,14 @@
   <tr class="danger">
 <% end %>
     <td><%= user[:id] %></td>
-    <td><%= user[:created_at] %></td>
     <td><%= user[:name] %></td>
-    <td><%= user[:username] %></td>
     <td><%= mail_to "#{user[:name]} <#{user[:email]}>", user[:email] %></td>
-    <td><%= user[:last_visit] || "Never" %></td>
+    <td><%= user[:total_bookmarks] %></td>
+    <td><%= user[:bookmark_count_month] %></td>
+    <td><%= user[:bookmark_count_week_0] %></td>
+    <td><%= user[:bookmark_count_week_1] %></td>
+    <td><%= user[:bookmark_count_week_2] %></td>
+    <td><%= user[:bookmark_count_week_3] %></td>
   </tr>
 <% end %>
 </table>

@@ -34,6 +34,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <%= t('admin.navigation_bar.user_analyses.title') %> <span class="caret"></span></a>
           <ul class="dropdown-menu">
+            <li><%= link_to t('admin.navigation_bar.user_analyses.user_activity'), admin_user_analyses_user_activity_path %></li>
             <li><%= link_to t('admin.navigation_bar.user_analyses.last_connections'), admin_user_analyses_last_connections_path %></li>
             <li><%= link_to t('admin.navigation_bar.user_analyses.use_bookmarklet'), admin_user_analyses_use_bookmarklet_path %></li>
           </ul>

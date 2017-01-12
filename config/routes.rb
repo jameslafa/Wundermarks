@@ -47,6 +47,7 @@ Rails.application.routes.draw do
     get '/', to: "dashboard#index"
     get '/user_analyses/last_connections'
     get '/user_analyses/use_bookmarklet'
+    get '/user_analyses/user_activity'
   end
 
   root to: "home#index"

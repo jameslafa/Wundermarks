@@ -37,4 +37,21 @@ class Admin::UserAnalysesController < Admin::AdminController
 
     @user_data.sort_by! { |u| u[:bookmarklet_version] }
   end
+
+  def user_activity
+    @user_data = []
+
+    User.includes(:user_profile).each do |user|
+      user_info = {id: user.id, name: user.profile.name, email: user.email, total_bookmarks: user.bookmarks.size}
+      bookmarks = user.bookmarks.where("created_at > ?", 1.month.ago)
+      user_info[:bookmark_count_month] = bookmarks.size
+      bookmarks_grouped_by_weeks = bookmarks.group_by { |b| (Date.today - b.created_at.to_date).to_i / 7}
+      (0..3).each do |week|
+        user_info[:"bookmark_count_week_#{week}"] = bookmarks_grouped_by_weeks.fetch(week, []).length
+      end
+      @user_data << user_info
+    end
+
+    @user_data.sort_by! { |u| u[:bookmark_count_month] }
+  end
 end
