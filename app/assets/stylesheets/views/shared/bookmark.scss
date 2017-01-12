@@ -94,7 +94,10 @@
         }
 
         &.bookmark-like{
-          margin-right: 1rem;
+          display: inline-block;
+          margin-right: 0.2rem;
+          min-width: 46px;
+          text-align: left;
 
           &.liked{
             color: #e81c4f;
