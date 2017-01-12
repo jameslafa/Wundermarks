@@ -1,5 +1,7 @@
 .c-tools{
   &.a-bookmarklet{
+    line-height: 1.5rem;
+
     .page-title{
       font-size: 2.2rem;
       font-weight: 600;
@@ -9,31 +11,76 @@
     .introduction{
       margin-bottom: 2rem;
     }
-    
+
     .instructions{
       margin-top: 2rem;
 
       .installation{
         margin-bottom: 2rem;
+
+        strong{
+          font-size: 1.1rem;
+        }
+
+        ul{
+          list-style-type: none;
+          padding-left: 0;
+        }
       }
 
-      .help-video{
+      .bookmarklet-button{
         background-color: #eee;
-        margin-bottom: 20px;
-        margin-top: 20px;
-        padding-bottom: 20px;
-        padding-top: 20px;
+        border: 1px dashed #777;
+        padding: 1rem;
+        text-align: center;
+      }
+
+      .drag-instruction{
+        line-height: 4rem;
+        text-align: center;
+
+        .arrow{
+          font-size: 1.5rem;
+          font-weight: bold;
+        }
+      }
+
+      .bookmarks-bar{
         text-align: center;
 
         img{
-          box-shadow: 0px 0px 10px 2px #aaa;
           height: auto;
-          max-width: 90%;
+          max-width: 450px;
+          width: 100%;
         }
       }
 
       .move{
         cursor: move;
+      }
+    }
+
+    .usage{
+      margin-top: 2rem;
+
+      strong{
+        font-size: 1.1rem;
+      }
+
+      .video-player{
+        text-align: center;
+
+        .video-controler{
+          padding-bottom: 1rem;
+          padding-top: 1rem;
+        }
+
+        video{
+          box-shadow: 0 0 5px 1px #777;
+          height: auto;
+          max-width: 700px;
+          width: 100%;
+        }
       }
     }
 

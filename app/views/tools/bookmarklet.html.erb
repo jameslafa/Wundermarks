@@ -1,29 +1,46 @@
-`<div class="row">
-  <div class="col-md-10 col-md-offset-1">
-    <div class="page-title"><%= t('.title') %></div>
+<div class="page-title"><%= t('.title') %></div>
 
+<div class="row">
+  <div class="col-md-8">
     <div class="introduction"><%= t('.introduction') %></div>
-    <a href="javascript:window.open('<%=new_bookmark_url(protocol: (Rails.env.production? ? 'https' : 'http'))%>?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)+'&description='+encodeURIComponent(window.getSelection())+'&v=<%= Settings.bookmarklet.current_version%>'+'&layout=popup', 'Wundermarks - Add bookmark','width=800,height=600,scrollbars=yes,status=no,titlebar=no,toolbar=no');void(0);" class="btn btn-primary move"><%= t('.link_title') %><%= ' - dev' if Rails.env.development? %></a>
+  </div>
+</div>
 
-    <div class="instructions">
-      <div class="installation">
-        <%= t('.instructions.installation_html') %>
-        <a href="#installation-video" class="btn btn-default" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="installation-video"><%= t(".instructions.see_tutorial")%></a>
-        <div class="collapse" id="installation-video">
-          <div class="help-video">
-            <%= image_tag("help/add_bookmarklet.gif") %>
-          </div>
+<div class="row instructions">
+  <div class="col-md-6">
+    <div class="installation">
+      <%= t('.instructions.installation_html') %>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="bookmarklet-button">
+      <a ondrop="console.log('installed');" href="javascript:window.open('<%=new_bookmark_url(protocol: (Rails.env.production? ? 'https' : 'http'))%>?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)+'&description='+encodeURIComponent(window.getSelection())+'&v=<%= Settings.bookmarklet.current_version%>'+'&layout=popup', 'Wundermarks - Add bookmark','width=800,height=600,scrollbars=yes,status=no,titlebar=no,toolbar=no');void(0);" class="btn btn-primary move"><%= t('.link_title') %><%= ' - dev' if Rails.env.development? %></a>
+    </div>
+    <div class="drag-instruction">
+      <span class="arrow">&uarr;</span>
+      Drag this button to the bookmarks bar
+      <span class="arrow">&uarr;</span>
+    </div>
+    <div class="bookmarks-bar">
+      <%= image_tag("help/bookmarks-bar-example.png") %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="usage">
+      <%= t('.instructions.usage_html') %>
+      <div class="video-player">
+        <div class="video-controler">
+          <%= button_tag "Start video tutorial", onclick:"startVideo();", class:"btn btn-info" %>
         </div>
-      </div>
-      <div class="usage">
-        <%= t('.instructions.usage_html') %>
-        <a href="#usage-video" class="btn btn-default" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="usage-video"><%= t(".instructions.see_tutorial")%></a>
-        <div class="collapse" id="usage-video">
-          <div class="help-video">
-            <%= image_tag("help/use_bookmarklet.gif") %>
-          </div>
-        </div>
+        <%= video_tag("/videos/bookmarklet-demo.mp4", id: "video-tutorial", poster: 'help/bookmarklet-demo-poster.jpg', controls: true, autoplay: false, height: 720, width: 1152) %>
+        <script>
+          function startVideo() {document.getElementById("video-tutorial").play();};
+        </script>
       </div>
     </div>
-  </div>`
+  </div>
 </div>
