@@ -1,0 +1,16 @@
+.c-tools{
+  &.a-bookmarklet_successfully_installed{
+    text-align: center;
+
+    .success-icon{
+      margin-bottom: 2rem;
+      margin-top: 2rem;
+      
+      svg{
+        fill: $default-text-color;
+        height: auto;
+        width: 100px;
+      }
+    }
+  }
+}

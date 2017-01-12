@@ -13,6 +13,13 @@ RSpec.describe ToolsController, type: :controller do
       end
     end
 
+    describe "GET #bookmarklet_successfully_installed" do
+      it "redirects to new_user_session_path" do
+        get :bookmarklet_successfully_installed
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+
     describe "GET #import" do
       it "redirects to new_user_session_path" do
         get :import
@@ -52,6 +59,17 @@ RSpec.describe ToolsController, type: :controller do
         event = Ahoy::Event.last
         expect(event.name).to eq 'tools-bookmarket'
         expect(event.properties).to be_nil
+      end
+    end
+
+    describe "GET #bookmarklet_successfully_installed" do
+      it "tracks an ahoy event" do
+        expect{
+          get :bookmarklet_successfully_installed, v: Settings.bookmarklet.current_version.to_s
+        }.to change(Ahoy::Event, :count).by(1)
+        event = Ahoy::Event.last
+        expect(event.name).to eq 'bookmarklet-installed'
+        expect(event.properties).to eq({"bm_v" => Settings.bookmarklet.current_version.to_i, "bm_updated" => true})
       end
     end
 

@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   scope '/tools' do
     get   '/',            to: "tools#index",        as: 'tools'
     get   '/bookmarklet', to: "tools#bookmarklet",  as: 'bookmarklet_tool'
+    get   '/bookmarklet_successfully_installed', to: "tools#bookmarklet_successfully_installed", as: 'bookmarklet_successfully_installed'
     get   '/import',      to: "tools#import",       as: 'import_tool'
     post  '/import',      to: "tools#import_file",  as: 'import_file_tool'
     get   '/imported',    to: "tools#imported",     as: 'imported_tool'

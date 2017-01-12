@@ -1,0 +1,7 @@
+en:
+  tools:
+    bookmarklet_successfully_installed:
+      text_html: |
+        <p>You successfully installed the bookmarklet!</p>
+        <p>You are now ready to go</p>
+      close_button: Start bookmarking

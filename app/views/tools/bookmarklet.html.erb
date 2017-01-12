@@ -9,13 +9,13 @@
 <div class="row instructions">
   <div class="col-md-6">
     <div class="installation">
-      <%= t('.instructions.installation_html') %>
+      <%= t('.installation_html') %>
     </div>
   </div>
 
   <div class="col-md-6">
     <div class="bookmarklet-button">
-      <a ondrop="console.log('installed');" href="javascript:window.open('<%=new_bookmark_url(protocol: (Rails.env.production? ? 'https' : 'http'))%>?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)+'&description='+encodeURIComponent(window.getSelection())+'&v=<%= Settings.bookmarklet.current_version%>'+'&layout=popup', 'Wundermarks - Add bookmark','width=800,height=600,scrollbars=yes,status=no,titlebar=no,toolbar=no');void(0);" class="btn btn-primary move"><%= t('.link_title') %><%= ' - dev' if Rails.env.development? %></a>
+      <a ondrag="showConfirmation();" href="javascript:window.open('<%=new_bookmark_url(protocol: (Rails.env.production? ? 'https' : 'http'))%>?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)+'&description='+encodeURIComponent(window.getSelection())+'&v=<%= Settings.bookmarklet.current_version%>'+'&layout=popup', 'Wundermarks - Add bookmark','width=800,height=600,scrollbars=yes,status=no,titlebar=no,toolbar=no');void(0);" class="btn btn-primary move"><%= t('.link_title') %><%= ' - dev' if Rails.env.development? %></a>
     </div>
     <div class="drag-instruction">
       <span class="arrow">&uarr;</span>
@@ -30,8 +30,22 @@
 
 <div class="row">
   <div class="col-md-12">
+    <div class="confirmation"><%= t(".confirmation_html") %></div>
+  </div>
+</div>
+
+<script>
+  var confirmationTimeout;
+  function showConfirmation() {
+    clearTimeout(confirmationTimeout);
+    confirmationTimeout = setTimeout(function(){ $('.confirmation').slideDown(); }, 1000);
+  };
+</script>
+
+<div class="row">
+  <div class="col-md-12">
     <div class="usage">
-      <%= t('.instructions.usage_html') %>
+      <%= t('.usage_html') %>
       <div class="video-player">
         <div class="video-controler">
           <%= button_tag "Start video tutorial", onclick:"startVideo();", class:"btn btn-info" %>

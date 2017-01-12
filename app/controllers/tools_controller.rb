@@ -10,6 +10,14 @@ class ToolsController < ApplicationController
     session.delete(:upgrade_bookmarklet)
   end
 
+  def bookmarklet_successfully_installed
+    bookmarklet_version = params[:v].to_i
+    upgrade_bookmarklet = Settings.bookmarklet.current_version.to_i > bookmarklet_version.to_i
+
+    ahoy.track "bookmarklet-installed", {bm_v: bookmarklet_version, bm_updated: !upgrade_bookmarklet}
+    render :bookmarklet_successfully_installed, layout: "popup"
+  end
+
   # Show import page
   def import
     ahoy.track "tools-import", nil

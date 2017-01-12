@@ -10,6 +10,10 @@ RSpec.describe ToolsController, type: :routing do
       expect(:get => "/tools/bookmarklet").to route_to("tools#bookmarklet")
     end
 
+    it "routes to #bookmarklet_successfully_installed" do
+      expect(:get => "/tools/bookmarklet_successfully_installed").to route_to("tools#bookmarklet_successfully_installed")
+    end
+
     it "routes to #import" do
       expect(:get => "/tools/import").to route_to("tools#import")
     end

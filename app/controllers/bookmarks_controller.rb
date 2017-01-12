@@ -49,16 +49,22 @@ class BookmarksController < ApplicationController
       @bookmark.attributes = @origin_bookmark.slice(:title, :description, :url, :tag_list)
       @bookmark.copy_from_bookmark_id = params[:id]
 
-    # If not, we get attributes from bookmarklet_params
-    # If there is no bookmarklet_params, it will simple keep the new bookmark empty
+      # If not, we get attributes from bookmarklet_params
+      # If there is no bookmarklet_params, it will simple keep the new bookmark empty
     else
       @bookmark.attributes = bookmarklet_params
       @bookmark.title = @bookmark.title.truncate(Bookmark::MAX_TITLE_LENGTH) if @bookmark.title.present?
       @bookmark.description = @bookmark.description.truncate(Bookmark::MAX_DESCRIPTION_LENGTH) if @bookmark.description.present?
     end
 
-    # Check if the current user already bookmarked this url
+
     if @bookmark.url.present?
+
+      # If the user is bookmarking the bookmarklet installation page, he confirms the installation is succesful
+      if uri = URI(@bookmark.url) and uri.host.end_with?(Rails.application.routes.default_url_options[:host]) && uri.path == bookmarklet_tool_path
+        return redirect_to bookmarklet_successfully_installed_path(v: params[:v])
+      end
+      # Check if the current user already bookmarked this url
       if @existing_bookmark = check_bookmark_does_not_exist(@bookmark.url)
         flash.now.alert = "#{I18n.t("errors.bookmarks.already_exists")}. #{view_context.link_to(I18n.t("errors.bookmarks.see_existing_bookmark"), bookmark_path(@existing_bookmark.id), class: 'alert-link')}.".html_safe
       end
@@ -140,7 +146,7 @@ class BookmarksController < ApplicationController
 
     # Update user's metadata
     UserMetadataUpdater.update_bookmarks_count(@bookmark)
-    
+
     ahoy.track "bookmarks-destroy", {id: bookmark_id}
     respond_to do |format|
       format.html { redirect_to bookmarks_url, notice: 'Bookmark was successfully destroyed.' }

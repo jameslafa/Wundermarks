@@ -288,112 +288,124 @@ RSpec.describe BookmarksController, type: :controller do
     end
 
     describe "GET #new" do
-      it "assigns a new bookmark as @bookmark" do
-        get :new
-        expect(assigns(:bookmark)).to be_a_new(Bookmark)
+      context "when the user bookmarks bookmarklet_tool_path" do
+        it "redirects to bookmarklet_successfully_installed_path with the bookmark version" do
+          get :new, url: bookmarklet_tool_url, v: "1469795299"
+          expect(response).to redirect_to bookmarklet_successfully_installed_path(v: "1469795299")
+
+          get :new, url: bookmarklet_tool_url(host: "www.#{Rails.application.routes.default_url_options[:host]}"), v: "1469795299"
+          expect(response).to redirect_to bookmarklet_successfully_installed_path(v: "1469795299")
+        end
       end
 
-      it "tracks an ahoy event" do
-        expect{
+      context "when the user bookmarks another url" do
+        it "assigns a new bookmark as @bookmark" do
           get :new
-        }.to change(Ahoy::Event, :count).by(1)
-        event = Ahoy::Event.last
-        expect(event.name).to eq 'bookmarks-new'
-        expect(event.properties).to eq({"layout" => "web"})
-      end
-
-      context "with bookmarklet url parameters" do
-        it "sets attributes from data given as url parameters" do
-          get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you"
-          expect(assigns(:bookmark).url).to eq "https://www.google.com/"
-          expect(assigns(:bookmark).title).to eq "Google: search engine"
-          expect(assigns(:bookmark).description).to eq "Find everything and spies on you"
+          expect(assigns(:bookmark)).to be_a_new(Bookmark)
         end
 
-        it "shortens title and description to match model requirement" do
-          given_title = "a" * 100
-          expected_title = ("a" * 77) + "..."
-          description = "b" * 300
-          given_description = ("b" * 252) + "..."
-
-          get :new, url: "https://www.google.com/", title: given_title, description: given_description
-          expect(assigns(:bookmark).title).to eq expected_title
-          expect(assigns(:bookmark).description).to eq given_description
+        it "tracks an ahoy event" do
+          expect{
+            get :new
+          }.to change(Ahoy::Event, :count).by(1)
+          event = Ahoy::Event.last
+          expect(event.name).to eq 'bookmarks-new'
+          expect(event.properties).to eq({"layout" => "web"})
         end
 
-        context "with url parameter layout == popup" do
-          it "renders the layout popup" do
-            get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", layout: "popup"
-            expect(response).to render_template(:new, layout: :popup)
+        context "with bookmarklet url parameters" do
+          it "sets attributes from data given as url parameters" do
+            get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you"
+            expect(assigns(:bookmark).url).to eq "https://www.google.com/"
+            expect(assigns(:bookmark).title).to eq "Google: search engine"
+            expect(assigns(:bookmark).description).to eq "Find everything and spies on you"
+          end
+
+          it "shortens title and description to match model requirement" do
+            given_title = "a" * 100
+            expected_title = ("a" * 77) + "..."
+            description = "b" * 300
+            given_description = ("b" * 252) + "..."
+
+            get :new, url: "https://www.google.com/", title: given_title, description: given_description
+            expect(assigns(:bookmark).title).to eq expected_title
+            expect(assigns(:bookmark).description).to eq given_description
+          end
+
+          context "with url parameter layout == popup" do
+            it "renders the layout popup" do
+              get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", layout: "popup"
+              expect(response).to render_template(:new, layout: :popup)
+            end
+
+            it "tracks an ahoy event" do
+              expect{
+                get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", v: "1469795299", layout: "popup"
+              }.to change(Ahoy::Event, :count).by(1)
+              event = Ahoy::Event.last
+              expect(event.name).to eq 'bookmarks-new'
+              expect(event.properties).to eq({"layout" => 'popup', "bm_v" => 1469795299, "bm_updated" => true, "duplicate_bookmark_warning" => false})
+            end
+          end
+
+          context "when the a bookmark with the same url exists" do
+            let(:bookmark) { create(:bookmark, user: subject.current_user) }
+
+            it 'displays alert to notify user that the bookmark already exists' do
+              get :new, url: bookmark.url, title: "Google: search engine"
+              expect(assigns(:bookmark).url).to eq bookmark.url
+              expect(flash[:alert]).to eq "#{I18n.t("errors.bookmarks.already_exists")}. #{link_to(I18n.t("errors.bookmarks.see_existing_bookmark"), bookmark_path(bookmark.id), class: 'alert-link')}."
+            end
+          end
+        end
+
+        context "with id parameter" do
+          let(:original_bookmark) { create(:bookmark, privacy: 'everyone') }
+
+          it "sets attributes with attributes of the bookmark identified by the id" do
+            get :new, id: original_bookmark.id
+            new_bookmark = assigns(:bookmark)
+            expect(new_bookmark.title).to eq original_bookmark.title
+            expect(new_bookmark.description).to eq original_bookmark.description
+            expect(new_bookmark.url).to eq original_bookmark.url
+            expect(new_bookmark.tag_list).to eq original_bookmark.tag_list
+            expect(new_bookmark.copy_from_bookmark_id).to eq original_bookmark.id
           end
 
           it "tracks an ahoy event" do
             expect{
-              get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", v: "1469795299", layout: "popup"
+              get :new, id: original_bookmark.id
             }.to change(Ahoy::Event, :count).by(1)
             event = Ahoy::Event.last
             expect(event.name).to eq 'bookmarks-new'
-            expect(event.properties).to eq({"layout" => 'popup', "bm_v" => 1469795299, "bm_updated" => true, "duplicate_bookmark_warning" => false})
+            expect(event.properties).to eq({"layout" => 'web', "copy_from_bookmark_id" => original_bookmark.id, "duplicate_bookmark_warning" => false})
+          end
+
+          context "when the bookmark is not accessible to the user" do
+            let(:original_bookmark) { create(:bookmark, privacy: 'only_me') }
+
+            it "redirects the user to the bookmarks list and show an error message" do
+              get :new, id: original_bookmark.id
+              expect(response).to redirect_to bookmarks_path
+              expect(flash[:alert]).to eq I18n.t("pundit.bookmark_policy.show?")
+            end
           end
         end
 
-        context "when the a bookmark with the same url exists" do
-          let(:bookmark) { create(:bookmark, user: subject.current_user) }
-
-          it 'displays alert to notify user that the bookmark already exists' do
-            get :new, url: bookmark.url, title: "Google: search engine"
-            expect(assigns(:bookmark).url).to eq bookmark.url
-            expect(flash[:alert]).to eq "#{I18n.t("errors.bookmarks.already_exists")}. #{link_to(I18n.t("errors.bookmarks.see_existing_bookmark"), bookmark_path(bookmark.id), class: 'alert-link')}."
-          end
-        end
-      end
-
-      context "with id parameter" do
-        let(:original_bookmark) { create(:bookmark, privacy: 'everyone') }
-
-        it "sets attributes with attributes of the bookmark identified by the id" do
-          get :new, id: original_bookmark.id
-          new_bookmark = assigns(:bookmark)
-          expect(new_bookmark.title).to eq original_bookmark.title
-          expect(new_bookmark.description).to eq original_bookmark.description
-          expect(new_bookmark.url).to eq original_bookmark.url
-          expect(new_bookmark.tag_list).to eq original_bookmark.tag_list
-          expect(new_bookmark.copy_from_bookmark_id).to eq original_bookmark.id
-        end
-
-        it "tracks an ahoy event" do
-          expect{
-            get :new, id: original_bookmark.id
-          }.to change(Ahoy::Event, :count).by(1)
-          event = Ahoy::Event.last
-          expect(event.name).to eq 'bookmarks-new'
-          expect(event.properties).to eq({"layout" => 'web', "copy_from_bookmark_id" => original_bookmark.id, "duplicate_bookmark_warning" => false})
-        end
-
-        context "when the bookmark is not accessible to the user" do
-          let(:original_bookmark) { create(:bookmark, privacy: 'only_me') }
-
-          it "redirects the user to the bookmarks list and show an error message" do
-            get :new, id: original_bookmark.id
-            expect(response).to redirect_to bookmarks_path
-            expect(flash[:alert]).to eq I18n.t("pundit.bookmark_policy.show?")
-          end
-        end
-      end
-
-      context "with an old bookmarklet version" do
-        it "sets upgrade_bookmarklet in the user session" do
-          get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", layout: "popup", v: (Settings.bookmarklet.current_version.to_i - 1000).to_s
-          expect(session[:upgrade_bookmarklet]).to be true
-        end
-
-        it "tracks an ahoy event" do
-          expect{
+        context "with an old bookmarklet version" do
+          it "sets upgrade_bookmarklet in the user session" do
             get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", layout: "popup", v: (Settings.bookmarklet.current_version.to_i - 1000).to_s
-          }.to change(Ahoy::Event, :count).by(1)
-          event = Ahoy::Event.last
-          expect(event.name).to eq 'bookmarks-new'
-          expect(event.properties).to eq({"layout" => 'popup', "bm_v" => (Settings.bookmarklet.current_version.to_i - 1000).to_i, "bm_updated" => false, "duplicate_bookmark_warning" => false})
+            expect(session[:upgrade_bookmarklet]).to be true
+          end
+
+          it "tracks an ahoy event" do
+            expect{
+              get :new, url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", layout: "popup", v: (Settings.bookmarklet.current_version.to_i - 1000).to_s
+            }.to change(Ahoy::Event, :count).by(1)
+            event = Ahoy::Event.last
+            expect(event.name).to eq 'bookmarks-new'
+            expect(event.properties).to eq({"layout" => 'popup', "bm_v" => (Settings.bookmarklet.current_version.to_i - 1000).to_i, "bm_updated" => false, "duplicate_bookmark_warning" => false})
+          end
         end
       end
 
