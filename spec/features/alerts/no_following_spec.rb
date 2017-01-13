@@ -3,6 +3,8 @@ feature 'NoFollowing' do
     user_profile = create(:user_profile)
     user = user_profile.user
 
+    create(:bookmark, user: user)
+
     other_user_profile = create(:user_profile)
     other_user = other_user_profile.user
 

@@ -17,6 +17,11 @@ class FeedController < ApplicationController
     end
 
     @bookmarks = BookmarkService.set_user_bookmark_likes(@bookmarks, current_user.id)
+
+    # If the user as no bookmark, we redirect him to the getting started page
+    if @bookmarks.empty? && current_user.metadata.bookmarks_count == 0
+      return redirect_to getting_started_path(source: "feed-no_bookmarks")
+    end
   end
 
   private

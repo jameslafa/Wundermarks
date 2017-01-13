@@ -126,100 +126,110 @@ RSpec.describe BookmarksController, type: :controller do
     before(:each) { sign_in_user }
 
     describe "GET #index" do
-      let(:other_user) { create(:user) }
+      context "when the current user already has bookmarks" do
+        let(:other_user) { create(:user) }
 
-      let!(:other_user_bookmarks) { create_list(:bookmark, 3, user: other_user) }
-      let!(:current_user_bookmarks) { create_list(:bookmark, 3, user: subject.current_user) }
+        let!(:other_user_bookmarks) { create_list(:bookmark, 3, user: other_user) }
+        let!(:current_user_bookmarks) { create_list(:bookmark, 3, user: subject.current_user) }
 
-      it "assigns all bookmarks belonging to current_user as @bookmarks" do
-        get :index
-        expect(assigns(:bookmarks)).to match_array(current_user_bookmarks)
-      end
-
-      it "sorts the bookmarks list by reverse chronology" do
-        ordered_list = current_user_bookmarks.sort { |x,y| y.created_at <=> x.created_at }
-        get :index
-        expect(assigns(:bookmarks)).to eq(ordered_list)
-      end
-
-      it "tracks an ahoy event" do
-        expect{
+        it "assigns all bookmarks belonging to current_user as @bookmarks" do
           get :index
-        }.to change(Ahoy::Event, :count).by(1)
-        event = Ahoy::Event.last
-        expect(event.name).to eq 'bookmarks-index'
-        expect(event.properties).to be_nil
-      end
-
-      context 'when a query parameter is defined' do
-        before(:each) do
-          @searched_bookmark = current_user_bookmarks.second
-          @searched_bookmark.update_attributes({title: "I love Ruby on Rails"})
+          expect(assigns(:bookmarks)).to match_array(current_user_bookmarks)
         end
 
-        it "assigns all bookmarks matching the search results belonging to the current user" do
-          get :index, q: 'rails'
-          expect(assigns(:bookmarks)).to eq([@searched_bookmark])
-        end
-
-        it "displays a notice and offer to search in all wundermarks" do
-          get :index, q: 'rails'
-          expect(flash[:notice]).to eq I18n.t("bookmarks.index.search.search_all_wundermarks", count: 1, search_friends_url: feed_path(q: 'rails'), search_all_url: feed_path(q: 'rails', filter: 'everyone'))
+        it "sorts the bookmarks list by reverse chronology" do
+          ordered_list = current_user_bookmarks.sort { |x,y| y.created_at <=> x.created_at }
+          get :index
+          expect(assigns(:bookmarks)).to eq(ordered_list)
         end
 
         it "tracks an ahoy event" do
           expect{
+            get :index
+          }.to change(Ahoy::Event, :count).by(1)
+          event = Ahoy::Event.last
+          expect(event.name).to eq 'bookmarks-index'
+          expect(event.properties).to be_nil
+        end
+
+        context 'when a query parameter is defined' do
+          before(:each) do
+            @searched_bookmark = current_user_bookmarks.second
+            @searched_bookmark.update_attributes({title: "I love Ruby on Rails"})
+          end
+
+          it "assigns all bookmarks matching the search results belonging to the current user" do
             get :index, q: 'rails'
-          }.to change(Ahoy::Event, :count).by(1)
-          event = Ahoy::Event.last
-          expect(event.name).to eq 'bookmarks-search'
-          expect(event.properties).to eq({"q" => 'rails', "results_count" => 1})
+            expect(assigns(:bookmarks)).to eq([@searched_bookmark])
+          end
+
+          it "displays a notice and offer to search in all wundermarks" do
+            get :index, q: 'rails'
+            expect(flash[:notice]).to eq I18n.t("bookmarks.index.search.search_all_wundermarks", count: 1, search_friends_url: feed_path(q: 'rails'), search_all_url: feed_path(q: 'rails', filter: 'everyone'))
+          end
+
+          it "tracks an ahoy event" do
+            expect{
+              get :index, q: 'rails'
+            }.to change(Ahoy::Event, :count).by(1)
+            event = Ahoy::Event.last
+            expect(event.name).to eq 'bookmarks-search'
+            expect(event.properties).to eq({"q" => 'rails', "results_count" => 1})
+          end
         end
-      end
 
-      context 'when a post_import parameter is defined' do
-        let!(:delicious_bookmarks) { create_list(:bookmark, 3, user: subject.current_user, source: 'delicious') }
+        context 'when a post_import parameter is defined' do
+          let!(:delicious_bookmarks) { create_list(:bookmark, 3, user: subject.current_user, source: 'delicious') }
 
-        it "assigns all bookmarks imported by the service" do
-          get :index, post_import: 'delicious'
-          expect(assigns(:bookmarks)).to match_array(delicious_bookmarks)
-        end
-
-        it "tracks an ahoy event" do
-          expect{
+          it "assigns all bookmarks imported by the service" do
             get :index, post_import: 'delicious'
-          }.to change(Ahoy::Event, :count).by(1)
-          event = Ahoy::Event.last
-          expect(event.name).to eq 'bookmarks-post_import'
-          expect(event.properties).to eq({"source" => 'delicious', "count" => 3})
+            expect(assigns(:bookmarks)).to match_array(delicious_bookmarks)
+          end
+
+          it "tracks an ahoy event" do
+            expect{
+              get :index, post_import: 'delicious'
+            }.to change(Ahoy::Event, :count).by(1)
+            event = Ahoy::Event.last
+            expect(event.name).to eq 'bookmarks-post_import'
+            expect(event.properties).to eq({"source" => 'delicious', "count" => 3})
+          end
+        end
+
+        context 'when the user has more than 25 bookmarks' do
+          it 'paginates the bookmarks list' do
+            bookmarks = current_user_bookmarks + create_list(:bookmark, 25, user: subject.current_user)
+            get :index
+            expect(assigns(:bookmarks)).to match_array(bookmarks.last(25))
+            get :index, page: 2
+            expect(assigns(:bookmarks)).to match_array(bookmarks.first(3))
+          end
+
+          it 'paginates the search results' do
+            bookmarks = create_list(:bookmark, 28, user: subject.current_user, title: 'ATRFGE')
+            get :index, q: 'ATRFGE'
+            expect(assigns(:bookmarks).to_a.size).to eq 25
+            get :index, q: 'ATRFGE', page: '2'
+            expect(assigns(:bookmarks).to_a.size).to eq 3
+          end
+
+          it 'paginates the delicious imports' do
+            bookmarks = create_list(:bookmark, 28, user: subject.current_user, source: 'delicious')
+            get :index, post_import: 'delicious'
+            expect(assigns(:bookmarks)).to match_array(bookmarks.last(25))
+            get :index, post_import: 'delicious', page: '2'
+            expect(assigns(:bookmarks)).to match_array(bookmarks.first(3))
+          end
         end
       end
 
-      context 'when the user has more than 25 bookmarks' do
-        it 'paginates the bookmarks list' do
-          bookmarks = current_user_bookmarks + create_list(:bookmark, 25, user: subject.current_user)
+      context "when the current user has no bookmark" do
+        it "redirects to getting_started page" do
           get :index
-          expect(assigns(:bookmarks)).to match_array(bookmarks.last(25))
-          get :index, page: 2
-          expect(assigns(:bookmarks)).to match_array(bookmarks.first(3))
-        end
-
-        it 'paginates the search results' do
-          bookmarks = create_list(:bookmark, 28, user: subject.current_user, title: 'ATRFGE')
-          get :index, q: 'ATRFGE'
-          expect(assigns(:bookmarks).to_a.size).to eq 25
-          get :index, q: 'ATRFGE', page: '2'
-          expect(assigns(:bookmarks).to_a.size).to eq 3
-        end
-
-        it 'paginates the delicious imports' do
-          bookmarks = create_list(:bookmark, 28, user: subject.current_user, source: 'delicious')
-          get :index, post_import: 'delicious'
-          expect(assigns(:bookmarks)).to match_array(bookmarks.last(25))
-          get :index, post_import: 'delicious', page: '2'
-          expect(assigns(:bookmarks)).to match_array(bookmarks.first(3))
+          expect(response).to redirect_to getting_started_path(source: "bookmarks-no_bookmarks")
         end
       end
+
     end
 
     describe "GET #show" do

@@ -1,0 +1,17 @@
+en:
+  help:
+    getting_started:
+      title: Getting started
+      step_1:
+        title: Install our bookmarklet
+        description: Bookmark any webpage in a click with our bookmarklet.
+        install_bookmarklet: Install the bookmarklet now
+      step_2:
+        title: Browse the Internet and find great content
+        description_html: You don't know where to start? Find an amazing recipe on <a href="http://minimalistbaker.com" target="_blank">Minimalist Baker</a>.
+      step_3:
+        title: Bookmark the page with the bookmarklet
+        description: You found a great recipes and you want to keep it? Just click on the bookmarklet.
+      step_4:
+        title: Find easily your recipe, forever!
+        description: In a few days, in a month or in a few years, you look for this nice recipe that you found once? No problem, just search for it on Wundermarks and find it instantly.

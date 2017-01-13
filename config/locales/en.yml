@@ -152,7 +152,7 @@ en:
     navigation:
       toogle_navigation: Toggle navigation
       brand: W
-      user_profiles: Who to follow 
+      user_profiles: Who to follow
       bookmarks: My bookmarks
       feed: News feed
       profile: My profile
@@ -160,6 +160,7 @@ en:
       preferences: My preferences
       contact: Contact us
       tools: Tools
+      getting_started: Getting started
     sign:
       sign_out: "Sign out"
       sign_in: "Sign in"

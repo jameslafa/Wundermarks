@@ -38,6 +38,10 @@ Rails.application.routes.draw do
     get   '/imported',    to: "tools#imported",     as: 'imported_tool'
   end
 
+  scope '/help' do
+    get '/getting_started', to: "help#getting_started", as: 'getting_started'
+  end
+
   resource :preferences, only: [:edit, :update]
   get "/preferences", to: "preferences#edit"
 

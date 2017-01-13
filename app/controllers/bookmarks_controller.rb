@@ -17,6 +17,12 @@ class BookmarksController < ApplicationController
 
     else
       @bookmarks = Bookmark.belonging_to(current_user).paginate(page: params[:page]).last_first
+
+      # If the user as no bookmark, we redirect him to the getting started page
+      if @bookmarks.empty? && current_user.metadata.bookmarks_count == 0
+        return redirect_to getting_started_path(source: "bookmarks-no_bookmarks")
+      end
+
       ahoy.track "bookmarks-index", nil
     end
   end

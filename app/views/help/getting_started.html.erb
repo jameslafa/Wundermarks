@@ -1,0 +1,36 @@
+<div class="page-title"><%= t(".title") %></div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="step" id="user_onboarding_process_step_1">
+      <div class="title"><%= t(".step_1.title") %></div>
+      <div class="description"><%= t(".step_1.description") %></div>
+      <div class="call_to_action"><%= link_to t(".step_1.install_bookmarklet"), bookmarklet_tool_path(source: "getting_started"), class: "btn btn-primary btn-lg", target:"_blank" %></div>
+      <div class="screenshot"><%= image_tag "user_onboarding_process/step-1_install-bookmarklet.png" %></div>
+    </div>
+
+    <div class="step-separator"></div>
+
+    <div class="step" id="user_onboarding_process_step_2">
+      <div class="title"><%= t(".step_2.title") %></div>
+      <div class="description"><%= t(".step_2.description_html") %></div>
+      <div class="screenshot"><%= image_tag "user_onboarding_process/step-2_find-great-content.png" %></div>
+    </div>
+
+    <div class="step-separator"></div>
+
+    <div class="step" id="user_onboarding_process_step_3">
+      <div class="title"><%= t(".step_3.title") %></div>
+      <div class="description"><%= t(".step_3.description") %></div>
+      <div class="screenshot"><%= image_tag "user_onboarding_process/step-3_bookmark-page.png" %></div>
+    </div>
+
+    <div class="step-separator"></div>
+
+    <div class="step" id="user_onboarding_process_step_4">
+      <div class="title"><%= t(".step_4.title") %></div>
+      <div class="description"><%= t(".step_4.description") %></div>
+      <div class="screenshot"><%= image_tag "user_onboarding_process/step-4_find-your-bookmark.png" %></div>
+    </div>
+  </div>
+</div>
