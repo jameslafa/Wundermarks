@@ -56,8 +56,9 @@
         }
       }
 
-      .move{
+      .bookmarklet{
         cursor: move;
+        -moz-user-select: auto;
       }
     }
 
