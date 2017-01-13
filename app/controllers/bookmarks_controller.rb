@@ -59,7 +59,6 @@ class BookmarksController < ApplicationController
 
 
     if @bookmark.url.present?
-
       # If the user is bookmarking the bookmarklet installation page, he confirms the installation is succesful
       if uri = URI(@bookmark.url) and uri.host.end_with?(Rails.application.routes.default_url_options[:host]) && uri.path == bookmarklet_tool_path
         return redirect_to bookmarklet_successfully_installed_path(v: params[:v])
@@ -69,6 +68,9 @@ class BookmarksController < ApplicationController
         flash.now.alert = "#{I18n.t("errors.bookmarks.already_exists")}. #{view_context.link_to(I18n.t("errors.bookmarks.see_existing_bookmark"), bookmark_path(@existing_bookmark.id), class: 'alert-link')}.".html_safe
       end
     end
+
+    # If the user is using a desktop but no bookmarklet
+    @install_bookmarklet = is_desktop_browser? && params[:layout] != 'popup'
 
     respond_to do |format|
       if params[:layout] == 'popup'

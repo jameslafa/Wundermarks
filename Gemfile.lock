@@ -396,6 +396,7 @@ DEPENDENCIES
   acts_as_follower
   ahoy_matey
   bootstrap-sass (~> 3.3)
+  browser
   byebug
   capistrano
   capistrano-bundler

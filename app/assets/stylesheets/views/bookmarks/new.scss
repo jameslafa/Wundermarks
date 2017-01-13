@@ -1,0 +1,18 @@
+.c-bookmarks{
+  &.a-new{
+    .install_bookmarklet{
+      text-align: center;
+
+      .btn{
+        margin-bottom: 0.5rem;
+        margin-top: 0.5rem;
+      }
+      
+      .ignore-mobile{
+        color: #777;
+        font-size: 0.8rem;
+        font-style: italic;
+      }
+    }
+  }
+}

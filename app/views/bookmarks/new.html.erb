@@ -1,5 +1,18 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
+    <% if @install_bookmarklet %>
+    <div class="row top hidden-xs hidden-sm" role="alert">
+      <div class="col-md-12">
+        <div class="alert alert-warning install_bookmarklet">
+          <p><%= t(".install_bookmarklet")%></p>
+
+          <%= link_to t(".install_bookmarklet_button"), bookmarklet_tool_path(source: "new_bookmark"), class: 'btn btn-info' %>
+
+          <p class="ignore-mobile"><%= t(".install_bookmarklet_ignore_mobile")%></p>
+        </div>
+      </div>
+    </div>
+    <% end %>
     <%= render 'form' %>
   </div>
 </div>

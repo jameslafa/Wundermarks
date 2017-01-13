@@ -74,6 +74,10 @@ class ApplicationController < ActionController::Base
     set_meta_tags({key => value})
   end
 
+  def is_desktop_browser?
+    browser.platform.chrome_os? || browser.platform.linux? || browser.platform.mac? || browser.platform.windows?
+  end
+
   private
 
   # Default method to handle Pundit user_not_authorized error. Redifine this

@@ -52,13 +52,15 @@ RSpec.describe ToolsController, type: :controller do
         expect(session[:upgrade_bookmarklet]).to be nil
       end
 
-      it "tracks an ahoy event" do
-        expect{
-          get :bookmarklet
-        }.to change(Ahoy::Event, :count).by(1)
-        event = Ahoy::Event.last
-        expect(event.name).to eq 'tools-bookmarket'
-        expect(event.properties).to be_nil
+      context 'when source is specified' do
+        it "tracks an ahoy event with the source" do
+          expect{
+            get :bookmarklet, source: 'new_bookmark'
+          }.to change(Ahoy::Event, :count).by(1)
+          event = Ahoy::Event.last
+          expect(event.name).to eq 'tools-bookmarket'
+          expect(event.properties).to eq({"source" => 'new_bookmark'})
+        end
       end
     end
 

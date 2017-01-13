@@ -409,6 +409,39 @@ RSpec.describe BookmarksController, type: :controller do
         end
       end
 
+      context "when the user does not user the bookmarklet on desktop" do
+        before(:each) do
+          @request.user_agent = user_agent
+        end
+
+        context "when user is on desktop and not in the popup" do
+          let(:user_agent) { "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:50.0) Gecko/20100101 Firefox/50.0" }
+
+          it "sets @install_bookmarklet to true" do
+            get :new
+            expect(assigns(:install_bookmarklet)).to be true
+          end
+        end
+
+        context "when user is on desktop but in the popup" do
+          let(:user_agent) { "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:50.0) Gecko/20100101 Firefox/50.0" }
+
+          it "sets @install_bookmarklet to true" do
+            get :new, layout: 'popup'
+            expect(assigns(:install_bookmarklet)).to be false
+          end
+        end
+
+        context "when user is on mobile" do
+          let(:user_agent) { "Mozilla/5.0 (Linux; Android 4.4; Nexus 5 Build/_BuildID_) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36" }
+
+          it "sets @install_bookmarklet to false" do
+            get :new
+            expect(assigns(:install_bookmarklet)).to be false
+          end
+        end
+      end
+
       it "restricts parameters" do
         params = {url: "https://www.google.com/", title: "Google: search engine", description: "Find everything and spies on you", layout: "popup"}
 

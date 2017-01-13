@@ -6,7 +6,7 @@ class ToolsController < ApplicationController
   end
 
   def bookmarklet
-    ahoy.track "tools-bookmarket", nil
+    ahoy.track "tools-bookmarket", {source: params[:source]}
     session.delete(:upgrade_bookmarklet)
   end
 

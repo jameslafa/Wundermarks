@@ -105,6 +105,9 @@ gem 'mini_magick', '~> 4.5'
 # Handle meta-tags
 gem 'meta-tags'
 
+# Detect browsers
+gem "browser"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
