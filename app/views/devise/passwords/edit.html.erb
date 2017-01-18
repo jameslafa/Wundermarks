@@ -12,7 +12,7 @@
 
       <div class="form-group">
         <%= f.label :password, t(".new_password") %>
-        <%= f.text_field :password, autofocus: true, class: 'form-control input-lg', autocomplete: "off", 'aria-describedby': "helpPassword" %>
+        <%= f.password_field :password, autofocus: true, class: 'form-control input-lg', autocomplete: "off", 'aria-describedby': "helpPassword" %>
         <% if @minimum_password_length %>
           <span id="helpPassword" class="help-block"><%= t(".min_characters", count: @minimum_password_length) %></span>
         <% end %>
