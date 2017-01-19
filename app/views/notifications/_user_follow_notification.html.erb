@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-sm-1 hidden-xs icon">
+    <i class="material-icons user-follow" aria-hidden="true">person_add</i>
+  </div>
+  <div class="col-sm-11 content">
+    <div class="header clearfix">
+      <%= link_to notification.sender.profile.name, user_profile_permalink(notification.sender.profile), class: 'user-profile-link' %> <%= t("notifications.user_follow.followed_you") %>
+      <%= time_tag notification.created_at, notification.created_at.in_time_zone.to_formatted_s(:short) %>
+    </div>
+  </div>
+</div>

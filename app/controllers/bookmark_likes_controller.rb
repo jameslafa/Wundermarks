@@ -6,6 +6,7 @@ class BookmarkLikesController < ApplicationController
     ahoy.track "bookmark_likes-create", {current_user: current_user.id, bookmark_id: bookmark.id }
 
     bookmark = BookmarkService.like(bookmark.id, current_user.id)
+    Notifier.bookmark_like(bookmark, current_user)
 
     respond_to do |format|
       format.html { redirect_to bookmark_path(id: bookmark.id) }

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   post '/bookmark_likes/:bookmark_id', to: 'bookmark_likes#create', as: 'like_bookmark'
   delete '/bookmark_likes/:bookmark_id', to: 'bookmark_likes#destroy', as: 'unlike_bookmark'
 
+  resources :notifications, only: [:index]
 
   # JSON only
   scope :format => true, :constraints => { :format => 'json' } do

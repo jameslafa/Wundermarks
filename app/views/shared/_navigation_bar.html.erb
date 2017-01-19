@@ -19,6 +19,7 @@
             <li><%= link_to t('header.navigation.profile'), current_user_profile_path %></li>
             <li><%= link_to t('header.navigation.preferences'), edit_preferences_path %></li>
             <li><%= link_to t('header.navigation.account'), edit_user_registration_path %></li>
+            <li role="separator" class="divider"></li>
             <li><%= link_to t('header.navigation.tools'), tools_path %></li>
             <li><%= link_to t('header.navigation.getting_started'), getting_started_path %></li>
             <li role="separator" class="divider"></li>
@@ -31,15 +32,15 @@
         <% end %>
       </ul>
 
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-left">
         <% if current_user %>
-        <li><%= link_to "<i class='material-icons'>people</i> ".html_safe + t('header.navigation.user_profiles'), user_profiles_path %></a></li>
-        <li><%= link_to "<i class='material-icons'>bookmark</i> ".html_safe + t('header.navigation.bookmarks'), bookmarks_path %></a></li>
-        <li><%= link_to "<i class='material-icons'>explore</i> ".html_safe + t('header.navigation.feed'), feed_path %></a></li>
+        <li><%= link_to "<i class='material-icons'>explore</i> #{t('header.navigation.feed')}".html_safe, feed_path %></a></li>
+        <li><%= link_to "<i class='material-icons'>notifications</i> #{t('header.navigation.notifications')} <span class='badge notifications-count'>#{notifications_count(current_user)}</span>".html_safe, notifications_path %></a></li>
+        <li><%= link_to "<i class='material-icons'>people</i> #{t('header.navigation.user_profiles')}".html_safe, user_profiles_path %></a></li>
         <% end %>
       </ul>
 
-      <div class="nav navbar-nav navbar-left">
+      <div class="nav navbar-nav navbar-right">
         <%= render "shared/search_bookmark", mobile: false, q: @q %>
       </div>
 

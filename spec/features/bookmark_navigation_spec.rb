@@ -32,7 +32,8 @@ feature 'BookmarkNavigation' do
     visit bookmark_path(bookmark)
 
     within '.navbar.navbar-default' do
-      expect(page).to have_link(nil, href: bookmarks_path)
+      expect(page).to have_link(nil, href: feed_path)
+      expect(page).to have_link(nil, href: user_profiles_path)
       expect(page).to have_css('form')
     end
 
@@ -62,7 +63,8 @@ feature 'BookmarkNavigation' do
     visit bookmark_path(bookmark)
 
     within '.navbar.navbar-default' do
-      expect(page).to have_link(nil, href: bookmarks_path)
+      expect(page).to have_link(nil, href: feed_path)
+      expect(page).to have_link(nil, href: user_profiles_path)
       expect(page).to have_css('form')
     end
 

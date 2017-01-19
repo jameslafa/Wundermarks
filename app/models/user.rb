@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
 
   has_many :bookmarks
   has_many :bookmark_likes, dependent: :destroy
+  has_many :notifications, dependent: :destroy, foreign_key: :recipient_id
   has_one :user_profile, dependent: :destroy, inverse_of: :user
   has_one :user_preference, dependent: :destroy, inverse_of: :user
   has_one :user_metadatum, dependent: :destroy, inverse_of: :user

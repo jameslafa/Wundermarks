@@ -155,9 +155,10 @@ en:
       user_profiles: Who to follow
       bookmarks: My bookmarks
       feed: Discover
-      profile: My profile
-      account: My account
-      preferences: My preferences
+      profile: View profile
+      account: Account settings
+      notifications: Notifications
+      preferences: Edit preferences
       contact: Contact us
       tools: Tools
       getting_started: Getting started

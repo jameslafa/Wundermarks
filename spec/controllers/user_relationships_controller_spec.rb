@@ -38,6 +38,19 @@ RSpec.describe UserRelationshipsController, type: :controller do
           expect(current_user.metadata.reload.followings_count).to eq(current_user_followings_count + 1)
           expect(other_user.metadata.reload.followers_count).to eq(other_user_followers_count + 1)
         end
+
+        it "creates a notification user_follow" do
+          expect{
+            post :create, user_id: other_user.id
+          }.to change(Notification, :count).by(1)
+
+          notification = Notification.last
+
+          expect(notification.recipient).to eq other_user
+          expect(notification.sender).to eq subject.current_user
+          expect(notification.emitter).to eq other_user
+          expect(notification.activity).to eq 'user_follow'
+        end
       end
 
       context "when the user_relationship does already exist" do

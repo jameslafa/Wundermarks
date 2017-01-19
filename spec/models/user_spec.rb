@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   it { is_expected.to have_many :bookmarks }
   it { is_expected.to have_many(:bookmark_likes).dependent(:destroy) }
+  it { is_expected.to have_many(:notifications).dependent(:destroy).with_foreign_key(:recipient_id) }
   it { is_expected.to have_one(:user_profile).dependent(:destroy) }
   it { is_expected.to have_one(:user_preference).dependent(:destroy) }
   it { is_expected.to have_one(:user_metadatum).dependent(:destroy) }

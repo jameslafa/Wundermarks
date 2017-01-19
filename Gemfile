@@ -133,7 +133,7 @@ group :development do
   # Lunch rake tasks via guard
   gem 'guard-rake'
   #  Display test results in a OSX notification
-  gem 'terminal-notifier-guard', '~> 1.6.1'
+  # gem 'terminal-notifier-guard', '~> 1.6.1'
   # Don't log static file requests
   gem 'quiet_assets'
   # Get a better Rails error page

@@ -100,10 +100,10 @@
           text-align: left;
 
           &.liked{
-            color: #e81c4f;
+            color: $like-color;
 
             i.material-icons{
-              color: #e81c4f;
+              color: $like-color;
             }
           }
         }

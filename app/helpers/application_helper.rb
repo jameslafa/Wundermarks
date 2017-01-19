@@ -19,4 +19,19 @@ module ApplicationHelper
     clean_text = simple_format(clean_text, {}, sanitize: false)
     Rinku.auto_link(clean_text, :all, 'target="_blank" rel="nofollow noopener noreferrer"').html_safe
   end
+
+  def notifications_count(user)
+    if user
+      count = NotificationFetcher.unread_user_notifications_count(user)
+      if count == 0
+        ''
+      elsif count > 10
+        '10+'
+      else
+        count.to_s
+      end
+    else
+      ''
+    end
+  end
 end

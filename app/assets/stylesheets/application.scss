@@ -31,6 +31,7 @@
 @import "views/user_profiles/show";
 @import "views/user_profiles/form";
 @import "views/preferences/edit";
+@import "views/notifications/index";
 
 html{
   color: $default-text-color;
@@ -160,7 +161,7 @@ body{
 
     @media(min-width:$screen-md-min){
       .search-bookmark{
-        width: 400px
+        width: 300px
       }
     }
   }

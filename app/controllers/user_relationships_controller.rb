@@ -16,6 +16,7 @@ class UserRelationshipsController < ApplicationController
       if current_user.follow(other_user)
         @following = true
         UserMetadataUpdater.update_relationships_count(current_user, other_user, 1)
+        Notifier.user_follow(other_user, current_user)
       end
     end
 

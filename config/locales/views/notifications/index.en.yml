@@ -1,0 +1,8 @@
+en:
+  notifications:
+    user_follow:
+      followed_you: followed you
+    bookmark_like:
+      liked_bookmark: liked your bookmark
+    bookmark_copy:
+      copied_bookmark: copied your bookmark

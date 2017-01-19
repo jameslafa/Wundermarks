@@ -5,6 +5,9 @@ feature 'MissingUsername' do
 
     user = user_profile.user
 
+    # User needs at least to have one bookmark to see the notification
+    create(:bookmark, user: user)
+
     login_as(user, :scope => :user)
 
     # Alert displayed on user's bookmark page

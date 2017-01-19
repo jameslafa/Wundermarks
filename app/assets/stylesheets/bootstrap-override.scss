@@ -17,6 +17,8 @@ $danger-color: #d9534f;
 $success-color: #5cb85c;
 
 $light-tooltip-background-color: darken($navigation-bar-text-color, 15%);
+$notification-color: lighten(#0D58A6, 60%);
+$like-color: #e81c4f;
 
 // Customize tooltip
 .light-tooltip + .tooltip > .tooltip-inner {background-color: $light-tooltip-background-color; color: #000;}

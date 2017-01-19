@@ -1,9 +1,20 @@
 .navbar-default{
+  .nav > li > a{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
   a {
+    font-size: 0.85rem;
+
     i.material-icons{
-      font-size: 20px;
-      line-height: 20px;
+      font-size: 18px;
+      line-height: 16px;
       vertical-align: middle;
+    }
+
+    .notifications-count{
+      background-color: $like-color;
     }
   }
 }

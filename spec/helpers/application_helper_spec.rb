@@ -29,4 +29,22 @@ RSpec.describe 'ApplicationHelper', :type => :helper do
     end
   end
 
+  describe 'notifications_count' do
+    it 'returns the user notifications count as a string' do
+      user = build_stubbed(:user)
+
+      allow(NotificationFetcher).to receive(:unread_user_notifications_count).and_return(0)
+      expect(notifications_count(user)).to eq ''
+
+      allow(NotificationFetcher).to receive(:unread_user_notifications_count).and_return(4)
+      expect(notifications_count(user)).to eq '4'
+
+      allow(NotificationFetcher).to receive(:unread_user_notifications_count).and_return(11)
+      expect(notifications_count(user)).to eq '10+'
+
+      allow(NotificationFetcher).to receive(:unread_user_notifications_count).and_return(4)
+      expect(notifications_count(nil)).to eq ''
+    end
+  end
+
 end

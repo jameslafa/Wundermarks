@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170109143516) do
+ActiveRecord::Schema.define(version: 20170118131116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,6 +141,22 @@ ActiveRecord::Schema.define(version: 20170109143516) do
 
   add_index "identities", ["user_id", "provider"], name: "index_identities_on_user_id_and_provider", unique: true, using: :btree
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "recipient_id"
+    t.integer  "sender_id"
+    t.integer  "activity"
+    t.integer  "emitter_id"
+    t.string   "emitter_type"
+    t.boolean  "read",         default: false
+    t.datetime "read_at"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "notifications", ["emitter_type", "emitter_id"], name: "index_notifications_on_emitter_type_and_emitter_id", using: :btree
+  add_index "notifications", ["read"], name: "index_notifications_on_read", using: :btree
+  add_index "notifications", ["recipient_id"], name: "index_notifications_on_recipient_id", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"

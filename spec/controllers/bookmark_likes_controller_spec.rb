@@ -31,6 +31,19 @@ RSpec.describe BookmarkLikesController, type: :controller do
           expect(bookmark_like.user).to eq current_user
         end
 
+        it "creates a bookmark_like notification" do
+          expect{
+            post :create, bookmark_id: bookmark.id
+          }.to change(Notification, :count).by(1)
+
+          notification = Notification.last
+
+          expect(notification.recipient).to eq bookmark.user
+          expect(notification.sender).to eq subject.current_user
+          expect(notification.emitter).to eq bookmark
+          expect(notification.activity).to eq 'bookmark_like'
+        end
+
         context "when the user likes his own bookmark" do
           let(:bookmark) { create(:bookmark, user: current_user) }
 

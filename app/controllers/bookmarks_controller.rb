@@ -117,6 +117,11 @@ class BookmarksController < ApplicationController
         # Update user's metadata
         UserMetadataUpdater.update_bookmarks_count(@bookmark)
 
+        # If the new bookmark is a copy, we notify the bookmark owner
+        if @bookmark.copy_from_bookmark_id.present?
+          Notifier.bookmark_copy(Bookmark.find(@bookmark.copy_from_bookmark_id), current_user)
+        end
+
         # Add a notification into slack
         SlackNotifierJob.perform_later("new_bookmark", @bookmark)
         ahoy.track "bookmarks-create", {id: @bookmark.id}

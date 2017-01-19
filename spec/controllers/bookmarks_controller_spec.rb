@@ -508,7 +508,8 @@ RSpec.describe BookmarksController, type: :controller do
         end
 
         it "assigns a newly created bookmark as @bookmark" do
-          post :create, {:bookmark => valid_attributes.merge!({copy_from_bookmark_id: 5})}
+          original_bookmark = create(:bookmark)
+          post :create, {:bookmark => valid_attributes.merge!({copy_from_bookmark_id: original_bookmark.id})}
           created_bookmark = assigns(:bookmark)
           expect(assigns(:bookmark)).to be_a(Bookmark)
           expect(assigns(:bookmark)).to contains_attributes_from valid_attributes.except(:tag_list, :privacy)
@@ -545,6 +546,25 @@ RSpec.describe BookmarksController, type: :controller do
           expect(event.name).to eq 'bookmarks-create'
           expect(event.properties).to eq({"id" => Bookmark.last.id})
         end
+
+        context "when the bookmark is a copy" do
+
+          it "notifies the original bookmark owner with a bookmark_copy notification" do
+            original_bookmark = create(:bookmark)
+
+            expect{
+              post :create, {:bookmark => valid_attributes.merge({copy_from_bookmark_id: original_bookmark.id})}
+            }.to change(Notification, :count).by(1)
+
+            new_bookmark = Bookmark.last
+            notification = Notification.last
+
+            expect(notification.recipient).to eq original_bookmark.user
+            expect(notification.sender).to eq new_bookmark.user
+            expect(notification.emitter).to eq original_bookmark
+            expect(notification.activity).to eq 'bookmark_copy'
+          end
+        end
       end
 
       context "with invalid params" do
@@ -570,7 +590,8 @@ RSpec.describe BookmarksController, type: :controller do
       end
 
       it "restricts parameters" do
-        params = attributes_for(:bookmark_with_tags, user_id: 1, copy_from_bookmark_id: 5)
+        original_bookmark = create(:bookmark)
+        params = attributes_for(:bookmark_with_tags, user_id: 1, copy_from_bookmark_id: original_bookmark.id)
 
         should permit(:title, :description, :url, :tag_list, :privacy, :copy_from_bookmark_id)
         .for(:create, params: {bookmark: params}).on(:bookmark)
