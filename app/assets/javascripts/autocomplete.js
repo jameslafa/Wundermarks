@@ -1,12 +1,12 @@
 // Should be executed each time the page is loaded by turbolinks
-function pageLoaded(){
+function autocompletePageLoaded(){
   enableTagAutoComplete();
 }
 
 // Should be executed only once, when the application boostrap.
 // It contains listeners global to the application staying active even
 // when the page is reloaded with turbolinks
-function documentReady(){
+function autocompleteDocumentReady(){
   enableUrlMetadataFetcher();
 }
 
@@ -72,7 +72,7 @@ function enableTagAutoComplete(){
 // Automatically fetch url metadata when a url is given
 function enableUrlMetadataFetcher(){
   var validURIRregex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
-  
+
   $(document).on( "blur", ".c-bookmarks form #bookmark_url", function(){
     var url = $(this).val();
 
@@ -105,5 +105,5 @@ function enableUrlMetadataFetcher(){
   });
 }
 
-$(document).ready(documentReady);
-$(document).on('turbolinks:load', pageLoaded);
+$(document).ready(autocompleteDocumentReady);
+$(document).on('turbolinks:load', autocompletePageLoaded);
