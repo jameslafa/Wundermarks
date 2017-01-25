@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   scope :format => true, :constraints => { :format => 'json' } do
     get '/autocomplete_search/tags',                to: "autocomplete_search#tags"
     get '/autocomplete_search/username_available',  to: "autocomplete_search#username_available"
+    get '/autocomplete_search/url_metadata',        to: "autocomplete_search#url_metadata"
   end
 
   scope '/tools' do

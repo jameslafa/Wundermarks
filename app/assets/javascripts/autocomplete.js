@@ -1,3 +1,15 @@
+// Should be executed each time the page is loaded by turbolinks
+function pageLoaded(){
+  enableTagAutoComplete();
+}
+
+// Should be executed only once, when the application boostrap.
+// It contains listeners global to the application staying active even
+// when the page is reloaded with turbolinks
+function documentReady(){
+  enableUrlMetadataFetcher();
+}
+
 function enableTagAutoComplete(){
   var inputFields = $('.tag-autocomplete');
   inputFields.each(function(index, inputField){
@@ -57,4 +69,41 @@ function enableTagAutoComplete(){
   });
 };
 
-$(document).on('turbolinks:load', enableTagAutoComplete);
+// Automatically fetch url metadata when a url is given
+function enableUrlMetadataFetcher(){
+  var validURIRregex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
+  
+  $(document).on( "blur", ".c-bookmarks form #bookmark_url", function(){
+    var url = $(this).val();
+
+    if(url && validURIRregex.test(url)){
+      var titleField = $(".c-bookmarks form  #bookmark_title");
+      var descriptionField = $(".c-bookmarks form  #bookmark_description");
+
+      if ( !titleField.val() && !descriptionField.val() ){
+        var loadingBar = $(".c-bookmarks form  #bookmark_url_loading_bar");
+        loadingBar.show(200);
+
+        $.ajax("/autocomplete_search/url_metadata.json", {
+          data: {url: url},
+          dataType: "json",
+          success: function(data){
+            if(!titleField.val() && data["title"]){
+              titleField.val(data["title"]);
+            }
+
+            if(!descriptionField.val() && data["description"]){
+              descriptionField.val(data["description"]);
+            }
+          },
+          complete: function(jqXHR, textStatus, errorThrown){
+            loadingBar.hide(200);
+          },
+        });
+      }
+    }
+  });
+}
+
+$(document).ready(documentReady);
+$(document).on('turbolinks:load', pageLoaded);

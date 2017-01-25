@@ -108,6 +108,9 @@ gem 'meta-tags'
 # Detect browsers
 gem "browser"
 
+# HTML parsing
+gem "nokogiri"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

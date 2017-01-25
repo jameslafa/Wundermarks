@@ -18,6 +18,14 @@ RSpec.describe AutocompleteSearchController, type: :controller do
         expect(response_body).to eq({"error" => I18n.t("devise.failure.unauthenticated")})
       end
     end
+
+    describe "GET #url_metadata" do
+      it "replies with a 401" do
+        get :url_metadata, format: :json
+        expect(response.status).to eq 401
+        expect(response_body).to eq({"error" => I18n.t("devise.failure.unauthenticated")})
+      end
+    end
   end
 
   context 'with a signed_in user' do
@@ -102,6 +110,64 @@ RSpec.describe AutocompleteSearchController, type: :controller do
         it 'returns true' do
           get :username_available, format: :json, q: 'johnsnow'
           expect(response_body).to eq ({"valid" => true, "message" => I18n.t("user_profiles.form.username_available", username: 'johnsnow')})
+        end
+      end
+    end
+
+    describe 'GET #url_metadata' do
+      context "when metadata are retrieved" do
+
+        let(:metadata) { {
+          title: Faker::Lorem.characters(90),
+          description: Faker::Lorem.characters(300),
+          language: "en",
+          canonical_url: "https://www.wundermarks.com",
+        } }
+
+        before(:each) do
+          allow(URLMetadataFinder).to receive(:get_metadata).and_return(metadata)
+        end
+
+        it "returns values as json" do
+          get :url_metadata, format: :json, url: 'https://www.wundermarks.com'
+
+          expect(response.body).to eq({
+            title: metadata[:title].truncate(80),
+            description: metadata[:description].truncate(255),
+            language: "en",
+            canonical_url: "https://www.wundermarks.com",
+          }.to_json)
+        end
+
+        it 'tracks an ahoy event' do
+          expect{
+            get :url_metadata, format: :json, url: 'https://www.wundermarks.com'
+          }.to change(Ahoy::Event, :count).by(1)
+          event = Ahoy::Event.last
+          expect(event.name).to eq 'autocomplete_search-url_metadata'
+          expect(event.properties).to eq({"user_id" => subject.current_user.id, "url" => "https://www.wundermarks.com", "success" => true})
+        end
+      end
+
+      context "when the metadata cannot be retrieved" do
+        before(:each) do
+          allow(URLMetadataFinder).to receive(:get_metadata).and_return(nil)
+        end
+
+        it "return an empty body and a 500" do
+          get :url_metadata, format: :json, url: 'https://www.wundermarks.com'
+
+          expect(response.body).to eq ""
+          expect(response).to have_http_status(500)
+        end
+
+        it 'tracks an ahoy event' do
+          expect{
+            get :url_metadata, format: :json, url: 'https://www.wundermarks.com'
+          }.to change(Ahoy::Event, :count).by(1)
+          event = Ahoy::Event.last
+          expect(event.name).to eq 'autocomplete_search-url_metadata'
+          expect(event.properties).to eq({"user_id" => subject.current_user.id, "url" => "https://www.wundermarks.com", "success" => false})
         end
       end
     end

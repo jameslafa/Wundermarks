@@ -5,6 +5,7 @@
 //= require turbolinks
 //= require lib/bootstrap-toolkit
 //= require lib/awesomplete
+//= require lib/nprogress
 //= require autocomplete
 
 // Should be executed each time the page is loaded by turbolinks
@@ -187,3 +188,13 @@ function uploadAvatar(){
 
 $(document).ready(documentReady);
 $(document).on('turbolinks:load', pageLoaded);
+
+
+// Activate NProgress on turbolinks change
+$(document).on('turbolinks:click', function() {
+  NProgress.start();
+});
+$(document).on('turbolinks:render', function() {
+  NProgress.done();
+  NProgress.remove();
+});

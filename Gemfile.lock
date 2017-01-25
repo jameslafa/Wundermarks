@@ -426,6 +426,7 @@ DEPENDENCIES
   meta-tags
   mini_magick (~> 4.5)
   mjml-rails
+  nokogiri
   pg (~> 0.15)
   pg_search
   puma

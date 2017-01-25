@@ -2,6 +2,7 @@ en:
   bookmarks:
     form:
       back_to_bookmarks: "Back to bookmarks list"
+      bookmark_url_help: "Add a valid URL to retrieve automatically the title and description of the page."
       tag_list_help: "Maximum 5 tags separated by commas: ','"
       tag_list_placeholder: "rails, javascript"
       title_length: Title length

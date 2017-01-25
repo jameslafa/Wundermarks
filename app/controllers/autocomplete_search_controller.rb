@@ -39,4 +39,26 @@ class AutocompleteSearchController < ApplicationController
 
     render json: {valid: valid, message: message}
   end
+
+  # Retrieve website metadata and return it as json
+  def url_metadata
+    url = params[:url].to_s.strip
+
+    # Fetch metadata via the URLMetadataFinder service
+    if url_metadata = URLMetadataFinder.get_metadata(url)
+      # Truncate title and description
+      url_metadata[:title] = url_metadata[:title].truncate(Bookmark::MAX_TITLE_LENGTH) if url_metadata[:title].present?
+      url_metadata[:description] = url_metadata[:description].truncate(Bookmark::MAX_DESCRIPTION_LENGTH) if url_metadata[:description].present?
+
+      # Track event
+      ahoy.track "autocomplete_search-url_metadata", {user_id: current_user.id, url: url, success: true}
+
+      # Return a json representation of the metadata
+      render :json => url_metadata, :status => 200
+    else
+
+      ahoy.track "autocomplete_search-url_metadata", {user_id: current_user.id, url: url, success: false}
+      render nothing: true, :status => 500
+    end
+  end
 end

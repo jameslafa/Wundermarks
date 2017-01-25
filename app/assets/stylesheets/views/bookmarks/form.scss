@@ -12,4 +12,28 @@
       }
     }
   }
+
+  @keyframes progress_start {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+
+  #bookmark_url_loading_bar{
+    border-radius: 2px;
+    display: none;
+    height: 2px;
+    padding: 0 2px;
+
+    .progress{
+      background-color: $secondary-color;
+      height: 3px;
+      width: 0;
+
+      animation: progress_start 1.5s ease-in-out infinite;
+    }
+  }
 }

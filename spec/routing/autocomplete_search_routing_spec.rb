@@ -9,5 +9,9 @@ RSpec.describe AutocompleteSearchController, type: :routing do
     it "routes to #username_available" do
       expect(:get => "/autocomplete_search/username_available.json").to route_to("autocomplete_search#username_available", format: 'json')
     end
+
+    it "routes to #url_metadata" do
+      expect(:get => "/autocomplete_search/url_metadata.json").to route_to("autocomplete_search#url_metadata", format: 'json')
+    end
   end
 end
